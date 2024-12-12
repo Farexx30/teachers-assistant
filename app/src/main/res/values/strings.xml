@@ -1,5 +1,23 @@
 <resources>
     <string name="app_name">TeachersAssistant</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="visible_app_name">Teacher\'s Assistant</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login">Login</string>
+    <string name="registration">Registration</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="register">Register</string>
+    <string name="schedule">Schedule</string>
+    <string name="your_students">Your students</string>
+    <string name="reset">Reset all data</string>
+    <string name="logout">Log out</string>
+    <string name="sunday_shortcut">Sun</string>
+    <string name="monday_shortcut">Mon</string>
+    <string name="tuesday_shortcut">Tue</string>
+    <string name="wednesday_shortcut">Wed</string>
+    <string name="thursday_shortcut">Thu</string>
+    <string name="friday_shortcut">Fri</string>
+    <string name="saturday_shortcut">Sat</string>
+    <string name="menu">Menu</string>
 </resources>
