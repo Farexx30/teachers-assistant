@@ -11,6 +11,7 @@ import com.example.teachersassistant.R
 import com.example.teachersassistant.views.fragments.InitialFragment
 import com.example.teachersassistant.views.fragments.LoginFragment
 import com.example.teachersassistant.views.fragments.RegistrationFragment
+import com.example.teachersassistant.views.fragments.ScheduleFragment
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
-                replace<InitialFragment>(R.id.fragment_container)
+                replace<ScheduleFragment>(R.id.fragment_container)
             }
         }
     }

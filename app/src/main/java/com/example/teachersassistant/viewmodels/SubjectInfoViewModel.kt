@@ -2,6 +2,6 @@ package com.example.teachersassistant.viewmodels
 
 import androidx.lifecycle.ViewModel
 
-class LessonStudentsViewModel : ViewModel() {
+class SubjectInfoViewModel : ViewModel() {
     // TODO: Implement the ViewModel
 }

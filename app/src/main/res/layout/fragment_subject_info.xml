@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.fragments.SubjectInfoFragment"
+    android:background="@color/my_dark">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/subject_name_linear_layout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/subject_name"
+                android:textColor="@color/my_very_light_blue"
+                android:textSize="30sp" />
+
+        <LinearLayout
+            android:id="@+id/subject_name_linear_layout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <EditText
+                android:id="@+id/subject_name_edit_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:hint="@string/subject_name"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:text=""
+                android:layout_weight="1"
+                android:textColor="@color/my_very_light_blue"
+                android:textColorHint="@color/my_light_blue"
+                android:textSize="30sp"
+                tools:ignore="LabelFor" />
+
+            <!--    Visible and enabled only when subject already exist -->
+            <Button
+                android:id="@+id/edit_subject_name_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:backgroundTint="@color/my_blue"
+                android:text="@string/edit"
+                android:textColor="@color/my_very_light_blue"
+                android:textSize="20sp"
+                android:visibility="invisible"
+                android:enabled="false"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:padding="10dp"
+                tools:ignore="ButtonStyle,InefficientWeight"/>
+
+        </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/subject_dates_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="25dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/subject_name_linear_layout1">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/subject_dates"
+                android:textColor="@color/my_very_light_blue"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/add_new_subject_date_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:backgroundTint="@color/my_blue"
+                android:text="@string/add"
+                android:textColor="@color/my_very_light_blue"
+                android:textSize="20sp"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:padding="10dp"
+                tools:ignore="ButtonStyle,InefficientWeight" />
+
+        </LinearLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/day_schedule_recycler_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="5dp"
+            app:layoutManager="LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/subject_dates_linear_layout"
+            app:layout_constraintWidth_percent="0.95" />
+
+        <Button
+            android:id="@+id/go_to_assigned_students_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:backgroundTint="@color/my_blue"
+            android:text="@string/assigned_students"
+            android:textColor="@color/my_very_light_blue"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/day_schedule_recycler_view"
+            tools:ignore="ButtonStyle,InefficientWeight" />
+
+
+        <!--    Content, color and behavior of those buttons will change when subject already exist -->
+        <LinearLayout
+            android:id="@+id/dynamic_content_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <Button
+                android:id="@+id/cancel_subject_creation_or_delete_subject_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/my_blue"
+                android:padding="2dp"
+                android:text="@string/cancel"
+                android:textColor="@color/my_very_light_blue"
+                android:textSize="20sp"
+                android:enabled="true"
+                tools:ignore="ButtonStyle,InefficientWeight" />
+
+            <Button
+                android:id="@+id/save_new_subject_or_go_to_menu_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/my_blue"
+                android:padding="2dp"
+                android:text="@string/save"
+                android:textColor="@color/my_very_light_blue"
+                android:textSize="20sp"
+                android:enabled="true"
+                tools:ignore="ButtonStyle,InefficientWeight" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

@@ -43,7 +43,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:layout_weight="2"
                     android:text="@string/username"
                     android:textColor="@color/my_very_light_blue"
                     android:textSize="20sp" />
@@ -52,7 +51,6 @@
                     android:id="@+id/registration_username_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="5"
                     android:focusable="true"
                     android:hint="@string/username"
                     android:importantForAutofill="no"
@@ -76,7 +74,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:layout_weight="2"
                     android:text="@string/password"
                     android:textColor="@color/my_very_light_blue"
                     android:textSize="20sp" />
@@ -85,7 +82,6 @@
                     android:id="@+id/registration_password_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="5"
                     android:hint="@string/password"
                     android:importantForAutofill="no"
                     android:inputType="textPassword"
@@ -106,7 +102,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="@string/confirm_password"
                     android:textColor="@color/my_very_light_blue"
                     android:textSize="20sp" />
@@ -115,7 +110,6 @@
                     android:id="@+id/registration_confirm_password_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:hint="@string/confirm_password"
                     android:importantForAutofill="no"
                     android:inputType="textPassword"

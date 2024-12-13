@@ -7,15 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.teachersassistant.R
-import com.example.teachersassistant.viewmodels.LessonViewModel
+import com.example.teachersassistant.viewmodels.SubjectStudentInfoViewModel
 
-class LessonFragment : Fragment() {
+class SubjectStudentInfoFragment : Fragment() {
 
     companion object {
-        fun newInstance() = LessonFragment()
+        fun newInstance() = SubjectStudentInfoFragment()
     }
 
-    private val viewModel: LessonViewModel by viewModels()
+    private val viewModel: SubjectStudentInfoViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +27,6 @@ class LessonFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_lesson, container, false)
+        return inflater.inflate(R.layout.fragment_subject_student_info, container, false)
     }
 }
