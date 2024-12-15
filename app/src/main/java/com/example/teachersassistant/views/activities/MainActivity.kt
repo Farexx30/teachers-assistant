@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.commit {
-                replace<ScheduleFragment>(R.id.fragment_container)
+                replace<InitialFragment>(R.id.fragment_container)
             }
         }
     }

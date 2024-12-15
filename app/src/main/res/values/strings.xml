@@ -30,4 +30,15 @@
     <string name="edit">Edit</string>
     <string name="go_to_schedule">Go to schedule</string>
     <string name="your_subjects">Your subjects</string>
+    <string name="assign_students">Assign students</string>
+    <string name="assign">Assign</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="album_number">Album number</string>
+    <string name="grades">Grades</string>
+    <string name="new_grade">New grade</string>
+    <string name="title">Title</string>
+    <string name="grade">Grade</string>
+    <string name="comment">Comment</string>
+    <string name="add_new_student">Add new student</string>
 </resources>
