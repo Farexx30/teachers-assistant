@@ -6,21 +6,21 @@
     android:background="@drawable/schedule_element_rounded_background">
 
     <TextView
-        android:id="@+id/day_text_view"
+        android:id="@+id/grade_title_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Monday"
+        android:text="Some title"
         android:textSize="25sp"
         android:layout_margin="3dp"
         android:padding="5dp"
         android:textColor="@color/my_very_light_blue" />
 
     <TextView
-        android:id="@+id/subject_hours_text_view"
+        android:id="@+id/grade_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="13:45 - 15:15"
-        android:textSize="18sp"
+        android:text="4.5"
+        android:textSize="25sp"
         android:layout_marginTop="3dp"
         android:layout_marginStart="3dp"
         android:layout_marginBottom="5dp"
