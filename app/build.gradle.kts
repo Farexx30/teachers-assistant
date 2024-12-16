@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+
+    kotlin("plugin.serialization") version "2.0.21"
 }
 
 android {
@@ -43,6 +45,12 @@ android {
 }
 
 dependencies {
+    //For navigation component(views/fragments integration):
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.navigation.ui)
+    implementation(libs.androidx.navigation.dynamic.features.fragment)
+    implementation(libs.kotlinx.serialization.json)
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

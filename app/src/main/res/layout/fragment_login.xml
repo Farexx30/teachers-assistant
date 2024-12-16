@@ -11,6 +11,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <Button
+            android:id="@+id/go_back_to_initial_fragment_from_login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/back"
+            android:textColor="@color/my_very_light_blue"
+            android:textSize="15sp"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:padding="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/Widget.AppCompat.Button.Borderless"/>
+
         <TextView
             android:id="@+id/login_text_view"
             android:layout_width="wrap_content"

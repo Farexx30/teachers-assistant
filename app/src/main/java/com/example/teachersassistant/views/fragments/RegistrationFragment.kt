@@ -6,10 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.teachersassistant.R
+import com.example.teachersassistant.databinding.FragmentLoginBinding
+import com.example.teachersassistant.databinding.FragmentRegistrationBinding
 import com.example.teachersassistant.viewmodels.RegistrationViewModel
 
 class RegistrationFragment : Fragment() {
+    private lateinit var binding: FragmentRegistrationBinding
 
     companion object {
         fun newInstance() = RegistrationFragment()
@@ -27,6 +31,15 @@ class RegistrationFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_registration, container, false)
+        binding = FragmentRegistrationBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.goBackToInitialFragmentFromRegistrationButton.setOnClickListener {
+            findNavController().navigate(R.id.action_registrationFragment_to_initialFragment)
+        }
     }
 }

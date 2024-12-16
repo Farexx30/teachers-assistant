@@ -41,4 +41,5 @@
     <string name="grade">Grade</string>
     <string name="comment">Comment</string>
     <string name="add_new_student">Add new student</string>
+    <string name="back">Back</string>
 </resources>
