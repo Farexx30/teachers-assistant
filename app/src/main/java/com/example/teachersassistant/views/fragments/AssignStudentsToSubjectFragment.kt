@@ -6,10 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.teachersassistant.viewmodels.AssignStudentsToSubjectViewModel
 import com.example.teachersassistant.R
+import com.example.teachersassistant.databinding.FragmentAssignStudentsToSubjectBinding
+import com.example.teachersassistant.databinding.FragmentSubjectInfoBinding
 
 class AssignStudentsToSubjectFragment : Fragment() {
+    private lateinit var binding: FragmentAssignStudentsToSubjectBinding
 
     companion object {
         fun newInstance() = AssignStudentsToSubjectFragment()
@@ -27,6 +31,21 @@ class AssignStudentsToSubjectFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_assign_students_to_subject, container, false)
+        binding = FragmentAssignStudentsToSubjectBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.assignChosenStudentsToSubjectButton.setOnClickListener {
+            findNavController().navigate(R.id.action_assignStudentsToSubjectFragment_to_subjectStudentsFragment)
+        }
+
+        binding.cancelStudentAssignmentToSubjectButton.setOnClickListener {
+            findNavController().navigate(R.id.action_assignStudentsToSubjectFragment_to_subjectStudentsFragment)
+        }
+
+        //TODO: Students selection
     }
 }

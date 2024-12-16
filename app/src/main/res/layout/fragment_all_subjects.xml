@@ -11,11 +11,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <Button
+            android:id="@+id/go_to_main_menu_from_all_subjects_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/menu"
+            android:textColor="@color/my_very_light_blue"
+            android:textSize="15sp"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:padding="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/Widget.AppCompat.Button.Borderless"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:text="@string/your_subjects"
+            android:text="@string/my_subjects"
             android:textColor="@color/my_very_light_blue"
             android:textSize="36sp"
             app:layout_constraintBottom_toTopOf="@+id/subjects_recycler_view"

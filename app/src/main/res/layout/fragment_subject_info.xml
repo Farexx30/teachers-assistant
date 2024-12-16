@@ -11,6 +11,41 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!--    Visible and enabled only when subject already exist -->
+        <Button
+            android:id="@+id/go_to_schedule_from_subject_info_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/schedule"
+            android:textColor="@color/my_very_light_blue"
+            android:textSize="15sp"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:padding="10dp"
+            android:visibility="invisible"
+            android:enabled="false"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/Widget.AppCompat.Button.Borderless"/>
+
+        <!--    Visible and enabled only when subject already exist -->
+        <Button
+            android:id="@+id/go_to_all_subjects_from_subject_info_button"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:padding="10dp"
+            android:text="@string/my_subjects"
+            android:textColor="@color/my_very_light_blue"
+            android:textSize="15sp"
+            android:visibility="invisible"
+            android:enabled="false"
+            app:layout_constraintStart_toEndOf="@+id/go_to_schedule_from_subject_info_button"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <LinearLayout
             android:id="@+id/subject_name_linear_layout1"
             android:layout_width="match_parent"
@@ -141,7 +176,7 @@
             tools:ignore="ButtonStyle,InefficientWeight" />
 
 
-        <!--    Content, color and behavior of those buttons will change when subject already exist -->
+        <!--    Visible only when subject doesn't exist -->
         <LinearLayout
             android:id="@+id/dynamic_content_linear_layout"
             android:layout_width="match_parent"
@@ -154,7 +189,7 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <Button
-                android:id="@+id/cancel_subject_creation_or_delete_subject_button"
+                android:id="@+id/cancel_subject_creation_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -168,7 +203,7 @@
                 tools:ignore="ButtonStyle,InefficientWeight" />
 
             <Button
-                android:id="@+id/save_new_subject_or_go_to_menu_button"
+                android:id="@+id/save_new_subject_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -182,6 +217,25 @@
                 tools:ignore="ButtonStyle,InefficientWeight" />
 
         </LinearLayout>
+
+        <!--    Visible and enabled only when subject already exists -->
+        <Button
+            android:id="@+id/delete_subject_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:backgroundTint="@color/my_red"
+            android:paddingLeft="60dp"
+            android:paddingRight="60dp"
+            android:text="@string/delete"
+            android:textColor="@color/my_very_light_blue"
+            android:textSize="20sp"
+            android:visibility="invisible"
+            android:enabled="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="ButtonStyle,InefficientWeight" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

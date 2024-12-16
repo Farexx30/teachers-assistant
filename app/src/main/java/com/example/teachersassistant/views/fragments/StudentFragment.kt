@@ -6,10 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.teachersassistant.R
+import com.example.teachersassistant.databinding.FragmentStudentBinding
+import com.example.teachersassistant.databinding.FragmentSubjectInfoBinding
 import com.example.teachersassistant.viewmodels.StudentViewModel
 
 class StudentFragment : Fragment() {
+    private lateinit var binding: FragmentStudentBinding
 
     companion object {
         fun newInstance() = StudentFragment()
@@ -27,6 +31,20 @@ class StudentFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_student, container, false)
+        binding = FragmentStudentBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.saveStudentButton.setOnClickListener {
+            //TODO: Create/Update student
+            findNavController().navigate(R.id.action_studentFragment_to_allStudentsFragment)
+        }
+
+        binding.cancelStudentButton.setOnClickListener {
+            findNavController().navigate(R.id.action_studentFragment_to_allStudentsFragment)
+        }
     }
 }

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.teachersassistant.R
@@ -19,7 +20,6 @@ import org.jetbrains.annotations.Async.Schedule
 import java.time.LocalTime
 
 class ScheduleFragment : Fragment() {
-
     private lateinit var binding: FragmentScheduleBinding
 
     private var subjects: MutableList<Subject> = mutableListOf()
@@ -43,7 +43,7 @@ class ScheduleFragment : Fragment() {
     ): View {
         loadTestData()
 
-        scheduleAdapter = ScheduleRecyclerViewAdapter(subjects, ::onItemLongClick)
+        scheduleAdapter = ScheduleRecyclerViewAdapter(subjects, ::onItemClick)
 
         binding = FragmentScheduleBinding.inflate(inflater, container, false)
         binding.apply {
@@ -56,14 +56,22 @@ class ScheduleFragment : Fragment() {
         return binding.root
     }
 
-    private fun onItemLongClick(subject: Subject) {
-        Toast.makeText(requireActivity(), subject.name, Toast.LENGTH_LONG).show()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.goToMainMenuFromScheduleButton.setOnClickListener {
+            findNavController().navigate(R.id.action_scheduleFragment_to_mainMenuFragment)
+        }
+    }
+
+    private fun onItemClick(subject: Subject) {
+        Toast.makeText(requireActivity(), subject.name, Toast.LENGTH_SHORT).show()
     }
 
     private fun loadTestData() {
         subjects.add(Subject("Subject1", Day.MONDAY, LocalTime.of(13, 45), LocalTime.of(15, 15)))
         subjects.add(Subject("Subject2", Day.MONDAY, LocalTime.of(13, 42), LocalTime.of(15, 15)))
-        subjects.add(Subject("Subject3", Day.MONDAY, LocalTime.of(13, 10), LocalTime.of(15, 15)))
+        subjects.add(Subject("Subject3", Day.MONDAY, LocalTime.of(13, 10), LocalTime.of(15, 28)))
         subjects.add(Subject("Subject4", Day.MONDAY, LocalTime.of(13, 45), LocalTime.of(15, 15)))
     }
 }

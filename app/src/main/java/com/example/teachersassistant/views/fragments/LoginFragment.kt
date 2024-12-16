@@ -41,5 +41,9 @@ class LoginFragment : Fragment() {
         binding.goBackToInitialFragmentFromLoginButton.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_initialFragment)
         }
+
+        binding.loginButton.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_mainMenuFragment)
+        }
     }
 }

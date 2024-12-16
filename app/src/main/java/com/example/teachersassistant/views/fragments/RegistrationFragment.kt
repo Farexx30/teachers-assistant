@@ -41,5 +41,9 @@ class RegistrationFragment : Fragment() {
         binding.goBackToInitialFragmentFromRegistrationButton.setOnClickListener {
             findNavController().navigate(R.id.action_registrationFragment_to_initialFragment)
         }
+
+        binding.registerButton.setOnClickListener {
+            findNavController().navigate(R.id.action_registrationFragment_to_mainMenuFragment)
+        }
     }
 }

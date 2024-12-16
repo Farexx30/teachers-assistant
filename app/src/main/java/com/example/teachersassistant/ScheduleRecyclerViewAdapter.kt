@@ -9,7 +9,7 @@ import com.example.teachersassistant.models.entities.Subject
 
 class ScheduleRecyclerViewAdapter(
     private val items: MutableList<Subject>,
-    private val onItemLongClick: (Subject) -> Unit
+    private val onItemClick: (Subject) -> Unit
 ) : RecyclerView.Adapter<ScheduleRecyclerViewAdapter.ViewHolder>() {
 
     private lateinit var binding: RecyclerViewElementScheduleBinding
@@ -41,9 +41,8 @@ class ScheduleRecyclerViewAdapter(
                 subjectHoursTextView.text = "${item.startHour} - ${item.endHour}"
             }
 
-            itemView.setOnLongClickListener {
-                onItemLongClick(item)
-                true
+            itemView.setOnClickListener {
+                onItemClick(item)
             }
         }
     }

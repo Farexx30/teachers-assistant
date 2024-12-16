@@ -9,7 +9,6 @@
     <string name="confirm_password">Confirm password</string>
     <string name="register">Register</string>
     <string name="schedule">Schedule</string>
-    <string name="your_students">Your students</string>
     <string name="reset">Reset all data</string>
     <string name="logout">Log out</string>
     <string name="sunday_shortcut">Sun</string>
@@ -29,7 +28,6 @@
     <string name="save">Save</string>
     <string name="edit">Edit</string>
     <string name="go_to_schedule">Go to schedule</string>
-    <string name="your_subjects">Your subjects</string>
     <string name="assign_students">Assign students</string>
     <string name="assign">Assign</string>
     <string name="first_name">First name</string>
@@ -42,4 +40,7 @@
     <string name="comment">Comment</string>
     <string name="add_new_student">Add new student</string>
     <string name="back">Back</string>
+    <string name="delete">Delete</string>
+    <string name="my_students">My students</string>
+    <string name="my_subjects">My subjects</string>
 </resources>
