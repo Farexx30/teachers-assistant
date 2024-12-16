@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.fragments.InitialFragment"
+    android:background="@color/my_dark">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/visible_app_name"
+            android:textColor="@color/my_very_light_blue"
+            android:textSize="40sp"
+            app:layout_constraintBottom_toTopOf="@+id/buttons_linear_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/buttons_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="150dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <Button
+                android:id="@+id/login_button"
+                android:layout_width="273dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="@string/login"
+                android:textColor="@color/my_very_light_blue"
+                android:textSize="20sp"
+                android:backgroundTint="@color/my_blue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="ButtonStyle,InefficientWeight" />
+
+            <Button
+                android:id="@+id/registration_button"
+                android:layout_width="274dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="@string/registration"
+                android:textColor="@color/my_very_light_blue"
+                android:textSize="20sp"
+                android:backgroundTint="@color/my_blue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="ButtonStyle,InefficientWeight" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
