@@ -127,7 +127,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/grades_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
@@ -140,15 +140,16 @@
             app:layout_constraintTop_toBottomOf="@+id/linear_layout" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/student_grades_recycler_view"
+            android:id="@+id/subject_student_grades_recycler_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="5dp"
+            android:scrollbars="vertical"
             app:layoutManager="LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_percent="0.4"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            app:layout_constraintTop_toBottomOf="@+id/grades_text_view"
             app:layout_constraintWidth_percent="0.95" />
 
         <Button
@@ -163,7 +164,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/student_grades_recycler_view"
+            app:layout_constraintTop_toBottomOf="@+id/subject_student_grades_recycler_view"
             tools:ignore="ButtonStyle,InefficientWeight" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

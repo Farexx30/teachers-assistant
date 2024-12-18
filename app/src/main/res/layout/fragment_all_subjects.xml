@@ -32,12 +32,12 @@
             android:text="@string/my_subjects"
             android:textColor="@color/my_very_light_blue"
             android:textSize="36sp"
-            app:layout_constraintBottom_toTopOf="@+id/subjects_recycler_view"
+            app:layout_constraintBottom_toTopOf="@+id/all_subjects_recycler_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/subjects_recycler_view"
+            android:id="@+id/all_subjects_recycler_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:scrollbars="vertical"
