@@ -4,11 +4,11 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.teachersassistant.databinding.RecyclerViewElementScheduleBinding
+import com.example.teachersassistant.databinding.RecyclerViewElementSubjectDateBinding
 import com.example.teachersassistant.dtos.SubjectDto
 
-class ScheduleRecyclerViewAdapter(private val items: MutableList<SubjectDto>)
-    : RecyclerView.Adapter<ScheduleRecyclerViewAdapter.ViewHolder>() {
+class SubjectDatesRecyclerViewAdapter (private val items: MutableList<SubjectDto>)
+    : RecyclerView.Adapter<SubjectDatesRecyclerViewAdapter.ViewHolder>() {
 
     var onItemClickListener: ((SubjectDto) -> Unit)? = null
 
@@ -16,15 +16,15 @@ class ScheduleRecyclerViewAdapter(private val items: MutableList<SubjectDto>)
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ScheduleRecyclerViewAdapter.ViewHolder {
+    ): SubjectDatesRecyclerViewAdapter.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = RecyclerViewElementScheduleBinding.inflate(inflater, parent, false)
+        val binding = RecyclerViewElementSubjectDateBinding.inflate(inflater, parent, false)
 
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(
-        holder: ScheduleRecyclerViewAdapter.ViewHolder,
+        holder: SubjectDatesRecyclerViewAdapter.ViewHolder,
         position: Int
     ) {
         holder.bind(items[position])
@@ -32,11 +32,11 @@ class ScheduleRecyclerViewAdapter(private val items: MutableList<SubjectDto>)
 
     override fun getItemCount(): Int = items.size
 
-    inner class ViewHolder(private val binding: RecyclerViewElementScheduleBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: RecyclerViewElementSubjectDateBinding): RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun bind(item: SubjectDto) {
             binding.apply {
-                subjectNameTextView.text = item.name
+                dayTextView.text = item.day.asString
                 subjectHoursTextView.text = "${item.startHour} - ${item.endHour}"
             }
 

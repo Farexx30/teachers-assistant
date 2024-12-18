@@ -12,7 +12,7 @@
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/subject_students_recycler_view"
+            android:id="@+id/students_to_assign_recycler_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:scrollbars="vertical"
@@ -34,7 +34,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/subject_students_recycler_view">
+            app:layout_constraintTop_toBottomOf="@+id/students_to_assign_recycler_view">
 
             <Button
                 android:id="@+id/cancel_student_assignment_to_subject_button"
