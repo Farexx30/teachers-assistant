@@ -66,9 +66,9 @@ class ScheduleFragment : Fragment() {
     }
 
     private fun loadTestData() {
-        subjects.add(SubjectDto(1, "Subject1", Day.MONDAY, LocalTime.of(13, 45), LocalTime.of(15, 15)))
-        subjects.add(SubjectDto(2, "Subject2", Day.TUESDAY, LocalTime.of(13, 42), LocalTime.of(15, 15)))
-        subjects.add(SubjectDto(3,"Subject3", Day.MONDAY, LocalTime.of(13, 10), LocalTime.of(15, 28)))
-        subjects.add(SubjectDto(4,"Subject4", Day.FRIDAY, LocalTime.of(13, 45), LocalTime.of(15, 15)))
+        subjects.add(SubjectDto("1", "Subject1", Day.MONDAY, LocalTime.of(13, 45), LocalTime.of(15, 15)))
+        subjects.add(SubjectDto("2", "Subject2", Day.TUESDAY, LocalTime.of(13, 42), LocalTime.of(15, 15)))
+        subjects.add(SubjectDto("3","Subject3", Day.MONDAY, LocalTime.of(13, 10), LocalTime.of(15, 28)))
+        subjects.add(SubjectDto("4","Subject4", Day.FRIDAY, LocalTime.of(13, 45), LocalTime.of(15, 15)))
     }
 }

@@ -6,6 +6,8 @@ plugins {
 
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -33,11 +35,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
 
     buildFeatures {
@@ -53,10 +55,9 @@ dependencies {
     implementation(libs.androidx.navigation.dynamic.features.fragment)
     implementation(libs.kotlinx.serialization.json)
 
-
+    //Hilt:
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
-
 
     //Other dependencies:
     implementation(libs.androidx.core.ktx)
