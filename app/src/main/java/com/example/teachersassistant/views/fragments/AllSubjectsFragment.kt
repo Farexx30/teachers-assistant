@@ -68,11 +68,9 @@ class AllSubjectsFragment : Fragment() {
         }
 
         binding.addNewSubjectButton.setOnClickListener {
-            val action = AllSubjectsFragmentDirections.actionAllSubjectsFragmentToSubjectInfoFragment()
+            val action = AllSubjectsFragmentDirections.actionAllSubjectsFragmentToSubjectInfoFragment(null)
             findNavController().navigate(action)
         }
-
-        //TODO: Binding to EXISTING subject
     }
 
     private fun loadTestData() {

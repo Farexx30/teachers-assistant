@@ -7,12 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.teachersassistant.R
 import com.example.teachersassistant.databinding.FragmentStudentBinding
 import com.example.teachersassistant.databinding.FragmentSubjectInfoBinding
 import com.example.teachersassistant.viewmodels.StudentViewModel
 
 class StudentFragment : Fragment() {
+    private val args: StudentFragmentArgs by navArgs()
+
     private lateinit var binding: FragmentStudentBinding
 
     companion object {
@@ -32,6 +35,9 @@ class StudentFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentStudentBinding.inflate(inflater, container, false)
+
+        //TODO: Fetch clicked student based on args.studentId (if updating) or just do nothing (if new student).
+
         return binding.root
     }
 
@@ -39,12 +45,15 @@ class StudentFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.saveStudentButton.setOnClickListener {
-            //TODO: Create/Update student
-            findNavController().navigate(R.id.action_studentFragment_to_allStudentsFragment)
+            //TODO: Insert/Update student
+
+            val action = StudentFragmentDirections.actionStudentFragmentToAllStudentsFragment()
+            findNavController().navigate(action)
         }
 
         binding.cancelStudentButton.setOnClickListener {
-            findNavController().navigate(R.id.action_studentFragment_to_allStudentsFragment)
+            val action = StudentFragmentDirections.actionStudentFragmentToAllStudentsFragment()
+            findNavController().navigate(action)
         }
     }
 }

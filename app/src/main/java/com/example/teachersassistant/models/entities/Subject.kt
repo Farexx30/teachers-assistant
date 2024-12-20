@@ -5,7 +5,7 @@ import java.time.LocalTime
 
 
 data class Subject (
-    val id: String,
+    val id: Int,
     val name: String,
     val day: Day,
     val startHour: LocalTime,

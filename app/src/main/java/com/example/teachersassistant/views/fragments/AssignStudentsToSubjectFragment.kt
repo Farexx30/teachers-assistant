@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.teachersassistant.AssignStudentsToSubjectRecyclerViewAdapter
 import com.example.teachersassistant.viewmodels.AssignStudentsToSubjectViewModel
@@ -19,6 +20,8 @@ import com.example.teachersassistant.databinding.FragmentSubjectInfoBinding
 import com.example.teachersassistant.dtos.StudentDto
 
 class AssignStudentsToSubjectFragment : Fragment() {
+    private val args: AssignStudentsToSubjectFragmentArgs by navArgs()
+
     private var students: MutableList<StudentDto> = mutableListOf()
     private lateinit var assignStudentsToSubjectAdapter: AssignStudentsToSubjectRecyclerViewAdapter
     private lateinit var binding: FragmentAssignStudentsToSubjectBinding
@@ -62,11 +65,13 @@ class AssignStudentsToSubjectFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.assignChosenStudentsToSubjectButton.setOnClickListener {
-            findNavController().navigate(R.id.action_assignStudentsToSubjectFragment_to_subjectStudentsFragment)
+            val action = AssignStudentsToSubjectFragmentDirections.actionAssignStudentsToSubjectFragmentToSubjectStudentsFragment(args.subjectId)
+            findNavController().navigate(action)
         }
 
         binding.cancelStudentAssignmentToSubjectButton.setOnClickListener {
-            findNavController().navigate(R.id.action_assignStudentsToSubjectFragment_to_subjectStudentsFragment)
+            val action = AssignStudentsToSubjectFragmentDirections.actionAssignStudentsToSubjectFragmentToSubjectStudentsFragment(args.subjectId)
+            findNavController().navigate(action)
         }
 
         //TODO: Students selection

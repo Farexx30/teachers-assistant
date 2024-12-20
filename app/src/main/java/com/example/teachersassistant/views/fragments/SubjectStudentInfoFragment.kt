@@ -8,14 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.teachersassistant.R
 import com.example.teachersassistant.SubjectStudentGradesRecyclerViewAdapter
 import com.example.teachersassistant.databinding.FragmentSubjectStudentInfoBinding
 import com.example.teachersassistant.dtos.StudentDto
 import com.example.teachersassistant.viewmodels.SubjectStudentInfoViewModel
 
 class SubjectStudentInfoFragment : Fragment() {
+    private val args: SubjectStudentInfoFragmentArgs by navArgs()
+
     private var students: MutableList<StudentDto> = mutableListOf()
     private lateinit var subjectStudentGradesAdapter: SubjectStudentGradesRecyclerViewAdapter
     private lateinit var binding: FragmentSubjectStudentInfoBinding
@@ -42,6 +44,8 @@ class SubjectStudentInfoFragment : Fragment() {
 
         subjectStudentGradesAdapter.onItemClickListener = { student ->
             Toast.makeText(requireActivity(), "${student.firstName} ${student.lastName} GRADE!", Toast.LENGTH_SHORT).show()
+
+            //TODO: Navigate to gradeFragment with the grade id
         }
 
         binding = FragmentSubjectStudentInfoBinding.inflate(inflater, container, false)
@@ -52,6 +56,13 @@ class SubjectStudentInfoFragment : Fragment() {
             }
         }
 
+        //TODO: Fetch subject student from database based on args.subjectId and args.studentId
+        //JUST TEST:
+        val student = students[args.studentId!!.toInt() - 1]
+        binding.studentFirstNameTextView.text = student.firstName
+        binding.studentLastNameTextView.text = student.lastName
+        binding.studentAlbumNumberTextView.text = student.albumNumber
+
         return binding.root
     }
 
@@ -59,11 +70,16 @@ class SubjectStudentInfoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.goBackToSubjectStudentsFromSubjectStudentInfoButton.setOnClickListener {
-            findNavController().navigate(R.id.action_subjectStudentInfoFragment_to_subjectStudentsFragment)
+            val action = SubjectStudentInfoFragmentDirections.actionSubjectStudentInfoFragmentToSubjectStudentsFragment(args.subjectId)
+            findNavController().navigate(action)
         }
 
         binding.newGradeButton.setOnClickListener {
-            findNavController().navigate(R.id.action_subjectStudentInfoFragment_to_gradeFragment)
+            val action = SubjectStudentInfoFragmentDirections.actionSubjectStudentInfoFragmentToGradeFragment(
+                subjectId = args.subjectId,
+                studentId = args.studentId,
+                gradeId = null)
+            findNavController().navigate(action)
         }
 
         //TODO: Click on single grade

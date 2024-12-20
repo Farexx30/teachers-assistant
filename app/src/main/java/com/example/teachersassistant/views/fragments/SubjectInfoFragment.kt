@@ -19,7 +19,7 @@ import com.example.teachersassistant.viewmodels.SubjectInfoViewModel
 import java.time.LocalTime
 
 class SubjectInfoFragment : Fragment() {
-    val args: SubjectInfoFragmentArgs by navArgs()
+    private val args: SubjectInfoFragmentArgs by navArgs()
 
     private var subjects: MutableList<SubjectDto> = mutableListOf()
     private lateinit var subjectDatesAdapter: SubjectDatesRecyclerViewAdapter
@@ -57,6 +57,8 @@ class SubjectInfoFragment : Fragment() {
             }
         }
 
+        //TODO: Fetch data from database based on args.subjectId
+
         return binding.root
     }
 
@@ -64,19 +66,23 @@ class SubjectInfoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.goToScheduleFromSubjectInfoButton.setOnClickListener {
-            findNavController().navigate(R.id.action_subjectInfoFragment_to_allSubjectsFragment)
+            val action = SubjectInfoFragmentDirections.actionSubjectInfoFragmentToScheduleFragment()
+            findNavController().navigate(action)
         }
 
         binding.goToAllSubjectsFromSubjectInfoButton.setOnClickListener {
-            findNavController().navigate(R.id.action_subjectInfoFragment_to_scheduleFragment)
+            val action = SubjectInfoFragmentDirections.actionSubjectInfoFragmentToAllSubjectsFragment()
+            findNavController().navigate(action)
         }
 
         binding.goToAssignedStudentsButton.setOnClickListener {
-            findNavController().navigate(R.id.action_subjectInfoFragment_to_subjectStudentsFragment)
+            val action = SubjectInfoFragmentDirections.actionSubjectInfoFragmentToSubjectStudentsFragment(args.subjectId)
+            findNavController().navigate(action)
         }
 
         binding.cancelSubjectCreationButton.setOnClickListener {
-            findNavController().navigate(R.id.action_subjectInfoFragment_to_allSubjectsFragment)
+            val action = SubjectInfoFragmentDirections.actionSubjectInfoFragmentToAllSubjectsFragment()
+            findNavController().navigate(action)
         }
 
         binding.deleteSubjectButton.setOnClickListener {

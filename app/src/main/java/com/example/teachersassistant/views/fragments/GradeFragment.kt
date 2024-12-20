@@ -7,12 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.teachersassistant.R
 import com.example.teachersassistant.databinding.FragmentGradeBinding
 import com.example.teachersassistant.databinding.FragmentSubjectStudentInfoBinding
 import com.example.teachersassistant.viewmodels.GradeViewModel
 
 class GradeFragment : Fragment() {
+    private val args: GradeFragmentArgs by navArgs()
+
     private lateinit var binding: FragmentGradeBinding
 
     companion object {
@@ -32,6 +35,9 @@ class GradeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentGradeBinding.inflate(inflater, container, false)
+
+        //TODO: Fetch clicked grade from db based on args.gradeId
+
         return binding.root
     }
 
@@ -40,11 +46,18 @@ class GradeFragment : Fragment() {
 
         binding.saveGradeButton.setOnClickListener {
             //TODO: Insert/Update grade
-            findNavController().navigate(R.id.action_gradeFragment_to_subjectStudentInfoFragment)
+
+            val action = GradeFragmentDirections.actionGradeFragmentToSubjectStudentInfoFragment(
+                subjectId = args.subjectId,
+                studentId = args.studentId)
+            findNavController().navigate(action)
         }
 
         binding.cancelGradeCreationOrUpdateButton.setOnClickListener {
-            findNavController().navigate(R.id.action_gradeFragment_to_subjectStudentInfoFragment)
+            val action = GradeFragmentDirections.actionGradeFragmentToSubjectStudentInfoFragment(
+                subjectId = args.subjectId,
+                studentId = args.studentId)
+            findNavController().navigate(action)
         }
     }
 }

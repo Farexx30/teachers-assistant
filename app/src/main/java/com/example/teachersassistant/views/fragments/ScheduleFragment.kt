@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.teachersassistant.R
 import com.example.teachersassistant.ScheduleRecyclerViewAdapter
 import com.example.teachersassistant.common.Day
 import com.example.teachersassistant.databinding.FragmentScheduleBinding
@@ -44,6 +43,8 @@ class ScheduleFragment : Fragment() {
 
         scheduleAdapter.onItemClickListener = { subject ->
             Toast.makeText(requireActivity(), subject.name, Toast.LENGTH_SHORT).show()
+            val action = ScheduleFragmentDirections.actionScheduleFragmentToSubjectInfoFragment(subject.id)
+            findNavController().navigate(action)
         }
 
         binding = FragmentScheduleBinding.inflate(inflater, container, false)
@@ -61,7 +62,8 @@ class ScheduleFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.goToMainMenuFromScheduleButton.setOnClickListener {
-            findNavController().navigate(R.id.action_scheduleFragment_to_mainMenuFragment)
+            val action = ScheduleFragmentDirections.actionScheduleFragmentToMainMenuFragment()
+            findNavController().navigate(action)
         }
     }
 
