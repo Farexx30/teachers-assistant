@@ -3,6 +3,9 @@ plugins {
     alias(libs.plugins.kotlin.android)
 
     kotlin("plugin.serialization") version "2.0.21"
+
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -38,7 +41,6 @@ android {
     }
 
     buildFeatures {
-        //noinspection DataBindingWithoutKapt
         dataBinding = true
         viewBinding = true
     }
@@ -52,6 +54,11 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
 
 
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
+
+
+    //Other dependencies:
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -64,4 +71,9 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
 }
