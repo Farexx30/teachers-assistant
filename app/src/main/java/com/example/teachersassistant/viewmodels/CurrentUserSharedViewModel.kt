@@ -10,6 +10,6 @@ class CurrentUserSharedViewModel @Inject constructor(
     private val studentDao: StudentDao
 ): ViewModel() {
 
-    val id: Int? = studentDao.getStudentId()
-    val name: String = studentDao.getStudentName()
+    val id: Int? = 5
+    val name: String = ""
 }

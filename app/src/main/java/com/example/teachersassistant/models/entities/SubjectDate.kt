@@ -8,22 +8,21 @@ import com.example.teachersassistant.common.DatabaseTableName
 import com.example.teachersassistant.common.Day
 import java.time.LocalTime
 
-@Entity(tableName = DatabaseTableName.SUBJECTS, foreignKeys = [
-    ForeignKey(
-        entity = User::class,
-        parentColumns = ["id"],
-        childColumns = ["userId"],
-        onDelete = ForeignKey.CASCADE
-    ),
+@Entity(tableName = DatabaseTableName.SUBJECT_DATE, foreignKeys = [
+        ForeignKey(
+            entity = Subject::class,
+            parentColumns = ["id"],
+            childColumns = ["subjectId"],
+            onDelete = ForeignKey.CASCADE
+        )
 ],
     indices = [Index(value = ["id"], unique = true)]
 )
-data class Subject(
+data class SubjectDate(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    val name: String,
+    val subjectId: Int,
     val day: Day,
     val startHour: LocalTime,
-    val endHour: LocalTime,
-    val userId: Int
+    val endHour: LocalTime
 )
