@@ -4,7 +4,7 @@ import com.example.teachersassistant.common.Day
 import java.time.LocalTime
 
 data class SubjectDto(
-    val id: Int,
+    val id: String,
     val name: String,
     val day: Day,
     val startHour: LocalTime,

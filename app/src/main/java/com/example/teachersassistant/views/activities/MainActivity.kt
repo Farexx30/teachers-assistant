@@ -5,14 +5,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import com.example.teachersassistant.R
-import com.example.teachersassistant.views.fragments.InitialFragment
-import com.example.teachersassistant.views.fragments.LoginFragment
-import com.example.teachersassistant.views.fragments.RegistrationFragment
-import com.example.teachersassistant.views.fragments.ScheduleFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

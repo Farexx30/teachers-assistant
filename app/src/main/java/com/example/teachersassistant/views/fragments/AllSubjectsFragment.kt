@@ -44,6 +44,8 @@ class AllSubjectsFragment : Fragment() {
 
         allSubjectsAdapter.onItemClickListener = { subject ->
             Toast.makeText(requireActivity(), subject.name, Toast.LENGTH_SHORT).show()
+            val action = AllSubjectsFragmentDirections.actionAllSubjectsFragmentToSubjectInfoFragment(subject.id)
+            findNavController().navigate(action)
         }
 
         binding = FragmentAllSubjectsBinding.inflate(inflater, container, false)
@@ -61,20 +63,20 @@ class AllSubjectsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.goToMainMenuFromAllSubjectsButton.setOnClickListener {
-            findNavController().navigate(R.id.action_allSubjectsFragment_to_mainMenuFragment)
+            val action = AllSubjectsFragmentDirections.actionAllSubjectsFragmentToMainMenuFragment()
+            findNavController().navigate(action)
         }
 
         binding.addNewSubjectButton.setOnClickListener {
-            findNavController().navigate(R.id.action_allSubjectsFragment_to_subjectInfoFragment)
+            val action = AllSubjectsFragmentDirections.actionAllSubjectsFragmentToSubjectInfoFragment(null)
+            findNavController().navigate(action)
         }
-
-        //TODO: Binding to EXISTING subject
     }
 
     private fun loadTestData() {
-        subjects.add(SubjectDto(1, "Subject1", Day.MONDAY, LocalTime.of(13, 45), LocalTime.of(15, 15)))
-        subjects.add(SubjectDto(2, "Subject2", Day.TUESDAY, LocalTime.of(13, 42), LocalTime.of(15, 15)))
-        subjects.add(SubjectDto(3,"Subject3", Day.MONDAY, LocalTime.of(13, 10), LocalTime.of(15, 28)))
-        subjects.add(SubjectDto(4,"Subject4", Day.FRIDAY, LocalTime.of(13, 45), LocalTime.of(15, 15)))
+        subjects.add(SubjectDto("1", "Subject1", Day.MONDAY, LocalTime.of(13, 45), LocalTime.of(15, 15)))
+        subjects.add(SubjectDto("2", "Subject2", Day.TUESDAY, LocalTime.of(13, 42), LocalTime.of(15, 15)))
+        subjects.add(SubjectDto("3","Subject3", Day.MONDAY, LocalTime.of(13, 10), LocalTime.of(15, 28)))
+        subjects.add(SubjectDto("4","Subject4", Day.FRIDAY, LocalTime.of(13, 45), LocalTime.of(15, 15)))
     }
 }

@@ -57,6 +57,7 @@
                     android:textSize="18sp" />
 
                 <TextView
+                    android:id="@+id/student_first_name_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -86,6 +87,7 @@
                     android:textSize="18sp" />
 
                 <TextView
+                    android:id="@+id/student_last_name_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -115,6 +117,7 @@
                     android:textSize="18sp" />
 
                 <TextView
+                    android:id="@+id/student_album_number_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
