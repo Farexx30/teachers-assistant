@@ -6,12 +6,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.teachersassistant.R
 import com.example.teachersassistant.databinding.FragmentLoginBinding
 import com.example.teachersassistant.databinding.FragmentMainMenuBinding
+import com.example.teachersassistant.viewmodels.CurrentUserSharedViewModel
 import com.example.teachersassistant.viewmodels.MainMenuViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint //Not necessary actually but looks like a "good practice" to me
 class MainMenuFragment : Fragment() {
     private lateinit var binding: FragmentMainMenuBinding
 
@@ -20,6 +24,7 @@ class MainMenuFragment : Fragment() {
     }
 
     private val viewModel: MainMenuViewModel by viewModels()
+    private val sharedViewModel: CurrentUserSharedViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,5 +62,7 @@ class MainMenuFragment : Fragment() {
         binding.logoutButton.setOnClickListener {
             findNavController().navigate(R.id.action_mainMenuFragment_to_initialFragment)
         }
+
+        binding.usernameTextView.text = "Id: ${sharedViewModel.id}, Name: ${sharedViewModel.name}"
     }
 }
