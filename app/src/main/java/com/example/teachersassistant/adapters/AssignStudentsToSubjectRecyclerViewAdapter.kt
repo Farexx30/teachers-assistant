@@ -1,14 +1,14 @@
-package com.example.teachersassistant
+package com.example.teachersassistant.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.teachersassistant.databinding.RecyclerViewElementGradeBinding
-import com.example.teachersassistant.dtos.StudentDto
+import com.example.teachersassistant.databinding.RecyclerViewElementStudentBinding
+import com.example.teachersassistant.dtos.student.StudentDto
 
-class SubjectStudentGradesRecyclerViewAdapter (private val items: MutableList<StudentDto>)
-    : RecyclerView.Adapter<SubjectStudentGradesRecyclerViewAdapter.ViewHolder>() {
+class AssignStudentsToSubjectRecyclerViewAdapter (private val items: List<StudentDto>)
+    : RecyclerView.Adapter<AssignStudentsToSubjectRecyclerViewAdapter.ViewHolder>() {
 
     var onItemClickListener: ((StudentDto) -> Unit)? = null
 
@@ -16,15 +16,15 @@ class SubjectStudentGradesRecyclerViewAdapter (private val items: MutableList<St
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): SubjectStudentGradesRecyclerViewAdapter.ViewHolder {
+    ): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = RecyclerViewElementGradeBinding.inflate(inflater, parent, false)
+        val binding = RecyclerViewElementStudentBinding.inflate(inflater, parent, false)
 
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(
-        holder: SubjectStudentGradesRecyclerViewAdapter.ViewHolder,
+        holder: ViewHolder,
         position: Int
     ) {
         holder.bind(items[position])
@@ -32,17 +32,18 @@ class SubjectStudentGradesRecyclerViewAdapter (private val items: MutableList<St
 
     override fun getItemCount(): Int = items.size
 
-    inner class ViewHolder(private val binding: RecyclerViewElementGradeBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: RecyclerViewElementStudentBinding): RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun bind(item: StudentDto) {
             binding.apply {
-                gradeTitleTextView.text = "Test title"
-                gradeTextView.text = "4.5"
+                studentFullNameTextView.text = "${item.firstName} ${item.lastName}"
             }
 
             itemView.setOnClickListener {
                 onItemClickListener?.invoke(item)
             }
+
+            //TODO: Multi choice of students
         }
     }
 }

@@ -1,22 +1,22 @@
-package com.example.teachersassistant
+package com.example.teachersassistant.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.teachersassistant.databinding.RecyclerViewElementScheduleBinding
-import com.example.teachersassistant.dtos.SubjectDto
+import com.example.teachersassistant.dtos.subject.SubjectAndHoursDto
 
-class ScheduleRecyclerViewAdapter(private val items: MutableList<SubjectDto>)
+class ScheduleRecyclerViewAdapter(private val items: List<SubjectAndHoursDto>)
     : RecyclerView.Adapter<ScheduleRecyclerViewAdapter.ViewHolder>() {
 
-    var onItemClickListener: ((SubjectDto) -> Unit)? = null
+    var onItemClickListener: ((SubjectAndHoursDto) -> Unit)? = null
 
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ScheduleRecyclerViewAdapter.ViewHolder {
+    ): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = RecyclerViewElementScheduleBinding.inflate(inflater, parent, false)
 
@@ -24,7 +24,7 @@ class ScheduleRecyclerViewAdapter(private val items: MutableList<SubjectDto>)
     }
 
     override fun onBindViewHolder(
-        holder: ScheduleRecyclerViewAdapter.ViewHolder,
+        holder: ViewHolder,
         position: Int
     ) {
         holder.bind(items[position])
@@ -34,10 +34,10 @@ class ScheduleRecyclerViewAdapter(private val items: MutableList<SubjectDto>)
 
     inner class ViewHolder(private val binding: RecyclerViewElementScheduleBinding): RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
-        fun bind(item: SubjectDto) {
+        fun bind(item: SubjectAndHoursDto) {
             binding.apply {
-                subjectNameTextView.text = item.name
-                subjectHoursTextView.text = "${item.startHour} - ${item.endHour}"
+                subjectNameTextView.text = item.subjectName
+                subjectHoursTextView.text = "${item.subjectStartHour} - ${item.subjectEndHour}"
             }
 
             itemView.setOnClickListener {

@@ -11,8 +11,19 @@
         android:layout_height="wrap_content"
         android:text="Lionel Messi"
         android:textSize="25sp"
-        android:layout_margin="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:padding="5dp"
+        android:textColor="@color/my_very_light_blue" />
+
+    <TextView
+        android:id="@+id/student_album_number_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Album number: 334265"
+        android:textSize="18sp"
+        android:padding="5dp"
+        android:layout_marginStart="10dp"
         android:textColor="@color/my_very_light_blue" />
 
     <View

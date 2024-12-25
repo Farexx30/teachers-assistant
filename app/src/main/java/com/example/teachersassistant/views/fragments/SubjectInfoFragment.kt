@@ -10,18 +10,16 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.teachersassistant.R
-import com.example.teachersassistant.SubjectDatesRecyclerViewAdapter
+import com.example.teachersassistant.adapters.SubjectDatesRecyclerViewAdapter
 import com.example.teachersassistant.common.Day
 import com.example.teachersassistant.databinding.FragmentSubjectInfoBinding
-import com.example.teachersassistant.dtos.SubjectDto
+import com.example.teachersassistant.dtos.subject.SubjectWithDatesDto
 import com.example.teachersassistant.viewmodels.SubjectInfoViewModel
 import java.time.LocalTime
 
 class SubjectInfoFragment : Fragment() {
     private val args: SubjectInfoFragmentArgs by navArgs()
 
-    private var subjects: MutableList<SubjectDto> = mutableListOf()
     private lateinit var subjectDatesAdapter: SubjectDatesRecyclerViewAdapter
     private lateinit var binding: FragmentSubjectInfoBinding
 
@@ -41,12 +39,10 @@ class SubjectInfoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        loadTestData()
-
-        subjectDatesAdapter = SubjectDatesRecyclerViewAdapter(subjects)
+        subjectDatesAdapter = SubjectDatesRecyclerViewAdapter(emptyList())
 
         subjectDatesAdapter.onItemClickListener = { subject ->
-            Toast.makeText(requireActivity(), "${subject.name} ${subject.day.asString} ${subject.startHour} - ${subject.endHour}", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(requireActivity(), "${subject.name} ${subject.day.asString} ${subject.startHour} - ${subject.endHour}", Toast.LENGTH_SHORT).show()
         }
 
         binding = FragmentSubjectInfoBinding.inflate(inflater, container, false)
@@ -88,12 +84,5 @@ class SubjectInfoFragment : Fragment() {
         binding.deleteSubjectButton.setOnClickListener {
             findNavController().popBackStack()
         }
-    }
-
-    private fun loadTestData() {
-        subjects.add(SubjectDto("1", "Subject1", Day.MONDAY, LocalTime.of(13, 45), LocalTime.of(15, 15)))
-        subjects.add(SubjectDto("2", "Subject2", Day.TUESDAY, LocalTime.of(13, 42), LocalTime.of(15, 15)))
-        subjects.add(SubjectDto("3","Subject3", Day.MONDAY, LocalTime.of(13, 10), LocalTime.of(15, 28)))
-        subjects.add(SubjectDto("4","Subject4", Day.FRIDAY, LocalTime.of(13, 45), LocalTime.of(15, 15)))
     }
 }

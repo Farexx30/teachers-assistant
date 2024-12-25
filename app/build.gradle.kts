@@ -8,6 +8,8 @@ plugins {
     id("com.google.dagger.hilt.android")
 
     id("androidx.navigation.safeargs.kotlin")
+
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -58,6 +60,14 @@ dependencies {
     //Hilt:
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
+
+    //Room:
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
+    //BCrypt:
+    implementation(libs.org.mindrot.jbcrypt)
 
     //Other dependencies:
     implementation(libs.androidx.core.ktx)

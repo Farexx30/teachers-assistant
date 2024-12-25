@@ -1,7 +1,10 @@
 package com.example.teachersassistant.viewmodels
 
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class MainMenuViewModel : ViewModel() {
+@HiltViewModel
+class MainMenuViewModel @Inject constructor() : ViewModel() {
     // TODO: Implement the ViewModel
 }

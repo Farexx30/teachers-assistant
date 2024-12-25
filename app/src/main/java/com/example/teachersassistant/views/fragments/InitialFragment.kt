@@ -10,7 +10,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.teachersassistant.R
 import com.example.teachersassistant.databinding.FragmentInitialBinding
 import com.example.teachersassistant.viewmodels.InitialViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class InitialFragment : Fragment() {
     private lateinit var binding: FragmentInitialBinding
 

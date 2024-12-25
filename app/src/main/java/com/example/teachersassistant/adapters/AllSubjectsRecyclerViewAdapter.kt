@@ -1,22 +1,22 @@
-package com.example.teachersassistant
+package com.example.teachersassistant.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.teachersassistant.databinding.RecyclerViewElementSubjectBinding
-import com.example.teachersassistant.dtos.SubjectDto
+import com.example.teachersassistant.dtos.subject.SubjectBasicInfoDto
 
-class AllSubjectsRecyclerViewAdapter (private val items: MutableList<SubjectDto>)
+class AllSubjectsRecyclerViewAdapter (private var items: List<SubjectBasicInfoDto>)
     : RecyclerView.Adapter<AllSubjectsRecyclerViewAdapter.ViewHolder>() {
 
-    var onItemClickListener: ((SubjectDto) -> Unit)? = null
+    var onItemClickListener: ((SubjectBasicInfoDto) -> Unit)? = null
 
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): AllSubjectsRecyclerViewAdapter.ViewHolder {
+    ): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = RecyclerViewElementSubjectBinding.inflate(inflater, parent, false)
 
@@ -24,7 +24,7 @@ class AllSubjectsRecyclerViewAdapter (private val items: MutableList<SubjectDto>
     }
 
     override fun onBindViewHolder(
-        holder: AllSubjectsRecyclerViewAdapter.ViewHolder,
+        holder: ViewHolder,
         position: Int
     ) {
         holder.bind(items[position])
@@ -34,7 +34,7 @@ class AllSubjectsRecyclerViewAdapter (private val items: MutableList<SubjectDto>
 
     inner class ViewHolder(private val binding: RecyclerViewElementSubjectBinding): RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
-        fun bind(item: SubjectDto) {
+        fun bind(item: SubjectBasicInfoDto) {
             binding.apply {
                 subjectNameTextView.text = item.name
             }
@@ -43,5 +43,10 @@ class AllSubjectsRecyclerViewAdapter (private val items: MutableList<SubjectDto>
                 onItemClickListener?.invoke(item)
             }
         }
+    }
+
+    fun updateData(updatedItems :List<SubjectBasicInfoDto>) {
+        items = updatedItems
+        notifyDataSetChanged()
     }
 }

@@ -1,13 +1,13 @@
-package com.example.teachersassistant
+package com.example.teachersassistant.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.teachersassistant.databinding.RecyclerViewElementStudentBinding
-import com.example.teachersassistant.dtos.StudentDto
+import com.example.teachersassistant.dtos.student.StudentDto
 
-class StudentsRecyclerViewAdapter (private val items: MutableList<StudentDto>)
+class StudentsRecyclerViewAdapter (private val items: List<StudentDto>)
     : RecyclerView.Adapter<StudentsRecyclerViewAdapter.ViewHolder>() {
 
     var onItemClickListener: ((StudentDto) -> Unit)? = null
@@ -16,7 +16,7 @@ class StudentsRecyclerViewAdapter (private val items: MutableList<StudentDto>)
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): StudentsRecyclerViewAdapter.ViewHolder {
+    ): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = RecyclerViewElementStudentBinding.inflate(inflater, parent, false)
 
@@ -24,7 +24,7 @@ class StudentsRecyclerViewAdapter (private val items: MutableList<StudentDto>)
     }
 
     override fun onBindViewHolder(
-        holder: StudentsRecyclerViewAdapter.ViewHolder,
+        holder: ViewHolder,
         position: Int
     ) {
         holder.bind(items[position])
@@ -37,6 +37,7 @@ class StudentsRecyclerViewAdapter (private val items: MutableList<StudentDto>)
         fun bind(item: StudentDto) {
             binding.apply {
                 studentFullNameTextView.text = "${item.firstName} ${item.lastName}"
+                studentAlbumNumberTextView.text = "Album number: ${item.albumNumber}"
             }
 
             itemView.setOnClickListener {

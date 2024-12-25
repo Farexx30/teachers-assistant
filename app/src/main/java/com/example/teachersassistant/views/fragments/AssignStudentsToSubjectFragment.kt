@@ -10,19 +10,13 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.teachersassistant.AssignStudentsToSubjectRecyclerViewAdapter
+import com.example.teachersassistant.adapters.AssignStudentsToSubjectRecyclerViewAdapter
 import com.example.teachersassistant.viewmodels.AssignStudentsToSubjectViewModel
-import com.example.teachersassistant.R
-import com.example.teachersassistant.StudentsRecyclerViewAdapter
-import com.example.teachersassistant.databinding.FragmentAllStudentsBinding
 import com.example.teachersassistant.databinding.FragmentAssignStudentsToSubjectBinding
-import com.example.teachersassistant.databinding.FragmentSubjectInfoBinding
-import com.example.teachersassistant.dtos.StudentDto
+import com.example.teachersassistant.dtos.student.StudentDto
 
 class AssignStudentsToSubjectFragment : Fragment() {
     private val args: AssignStudentsToSubjectFragmentArgs by navArgs()
-
-    private var students: MutableList<StudentDto> = mutableListOf()
     private lateinit var assignStudentsToSubjectAdapter: AssignStudentsToSubjectRecyclerViewAdapter
     private lateinit var binding: FragmentAssignStudentsToSubjectBinding
 
@@ -42,9 +36,7 @@ class AssignStudentsToSubjectFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        loadTestData()
-
-        assignStudentsToSubjectAdapter = AssignStudentsToSubjectRecyclerViewAdapter(students)
+        assignStudentsToSubjectAdapter = AssignStudentsToSubjectRecyclerViewAdapter(emptyList())
 
         assignStudentsToSubjectAdapter.onItemClickListener = { student ->
             Toast.makeText(requireActivity(), "${student.firstName} ${student.lastName}", Toast.LENGTH_SHORT).show()
@@ -76,23 +68,4 @@ class AssignStudentsToSubjectFragment : Fragment() {
 
         //TODO: Students selection
     }
-    private fun loadTestData() {
-        students.add(StudentDto("1", "Leoś","Messi", "334528"))
-        students.add(StudentDto("2", "Leoś","Messi", "334598"))
-        students.add(StudentDto("3", "ktos","Kktosssss", "307083"))
-        students.add(StudentDto("4", "UwU","Enjoyer", "333987"))
-        students.add(StudentDto("5", "Roni","Messi", "334528"))
-        students.add(StudentDto("6", "LeośXDD","Messi", "334528"))
-        students.add(StudentDto("7", "Leoś","MessiHAHAHA", "334528"))
-        students.add(StudentDto("8", "Leoś","MessHEHEHEi", "334528"))
-        students.add(StudentDto("9", "CRISTIANO","RONALDO", "334528"))
-        students.add(StudentDto("10", "CRISTIANO","RONALDO", "334528"))
-        students.add(StudentDto("11", "CRISTIANO","RONALDO", "334528"))
-        students.add(StudentDto("12", "CRISTIANO","RONALDO", "334528"))
-        students.add(StudentDto("13", "CRISTIANO","RONALDO", "334528"))
-        students.add(StudentDto("14", "some","one", "334528"))
-        students.add(StudentDto("15", "some","two", "334528"))
-        students.add(StudentDto("16", "some","three", "334528"))
-    }
-
 }

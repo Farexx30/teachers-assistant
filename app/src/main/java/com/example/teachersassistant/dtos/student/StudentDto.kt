@@ -1,7 +1,7 @@
-package com.example.teachersassistant.dtos
+package com.example.teachersassistant.dtos.student
 
 data class StudentDto (
-    val id: String,
+    val id: Long,
     val firstName: String,
     val lastName: String,
     val albumNumber: String
