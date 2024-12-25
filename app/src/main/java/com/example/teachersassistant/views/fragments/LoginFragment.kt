@@ -6,12 +6,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.teachersassistant.R
+import com.example.teachersassistant.common.RegistrationOrLoginResult
 import com.example.teachersassistant.databinding.FragmentInitialBinding
 import com.example.teachersassistant.databinding.FragmentLoginBinding
 import com.example.teachersassistant.viewmodels.LoginViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
 
@@ -32,6 +40,36 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
+        binding.loginViewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.loginState.collect { result ->
+                    when (result) {
+                        RegistrationOrLoginResult.NONE -> {}
+
+                        RegistrationOrLoginResult.FAILED -> Toast.makeText(
+                            requireActivity(),
+                            "Not good! :(",
+                            Toast.LENGTH_LONG
+                        ).show()
+
+                        RegistrationOrLoginResult.SUCCESS -> {
+                            Toast.makeText(
+                                requireActivity(),
+                                "Good! :)",
+                                Toast.LENGTH_LONG
+                            ).show()
+                            //Navigate:
+                            val action = LoginFragmentDirections.actionLoginFragmentToMainMenuFragment()
+                            findNavController().navigate(action)
+                        }
+                    }
+                }
+            }
+        }
+
         return binding.root
     }
 
@@ -39,11 +77,8 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.goBackToInitialFragmentFromLoginButton.setOnClickListener {
-            findNavController().navigate(R.id.action_loginFragment_to_initialFragment)
-        }
-
-        binding.loginButton.setOnClickListener {
-            findNavController().navigate(R.id.action_loginFragment_to_mainMenuFragment)
+            val action = LoginFragmentDirections.actionLoginFragmentToInitialFragment()
+            findNavController().navigate(action)
         }
     }
 }

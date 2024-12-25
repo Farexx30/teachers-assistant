@@ -66,6 +66,8 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
 
+    //BCrypt:
+    implementation(libs.org.mindrot.jbcrypt)
 
     //Other dependencies:
     implementation(libs.androidx.core.ktx)

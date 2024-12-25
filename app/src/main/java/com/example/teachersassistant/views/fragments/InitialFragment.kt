@@ -6,15 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.teachersassistant.R
-import com.example.teachersassistant.TeachersAssistantDatabase
 import com.example.teachersassistant.databinding.FragmentInitialBinding
 import com.example.teachersassistant.viewmodels.InitialViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class InitialFragment : Fragment() {
@@ -50,7 +46,5 @@ class InitialFragment : Fragment() {
         binding.registrationButton.setOnClickListener {
             findNavController().navigate(R.id.action_initialFragment_to_registrationFragment)
         }
-
-        viewModel.test()
     }
 }
