@@ -45,8 +45,8 @@ class AllSubjectsRecyclerViewAdapter (private var items: List<SubjectBasicInfoDt
         }
     }
 
-    fun updateData(updatedItems :List<SubjectBasicInfoDto>) {
-        items = updatedItems
+    fun updateData(newItems: List<SubjectBasicInfoDto>) {
+        items = newItems
         notifyDataSetChanged()
     }
 }

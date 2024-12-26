@@ -33,35 +33,31 @@ class StudentRepository @Inject constructor(
     }
 
     override suspend fun getAllCurrentUserStudents(teacherId: Long): List<StudentDto> {
-        val students = studentDao.getAllCurrentUserStudentsById(teacherId)
-        val studentsDto = students.mapToStudentsDtos()
-        return studentsDto
+        val studentsDtos = studentDao.getAllCurrentUserStudentsById(teacherId)
+        return studentsDtos
     }
 
     override suspend fun getStudentDataById(studentId: Long): StudentDto {
-        val student = studentDao.getStudentDataById(studentId)
-        val studentDto = student.mapToStudentDto()
+        val studentDto = studentDao.getStudentDataById(studentId)
         return studentDto
     }
 
     override suspend fun getSubjectStudentsBySubjectId(subjectId: Long): List<StudentDto> {
-        val students = studentDao.getSubjectStudentsBySubjectId(subjectId)
-        val studentsDtos = students.mapToStudentsDtos()
+        val studentsDtos = studentDao.getSubjectStudentsBySubjectId(subjectId)
         return studentsDtos
     }
 
     override suspend fun getNotSubjectStudentsBySubjectId(subjectId: Long): List<StudentDto> {
-        val students = studentDao.getNotSubjectStudentsBySubjectId(subjectId)
-        val studentsDtos = students.mapToStudentsDtos()
+        val studentsDtos = studentDao.getNotSubjectStudentsBySubjectId(subjectId)
         return studentsDtos
     }
 
     override suspend fun getSubjectStudentsWithGradesById(subjectId:Long, studentId: Long): StudentWithGradesDto {
         //Here we don't need to map to dto because we already returns dto from dao (cuz we are returning data from multiple tables):
-        val student = studentDao.getStudentDataById(studentId)
-        val grades = studentDao.getSubjectStudentGrades(subjectId, studentId)
+        val studentsDtos = studentDao.getStudentDataById(studentId)
+        val gradesDtos = studentDao.getSubjectStudentGrades(subjectId, studentId)
 
-        val studentWithGradesDto = StudentWithGradesDto(student.mapToStudentDto(), grades)
+        val studentWithGradesDto = StudentWithGradesDto(studentsDtos, gradesDtos)
         return studentWithGradesDto
     }
 

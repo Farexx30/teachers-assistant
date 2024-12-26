@@ -7,11 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.teachersassistant.databinding.RecyclerViewElementStudentBinding
 import com.example.teachersassistant.dtos.student.StudentDto
 
-class StudentsRecyclerViewAdapter (private val items: List<StudentDto>)
+class StudentsRecyclerViewAdapter (private var items: List<StudentDto>)
     : RecyclerView.Adapter<StudentsRecyclerViewAdapter.ViewHolder>() {
 
     var onItemClickListener: ((StudentDto) -> Unit)? = null
-
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -44,5 +43,10 @@ class StudentsRecyclerViewAdapter (private val items: List<StudentDto>)
                 onItemClickListener?.invoke(item)
             }
         }
+    }
+
+    fun updateData(newItems: List<StudentDto>) {
+        items = newItems
+        notifyDataSetChanged()
     }
 }

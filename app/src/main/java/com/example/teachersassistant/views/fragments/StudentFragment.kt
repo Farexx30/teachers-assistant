@@ -12,7 +12,9 @@ import com.example.teachersassistant.R
 import com.example.teachersassistant.databinding.FragmentStudentBinding
 import com.example.teachersassistant.databinding.FragmentSubjectInfoBinding
 import com.example.teachersassistant.viewmodels.StudentViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class StudentFragment : Fragment() {
     private val args: StudentFragmentArgs by navArgs()
 
@@ -24,19 +26,13 @@ class StudentFragment : Fragment() {
 
     private val viewModel: StudentViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentStudentBinding.inflate(inflater, container, false)
-
-        //TODO: Fetch clicked student based on args.studentId (if updating) or just do nothing (if new student).
+        binding.studentViewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         return binding.root
     }
@@ -44,8 +40,12 @@ class StudentFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        if (args.studentId != 0L) {
+            viewModel.getStudentData(args.studentId)
+        }
+
         binding.saveStudentButton.setOnClickListener {
-            //TODO: Insert/Update student
+            viewModel.saveStudent(args.studentId)
 
             val action = StudentFragmentDirections.actionStudentFragmentToAllStudentsFragment()
             findNavController().navigate(action)

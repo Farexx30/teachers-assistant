@@ -9,7 +9,7 @@ import com.example.teachersassistant.dtos.subject.SubjectWithDatesDto
 import com.example.teachersassistant.models.entities.student.SubjectStudent
 
 interface ISubjectRepository {
-    abstract suspend fun insertSubject(newSubjectDto: SubjectBasicInfoDto, teacherId: Long)
+    abstract suspend fun insertSubject(newSubjectDto: SubjectBasicInfoDto, teacherId: Long): Long
     abstract suspend fun insertSubjectDate(newSubjectDateDto: SubjectDateDto, subjectId: Long)
     abstract suspend fun assignStudentToSubject(newSubjectStudentDto: SubjectStudentDto)
     abstract suspend fun updateSubject(updatedSubjectDto: SubjectBasicInfoDto, teacherId: Long)
@@ -17,6 +17,7 @@ interface ISubjectRepository {
     abstract suspend fun deleteSubject(subjectToDeleteDto: SubjectBasicInfoDto)
     abstract suspend fun deleteSubject(subjectDateToDeleteDto: SubjectDateDto)
     abstract suspend fun removeStudentFromSubject(subjectStudentToRemoveDto: SubjectStudentDto)
+    abstract suspend fun getSubjectBasicInfoById (subjectId: Long): SubjectBasicInfoDto
     abstract suspend fun getAllCurrentUserSubjects(currentUserId: Long): List<SubjectBasicInfoDto>
     abstract suspend fun getSubjectsWithHoursByDay(day: Day): SubjectAndHoursDto
     abstract suspend fun getSubjectWithDates(subjectId: Long): SubjectWithDatesDto

@@ -44,7 +44,7 @@ class SubjectStudentsFragment : Fragment() {
 
             val action = SubjectStudentsFragmentDirections.actionSubjectStudentsFragmentToSubjectStudentInfoFragment(
                 subjectId = args.subjectId,
-                studentId = student.id.toString())
+                studentId = student.id)
             findNavController().navigate(action)
         }
 

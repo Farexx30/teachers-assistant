@@ -19,7 +19,7 @@ import com.example.teachersassistant.models.entities.subject.SubjectDate
 interface SubjectDao {
     //!!! INSERTS !!!//
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertSubject(newSubject: Subject)
+    suspend fun insertSubject(newSubject: Subject): Long
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertSubjectDate(newSubjectDate: SubjectDate)
@@ -57,7 +57,7 @@ interface SubjectDao {
        FROM ${DatabaseTableName.SUBJECTS}
        WHERE teacherId = :currentUserId
     """)
-    suspend fun getAllCurrentUserSubjectsByUserId(currentUserId: Long): List<Subject>
+    suspend fun getAllCurrentUserSubjectsByUserId(currentUserId: Long): List<SubjectBasicInfoDto>
 
     @Query("""
        SELECT s.id subjectId, s.name subjectName, sd.startHour subjectStartHour, sd.endHour subjectEndHour

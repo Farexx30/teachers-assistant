@@ -7,12 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.teachersassistant.adapters.AllSubjectsRecyclerViewAdapter
 import com.example.teachersassistant.viewmodels.AllSubjectsViewModel
 import com.example.teachersassistant.databinding.FragmentAllSubjectsBinding
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class AllSubjectsFragment : Fragment() {
     private lateinit var allSubjectsAdapter: AllSubjectsRecyclerViewAdapter
     private lateinit var binding: FragmentAllSubjectsBinding
@@ -23,27 +27,21 @@ class AllSubjectsFragment : Fragment() {
 
     private val viewModel: AllSubjectsViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         allSubjectsAdapter = AllSubjectsRecyclerViewAdapter(emptyList())
 
         allSubjectsAdapter.onItemClickListener = { subject ->
-            Toast.makeText(requireActivity(), subject.name, Toast.LENGTH_SHORT).show()
-            val action = AllSubjectsFragmentDirections.actionAllSubjectsFragmentToSubjectInfoFragment(subject.id.toString())
+            val action = AllSubjectsFragmentDirections.actionAllSubjectsFragmentToSubjectInfoFragment(subject.id)
             findNavController().navigate(action)
         }
 
         binding = FragmentAllSubjectsBinding.inflate(inflater, container, false)
         binding.apply {
             allSubjectsRecyclerView.apply {
-                layoutManager = LinearLayoutManager(requireActivity())
+                layoutManager = LinearLayoutManager(requireContext())
                 adapter = allSubjectsAdapter
             }
         }
@@ -54,13 +52,19 @@ class AllSubjectsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        lifecycleScope.launch {
+            viewModel.subjects.collect { subjects ->
+                allSubjectsAdapter.updateData(subjects)
+            }
+        }
+
         binding.goToMainMenuFromAllSubjectsButton.setOnClickListener {
             val action = AllSubjectsFragmentDirections.actionAllSubjectsFragmentToMainMenuFragment()
             findNavController().navigate(action)
         }
 
         binding.addNewSubjectButton.setOnClickListener {
-            val action = AllSubjectsFragmentDirections.actionAllSubjectsFragmentToSubjectInfoFragment(null)
+            val action = AllSubjectsFragmentDirections.actionAllSubjectsFragmentToSubjectInfoFragment(0L)
             findNavController().navigate(action)
         }
     }

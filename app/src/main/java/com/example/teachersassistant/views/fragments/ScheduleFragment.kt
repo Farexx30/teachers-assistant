@@ -40,7 +40,7 @@ class ScheduleFragment : Fragment() {
 
         scheduleAdapter.onItemClickListener = { subject ->
             Toast.makeText(requireActivity(), subject.subjectName, Toast.LENGTH_SHORT).show()
-            val action = ScheduleFragmentDirections.actionScheduleFragmentToSubjectInfoFragment(subject.subjectId.toString())
+            val action = ScheduleFragmentDirections.actionScheduleFragmentToSubjectInfoFragment(subject.subjectId)
             findNavController().navigate(action)
         }
 

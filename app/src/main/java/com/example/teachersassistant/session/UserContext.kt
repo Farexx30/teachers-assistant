@@ -1,8 +1,9 @@
 package com.example.teachersassistant.session
 
 import com.example.teachersassistant.dtos.user.UserBasicInfoDto
+import javax.inject.Inject
 
-class UserContext : IUserContext {
+class UserContext @Inject constructor() : IUserContext {
     private var currentUser: UserBasicInfoDto? = null
 
     override fun getCurrentUserId(): Long? = currentUser?.id

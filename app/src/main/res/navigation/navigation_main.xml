@@ -75,19 +75,16 @@
             app:destination="@id/subjectStudentInfoFragment" />
         <argument
             android:name="subjectId"
-            app:argType="string"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:argType="long"
+            android:defaultValue="0L" />
         <argument
             android:name="studentId"
-            app:argType="string"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:argType="long"
+            android:defaultValue="0L" />
         <argument
             android:name="gradeId"
-            app:argType="string"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:argType="long"
+            android:defaultValue="0L" />
     </fragment>
     <fragment
         android:id="@+id/mainMenuFragment"
@@ -117,9 +114,8 @@
             app:destination="@id/allStudentsFragment" />
         <argument
             android:name="studentId"
-            app:argType="string"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:argType="long"
+            android:defaultValue="0L" />
     </fragment>
     <fragment
         android:id="@+id/subjectInfoFragment"
@@ -137,9 +133,8 @@
             app:destination="@id/allSubjectsFragment" />
         <argument
             android:name="subjectId"
-            app:argType="string"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:argType="long"
+            android:defaultValue="0L" />
 
     </fragment>
     <fragment
@@ -155,14 +150,12 @@
             app:destination="@id/gradeFragment" />
         <argument
             android:name="subjectId"
-            app:argType="string"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:argType="long"
+            android:defaultValue="0L" />
         <argument
             android:name="studentId"
-            app:argType="string"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:argType="long"
+            android:defaultValue="0L" />
     </fragment>
     <fragment
         android:id="@+id/subjectStudentsFragment"
@@ -180,9 +173,8 @@
             app:destination="@id/subjectStudentInfoFragment" />
         <argument
             android:name="subjectId"
-            app:argType="string"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:argType="long"
+            android:defaultValue="0L" />
     </fragment>
     <fragment
         android:id="@+id/assignStudentsToSubjectFragment"
@@ -194,9 +186,8 @@
             app:destination="@id/subjectStudentsFragment" />
         <argument
             android:name="subjectId"
-            app:argType="string"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:argType="long"
+            android:defaultValue="0L" />
     </fragment>
     <fragment
         android:id="@+id/scheduleFragment"

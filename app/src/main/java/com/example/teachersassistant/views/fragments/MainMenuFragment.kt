@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.teachersassistant.R
 import com.example.teachersassistant.databinding.FragmentMainMenuBinding
@@ -33,6 +34,9 @@ class MainMenuFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMainMenuBinding.inflate(inflater, container, false)
+        binding.mainMenuViewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
         return binding.root
     }
 
@@ -40,23 +44,31 @@ class MainMenuFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.scheduleButton.setOnClickListener {
-            findNavController().navigate(R.id.action_mainMenuFragment_to_scheduleFragment)
+            val action = MainMenuFragmentDirections.actionMainMenuFragmentToScheduleFragment()
+            findNavController().navigate(action)
         }
 
         binding.mySubjectsButton.setOnClickListener {
-            findNavController().navigate(R.id.action_mainMenuFragment_to_allSubjectsFragment)
+            val action = MainMenuFragmentDirections.actionMainMenuFragmentToAllSubjectsFragment()
+            findNavController().navigate(action)
         }
 
         binding.myStudentsButton.setOnClickListener {
-            findNavController().navigate(R.id.action_mainMenuFragment_to_allStudentsFragment)
+            val action = MainMenuFragmentDirections.actionMainMenuFragmentToAllStudentsFragment()
+            findNavController().navigate(action)
         }
 
         binding.resetButton.setOnClickListener {
-            // TODO
+            viewModel.resetAllData()
         }
 
         binding.logoutButton.setOnClickListener {
-            findNavController().navigate(R.id.action_mainMenuFragment_to_initialFragment)
+            viewModel.logout()
+
+            Toast.makeText(requireContext(), "Goodbye", Toast.LENGTH_SHORT).show()
+
+            val action = MainMenuFragmentDirections.actionMainMenuFragmentToInitialFragment()
+            findNavController().navigate(action)
         }
     }
 }
