@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.teachersassistant.adapters.ScheduleRecyclerViewAdapter
@@ -14,8 +15,11 @@ import com.example.teachersassistant.common.Day
 import com.example.teachersassistant.databinding.FragmentScheduleBinding
 import com.example.teachersassistant.dtos.subject.SubjectWithDatesDto
 import com.example.teachersassistant.viewmodels.ScheduleViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.time.LocalTime
 
+@AndroidEntryPoint
 class ScheduleFragment : Fragment() {
     private lateinit var scheduleAdapter: ScheduleRecyclerViewAdapter
     private lateinit var binding: FragmentScheduleBinding
@@ -29,7 +33,6 @@ class ScheduleFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // TODO: Use the ViewModel
     }
 
     override fun onCreateView(
@@ -39,7 +42,6 @@ class ScheduleFragment : Fragment() {
         scheduleAdapter = ScheduleRecyclerViewAdapter(emptyList())
 
         scheduleAdapter.onItemClickListener = { subject ->
-            Toast.makeText(requireActivity(), subject.subjectName, Toast.LENGTH_SHORT).show()
             val action = ScheduleFragmentDirections.actionScheduleFragmentToSubjectInfoFragment(subject.subjectId)
             findNavController().navigate(action)
         }
@@ -58,9 +60,43 @@ class ScheduleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        lifecycleScope.launch {
+            viewModel.subjects.collect { subjects ->
+                scheduleAdapter.updateData(subjects)
+            }
+        }
+
         binding.goToMainMenuFromScheduleButton.setOnClickListener {
             val action = ScheduleFragmentDirections.actionScheduleFragmentToMainMenuFragment()
             findNavController().navigate(action)
+        }
+
+        binding.mondayButton.setOnClickListener {
+            viewModel.getSubjectsByDay("Monday")
+        }
+
+        binding.tuesdayButton.setOnClickListener {
+            viewModel.getSubjectsByDay("Tuesday")
+        }
+
+        binding.wednesdayButton.setOnClickListener {
+            viewModel.getSubjectsByDay("Wednesday")
+        }
+
+        binding.thursdayButton.setOnClickListener {
+            viewModel.getSubjectsByDay("Thursday")
+        }
+
+        binding.fridayButton.setOnClickListener {
+            viewModel.getSubjectsByDay("Friday")
+        }
+
+        binding.saturdayButton.setOnClickListener {
+            viewModel.getSubjectsByDay("Saturday")
+        }
+
+        binding.sundayButton.setOnClickListener {
+            viewModel.getSubjectsByDay("Sunday")
         }
     }
 }

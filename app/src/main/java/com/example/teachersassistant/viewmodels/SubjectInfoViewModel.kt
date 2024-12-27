@@ -3,7 +3,9 @@ package com.example.teachersassistant.viewmodels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.teachersassistant.dtos.student.StudentDto
 import com.example.teachersassistant.dtos.subject.SubjectBasicInfoDto
+import com.example.teachersassistant.dtos.subject.SubjectDateDto
 import com.example.teachersassistant.models.repositories.subject.ISubjectRepository
 import com.example.teachersassistant.session.IUserContext
 import com.example.teachersassistant.session.UserContext
@@ -18,17 +20,21 @@ class SubjectInfoViewModel @Inject constructor(
     private val subjectRepository: ISubjectRepository,
     private val userContext: IUserContext
 ): ViewModel() {
-
     val subjectName = MutableLiveData<String>()
+
+    private val _subjectDates = MutableStateFlow<List<SubjectDateDto>>(emptyList())
+    val subjectDates: StateFlow<List<SubjectDateDto>> = _subjectDates
 
     private val _subjectId = MutableStateFlow(0L)
     val subjectId: StateFlow<Long> = _subjectId
 
     fun getSubjectData(subjectId: Long) {
         viewModelScope.launch {
-            val subjectDto = subjectRepository.getSubjectBasicInfoById(subjectId)
+            val (subjectDto, subjectDatesDtos) = subjectRepository.getSubjectWithDates(subjectId)
+
             subjectName.postValue(subjectDto.name)
             _subjectId.value = subjectDto.id
+            _subjectDates.value = subjectDatesDtos
         }
     }
 

@@ -85,19 +85,21 @@ class SubjectRepository @Inject constructor(
         return subjectsDtos
     }
 
-    override suspend fun getSubjectsWithHoursByDay(day: Day): SubjectAndHoursDto {
-        val subjectsWithHoursDto = subjectDao.getSubjectsWithHoursByDay(day)
-
-        return subjectsWithHoursDto
+    override suspend fun getSubjectsWithHours(day: Day, currentUserId: Long): List<SubjectAndHoursDto> {
+        val subjectsWithHoursDtos = subjectDao.getSubjectsWithHours(day, currentUserId)
+        return subjectsWithHoursDtos
     }
 
-    override suspend fun getSubjectWithDates(subjectId: Long): SubjectWithDatesDto {
+    override suspend fun getSubjectWithDates(subjectId: Long): Pair<SubjectBasicInfoDto, List<SubjectDateDto>> {
         //Here we don't need to map to dto because we already returns dto from dao (cuz we are returning data from multiple tables):
         val subjectDto = subjectDao.getSubjectBasicInfoById(subjectId)
-        val subjectDates = subjectDao.getSubjectDatesBySubjectId(subjectId)
+        val subjectDatesDtos = subjectDao.getSubjectDatesBySubjectId(subjectId)
 
-        val subjectWithDatesDto = SubjectWithDatesDto(subjectDto, subjectDates)
-        return subjectWithDatesDto
+        return Pair(subjectDto, subjectDatesDtos)
     }
 
+    override suspend fun getSubjectDateById(dateId: Long): SubjectDateDto {
+        val subjectDateDto = subjectDao.getSubjectDateById(dateId)
+        return subjectDateDto
+    }
 }

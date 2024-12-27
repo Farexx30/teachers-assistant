@@ -45,6 +45,10 @@ class SubjectInfoFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         subjectId = args.subjectId
+
+        if (subjectId != 0L) {
+            viewModel.getSubjectData(subjectId)
+        }
     }
 
     override fun onCreateView(
@@ -54,7 +58,10 @@ class SubjectInfoFragment : Fragment() {
         subjectDatesAdapter = SubjectDatesRecyclerViewAdapter(emptyList())
 
         subjectDatesAdapter.onItemClickListener = { date ->
-            //TODO
+            val action = SubjectInfoFragmentDirections.actionSubjectInfoFragmentToSubjectDateFragment(
+                date.id,
+                subjectId)
+            findNavController().navigate(action)
         }
 
         binding = FragmentSubjectInfoBinding.inflate(inflater, container, false)
@@ -70,8 +77,6 @@ class SubjectInfoFragment : Fragment() {
 
         if (subjectId != 0L) {
             adjustUIWhenSubjectExist()
-
-            viewModel.getSubjectData(subjectId)
         }
         else {
             lifecycleScope.launch {
@@ -92,14 +97,16 @@ class SubjectInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        binding.goToScheduleFromSubjectInfoButton.setOnClickListener {
-            val action = SubjectInfoFragmentDirections.actionSubjectInfoFragmentToScheduleFragment()
-            findNavController().navigate(action)
+        lifecycleScope.launch {
+            viewModel.subjectDates.collect { subjectDates ->
+                subjectDatesAdapter.updateData(subjectDates)
+            }
         }
 
-        binding.goToAllSubjectsFromSubjectInfoButton.setOnClickListener {
-            val action = SubjectInfoFragmentDirections.actionSubjectInfoFragmentToAllSubjectsFragment()
+        binding.addNewSubjectDateButton.setOnClickListener {
+            val action = SubjectInfoFragmentDirections.actionSubjectInfoFragmentToSubjectDateFragment(
+                subjectId = subjectId,
+                dateId = 0L)
             findNavController().navigate(action)
         }
 
@@ -118,6 +125,17 @@ class SubjectInfoFragment : Fragment() {
 
             adjustUIWhenSubjectExist()
         }
+
+        binding.goToScheduleFromSubjectInfoButton.setOnClickListener {
+            val action = SubjectInfoFragmentDirections.actionSubjectInfoFragmentToScheduleFragment()
+            findNavController().navigate(action)
+        }
+
+        binding.goToAllSubjectsFromSubjectInfoButton.setOnClickListener {
+            val action = SubjectInfoFragmentDirections.actionSubjectInfoFragmentToAllSubjectsFragment()
+            findNavController().navigate(action)
+        }
+
 
         binding.editSubjectNameButton.setOnClickListener {
             if (!binding.subjectNameEditText.isEnabled) {

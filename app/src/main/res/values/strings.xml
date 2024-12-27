@@ -44,4 +44,18 @@
     <string name="my_students">My students</string>
     <string name="my_subjects">My subjects</string>
     <string name="go_to_all_subjects">Go to all subjects</string>
+    <string name="day">Day</string>
+    <string name="colon">:</string>
+    <string name="dash">-</string>
+    <string name="start_hour">Start hour</string>
+    <string name="end_hour">End hour</string>
+    <string-array name="day_options">
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+        <item>Friday</item>
+        <item>Saturday</item>
+        <item>Sunday</item>
+    </string-array>
 </resources>

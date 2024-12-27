@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="subjectDateViewModel"
+            type="com.example.teachersassistant.viewmodels.SubjectDateViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".views.fragments.SubjectDateFragment"
+        android:background="@color/my_dark">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:text="@string/day"
+                    android:textColor="@color/my_very_light_blue"
+                    android:textSize="40sp" />
+
+                <EditText
+                    android:id="@+id/subject_day_edit_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:focusable="true"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:hint="@string/day"
+                    android:text="@={subjectDateViewModel.day}"
+                    android:textAlignment="center"
+                    android:textColor="@color/my_very_light_blue"
+                    android:textColorHint="@color/my_light_blue"
+                    android:textSize="40sp"
+                    tools:ignore="LabelFor,SpeakableTextPresentCheck" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="100dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/start_hour"
+                    android:textColor="@color/my_very_light_blue"
+                    android:textSize="36sp" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/subject_start_hour_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:focusable="true"
+                        android:hint="start1"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:text="@={subjectDateViewModel.startHour}"
+                        android:textAlignment="center"
+                        android:textColor="@color/my_very_light_blue"
+                        android:textColorHint="@color/my_light_blue"
+                        android:textSize="20sp"
+                        tools:ignore="HardcodedText,LabelFor,SpeakableTextPresentCheck" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/colon"
+                        android:textColor="@color/my_very_light_blue"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/subject_start_minute_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:focusable="true"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:hint="start2"
+                        android:text="@={subjectDateViewModel.startMinute}"
+                        android:textAlignment="center"
+                        android:textColor="@color/my_very_light_blue"
+                        android:textColorHint="@color/my_light_blue"
+                        android:textSize="20sp"
+                        tools:ignore="LabelFor,SpeakableTextPresentCheck" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="20dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/end_hour"
+                    android:textColor="@color/my_very_light_blue"
+                    android:textSize="36sp" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/subject_end_hour_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:focusable="true"
+                        android:hint="end1"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:text="@={subjectDateViewModel.endHour}"
+                        android:textAlignment="center"
+                        android:textColor="@color/my_very_light_blue"
+                        android:textColorHint="@color/my_light_blue"
+                        android:textSize="20sp"
+                        tools:ignore="HardcodedText,LabelFor,SpeakableTextPresentCheck" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/colon"
+                        android:textColor="@color/my_very_light_blue"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/subject_end_minute_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:focusable="true"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:hint="end2"
+                        android:text="@={subjectDateViewModel.endMinute}"
+                        android:textAlignment="center"
+                        android:textColor="@color/my_very_light_blue"
+                        android:textColorHint="@color/my_light_blue"
+                        android:textSize="20sp"
+                        tools:ignore="LabelFor,SpeakableTextPresentCheck" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="30dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <Button
+                    android:id="@+id/cancel_subject_date_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/my_blue"
+                    android:enabled="true"
+                    android:padding="2dp"
+                    android:text="@string/cancel"
+                    android:textColor="@color/my_very_light_blue"
+                    android:textSize="20sp"
+                    tools:ignore="ButtonStyle,InefficientWeight" />
+
+                <Button
+                    android:id="@+id/save_subject_date_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/my_blue"
+                    android:enabled="true"
+                    android:padding="2dp"
+                    android:text="@string/save"
+                    android:textColor="@color/my_very_light_blue"
+                    android:textSize="20sp"
+                    tools:ignore="ButtonStyle,InefficientWeight" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
+</layout>

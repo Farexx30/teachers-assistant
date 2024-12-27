@@ -19,6 +19,7 @@ interface ISubjectRepository {
     abstract suspend fun removeStudentFromSubject(subjectStudentToRemoveDto: SubjectStudentDto)
     abstract suspend fun getSubjectBasicInfoById (subjectId: Long): SubjectBasicInfoDto
     abstract suspend fun getAllCurrentUserSubjects(currentUserId: Long): List<SubjectBasicInfoDto>
-    abstract suspend fun getSubjectsWithHoursByDay(day: Day): SubjectAndHoursDto
-    abstract suspend fun getSubjectWithDates(subjectId: Long): SubjectWithDatesDto
+    abstract suspend fun getSubjectsWithHours(day: Day, currentUserId: Long): List<SubjectAndHoursDto>
+    abstract suspend fun getSubjectWithDates(subjectId: Long): Pair<SubjectBasicInfoDto, List<SubjectDateDto>>
+    abstract suspend fun getSubjectDateById(dateId: Long): SubjectDateDto
 }

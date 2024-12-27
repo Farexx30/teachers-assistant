@@ -135,6 +135,9 @@
             android:name="subjectId"
             app:argType="long"
             android:defaultValue="0L" />
+        <action
+            android:id="@+id/action_subjectInfoFragment_to_subjectDateFragment"
+            app:destination="@id/subjectDateFragment" />
 
     </fragment>
     <fragment
@@ -200,5 +203,22 @@
         <action
             android:id="@+id/action_scheduleFragment_to_mainMenuFragment"
             app:destination="@id/mainMenuFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/subjectDateFragment"
+        android:name="com.example.teachersassistant.views.fragments.SubjectDateFragment"
+        android:label="fragment_subject_date"
+        tools:layout="@layout/fragment_subject_date" >
+        <argument
+            android:name="dateId"
+            app:argType="long"
+            android:defaultValue="0L" />
+        <action
+            android:id="@+id/action_subjectDateFragment_to_subjectInfoFragment"
+            app:destination="@id/subjectInfoFragment" />
+        <argument
+            android:name="subjectId"
+            app:argType="long"
+            android:defaultValue="0L" />
     </fragment>
 </navigation>
