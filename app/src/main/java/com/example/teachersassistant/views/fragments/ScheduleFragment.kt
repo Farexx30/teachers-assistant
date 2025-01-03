@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.teachersassistant.R
 import com.example.teachersassistant.adapters.ScheduleRecyclerViewAdapter
 import com.example.teachersassistant.common.Day
 import com.example.teachersassistant.databinding.FragmentScheduleBinding
@@ -54,17 +55,17 @@ class ScheduleFragment : Fragment() {
             }
         }
 
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
         lifecycleScope.launch {
             viewModel.subjects.collect { subjects ->
                 scheduleAdapter.updateData(subjects)
             }
         }
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         binding.goToMainMenuFromScheduleButton.setOnClickListener {
             val action = ScheduleFragmentDirections.actionScheduleFragmentToMainMenuFragment()
@@ -72,31 +73,31 @@ class ScheduleFragment : Fragment() {
         }
 
         binding.mondayButton.setOnClickListener {
-            viewModel.getSubjectsByDay("Monday")
+            viewModel.getSubjectsByDay(Day.MONDAY.asString)
         }
 
         binding.tuesdayButton.setOnClickListener {
-            viewModel.getSubjectsByDay("Tuesday")
+            viewModel.getSubjectsByDay(Day.TUESDAY.asString)
         }
 
         binding.wednesdayButton.setOnClickListener {
-            viewModel.getSubjectsByDay("Wednesday")
+            viewModel.getSubjectsByDay(Day.WEDNESDAY.asString)
         }
 
         binding.thursdayButton.setOnClickListener {
-            viewModel.getSubjectsByDay("Thursday")
+            viewModel.getSubjectsByDay(Day.THURSDAY.asString)
         }
 
         binding.fridayButton.setOnClickListener {
-            viewModel.getSubjectsByDay("Friday")
+            viewModel.getSubjectsByDay(Day.FRIDAY.asString)
         }
 
         binding.saturdayButton.setOnClickListener {
-            viewModel.getSubjectsByDay("Saturday")
+            viewModel.getSubjectsByDay(Day.SATURDAY.asString)
         }
 
         binding.sundayButton.setOnClickListener {
-            viewModel.getSubjectsByDay("Sunday")
+            viewModel.getSubjectsByDay(Day.SUNDAY.asString)
         }
     }
 }

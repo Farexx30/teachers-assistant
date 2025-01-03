@@ -96,9 +96,9 @@ fun List<Student>.mapToStudentsDtos(): List<StudentDto> {
 fun SubjectStudentGrade.mapToSubjectStudentGradeDto(): SubjectStudentGradeDto {
     return SubjectStudentGradeDto(
         id = this.id,
-        gradeTitle = this.gradeTitle,
+        title = this.gradeTitle,
         grade = this.grade,
-        gradeComment = this.gradeComment
+        comment = this.gradeComment
     )
 }
 
@@ -109,5 +109,20 @@ fun SubjectStudentDto.mapToSubjectStudent(): SubjectStudent {
     )
 }
 
+fun List<SubjectStudentDto>.mapToSubjectStudents(): List<SubjectStudent> {
+    return this.map {
+        it.mapToSubjectStudent()
+    }
+}
 
+fun SubjectStudentGradeDto.mapToSubjectStudentGrade(): SubjectStudentGrade {
+    return SubjectStudentGrade(
+        id = this.id,
+        subjectId = 0L,
+        studentId = 0L,
+        gradeTitle = this.title,
+        grade = this.grade,
+        gradeComment =  this.comment
+    )
+}
 

@@ -25,7 +25,7 @@ interface SubjectDao {
     suspend fun insertSubjectDate(newSubjectDate: SubjectDate)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun assignStudentToSubject(newSubjectStudent: SubjectStudent)
+    suspend fun assignStudentsToSubject(newSubjectStudents: List<SubjectStudent>)
 
 
     //!!! UPDATES !!!//

@@ -2,10 +2,12 @@ package com.example.teachersassistant.views.fragments
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -34,12 +36,34 @@ class AllStudentsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        studentsAdapter = StudentsRecyclerViewAdapter(emptyList())
+        studentsAdapter = StudentsRecyclerViewAdapter(mutableListOf())
 
         studentsAdapter.onItemClickListener = { student ->
             val action = AllStudentsFragmentDirections.actionAllStudentsFragmentToStudentFragment(student.id)
             findNavController().navigate(action)
         }
+
+        studentsAdapter.onItemLongClickListener = { view, student, position ->
+            val popupMenu = PopupMenu(requireContext(), view)
+
+            popupMenu.menuInflater
+                .inflate(R.menu.menu_recycler_view_options, popupMenu.menu)
+            popupMenu.gravity = Gravity.END
+
+            popupMenu.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.delete_option -> {
+                        viewModel.deleteStudent(student.id)
+                        studentsAdapter.itemRemoved(position)
+                        true
+                    }
+                    else -> false
+                }
+            }
+
+            popupMenu.show()
+        }
+
 
         binding = FragmentAllStudentsBinding.inflate(inflater, container, false)
         binding.allStudentsViewModel = viewModel

@@ -5,6 +5,7 @@ import com.example.teachersassistant.common.mapToSubject
 import com.example.teachersassistant.common.mapToSubjectDate
 import com.example.teachersassistant.common.mapToSubjectDtos
 import com.example.teachersassistant.common.mapToSubjectStudent
+import com.example.teachersassistant.common.mapToSubjectStudents
 import com.example.teachersassistant.dtos.subject.SubjectAndHoursDto
 import com.example.teachersassistant.dtos.subject.SubjectBasicInfoDto
 import com.example.teachersassistant.dtos.subject.SubjectDateDto
@@ -32,10 +33,10 @@ class SubjectRepository @Inject constructor(
         subjectDao.insertSubjectDate(newSubjectDate)
     }
 
-    override suspend fun assignStudentToSubject(newSubjectStudentDto: SubjectStudentDto) {
-        val newSubjectStudent = newSubjectStudentDto.mapToSubjectStudent()
+    override suspend fun assignStudentToSubject(newSubjectStudentsDtos: List<SubjectStudentDto>) {
+        val newSubjectStudents = newSubjectStudentsDtos.mapToSubjectStudents()
 
-        subjectDao.assignStudentToSubject(newSubjectStudent)
+        subjectDao.assignStudentsToSubject(newSubjectStudents)
     }
 
 

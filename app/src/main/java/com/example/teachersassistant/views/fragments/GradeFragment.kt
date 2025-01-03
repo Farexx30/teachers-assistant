@@ -12,7 +12,9 @@ import com.example.teachersassistant.R
 import com.example.teachersassistant.databinding.FragmentGradeBinding
 import com.example.teachersassistant.databinding.FragmentSubjectStudentInfoBinding
 import com.example.teachersassistant.viewmodels.GradeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class GradeFragment : Fragment() {
     private val args: GradeFragmentArgs by navArgs()
 
@@ -27,7 +29,9 @@ class GradeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // TODO: Use the ViewModel
+        if (args.gradeId != 0L) {
+            viewModel.getGradeById(args.gradeId)
+        }
     }
 
     override fun onCreateView(
@@ -35,8 +39,8 @@ class GradeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentGradeBinding.inflate(inflater, container, false)
-
-        //TODO: Fetch clicked grade from db based on args.gradeId
+        binding.gradeViewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         return binding.root
     }
@@ -45,18 +49,24 @@ class GradeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.saveGradeButton.setOnClickListener {
-            //TODO: Insert/Update grade
+            viewModel.saveGrade(
+                args.gradeId,
+                args.subjectId,
+                args.studentId
+            )
 
             val action = GradeFragmentDirections.actionGradeFragmentToSubjectStudentInfoFragment(
                 subjectId = args.subjectId,
-                studentId = args.studentId)
+                studentId = args.studentId
+            )
             findNavController().navigate(action)
         }
 
         binding.cancelGradeCreationOrUpdateButton.setOnClickListener {
             val action = GradeFragmentDirections.actionGradeFragmentToSubjectStudentInfoFragment(
                 subjectId = args.subjectId,
-                studentId = args.studentId)
+                studentId = args.studentId
+            )
             findNavController().navigate(action)
         }
     }

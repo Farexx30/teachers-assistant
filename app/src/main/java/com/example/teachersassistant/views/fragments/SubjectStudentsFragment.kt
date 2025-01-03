@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,7 +15,10 @@ import com.example.teachersassistant.adapters.StudentsRecyclerViewAdapter
 import com.example.teachersassistant.databinding.FragmentSubjectStudentsBinding
 import com.example.teachersassistant.dtos.student.StudentDto
 import com.example.teachersassistant.viewmodels.SubjectStudentsViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class SubjectStudentsFragment : Fragment() {
     private val args: SubjectStudentsFragmentArgs by navArgs()
 
@@ -30,18 +34,16 @@ class SubjectStudentsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // TODO: Use the ViewModel
+        viewModel.getSubjectStudentsBySubjectId(args.subjectId)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        studentsAdapter = StudentsRecyclerViewAdapter(emptyList())
+        studentsAdapter = StudentsRecyclerViewAdapter(mutableListOf())
 
         studentsAdapter.onItemClickListener = { student ->
-            Toast.makeText(requireActivity(), "${student.firstName} ${student.lastName} ${student.albumNumber}", Toast.LENGTH_SHORT).show()
-
             val action = SubjectStudentsFragmentDirections.actionSubjectStudentsFragmentToSubjectStudentInfoFragment(
                 subjectId = args.subjectId,
                 studentId = student.id)
@@ -51,12 +53,16 @@ class SubjectStudentsFragment : Fragment() {
         binding = FragmentSubjectStudentsBinding.inflate(inflater, container, false)
         binding.apply {
             subjectStudentsRecyclerView.apply {
-                layoutManager = LinearLayoutManager(requireActivity())
+                layoutManager = LinearLayoutManager(requireContext())
                 adapter = studentsAdapter
             }
         }
 
-        //TODO: Fetch subject students from database based on args.subjectId
+        lifecycleScope.launch {
+            viewModel.students.collect { students ->
+                studentsAdapter.updateData(students.toMutableList())
+            }
+        }
 
         return binding.root
     }

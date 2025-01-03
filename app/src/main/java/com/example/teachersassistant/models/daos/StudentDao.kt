@@ -71,16 +71,19 @@ interface StudentDao {
 
     //Query for fetching student that are NOT in current subject:
     @Query("""
-        SELECT s.id, s.firstName, s.lastName, s.albumNumber
-        FROM ${DatabaseTableName.STUDENTS} s
-        JOIN ${DatabaseTableName.SUBJECT_STUDENT} ss ON ss.studentId = s.id
-        WHERE ss.subjectId <> :subjectId 
+        SELECT id, firstName, lastName, albumNumber
+        FROM ${DatabaseTableName.STUDENTS}
+        WHERE teacherId = :teacherId 
+            AND id NOT IN (SELECT s.id 
+                           FROM ${DatabaseTableName.STUDENTS} s
+                           JOIN ${DatabaseTableName.SUBJECT_STUDENT} ss ON ss.studentId = s.id
+                           WHERE ss.subjectId = :subjectId)
         """)
-    suspend fun getNotSubjectStudentsBySubjectId(subjectId: Long): List<StudentDto>
+    suspend fun getNotSubjectStudentsBySubjectId(subjectId: Long, teacherId: Long): List<StudentDto>
 
     //Query for fetching student's data with its grades:
     @Query("""
-       SELECT id, gradeTitle, grade, gradeComment
+       SELECT id id, gradeTitle title, grade grade, gradeComment comment
        FROM ${DatabaseTableName.SUBJECT_STUDENT_GRADE}
        WHERE subjectId = :subjectId AND studentId = :studentId
         """)
@@ -88,7 +91,7 @@ interface StudentDao {
 
     //Query for fetching student's grade data:
     @Query("""
-       SELECT id, gradeTitle, grade, gradeComment
+       SELECT id id, gradeTitle title, grade grade, gradeComment comment
        FROM ${DatabaseTableName.SUBJECT_STUDENT_GRADE}
        WHERE id = :gradeId
        LIMIT 1

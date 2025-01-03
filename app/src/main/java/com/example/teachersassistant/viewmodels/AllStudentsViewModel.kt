@@ -17,12 +17,25 @@ class AllStudentsViewModel @Inject constructor(
     private val userContext: IUserContext,
     private val studentRepository: IStudentRepository
 ) : ViewModel() {
-    private val _students = MutableStateFlow<List<StudentDto>>(emptyList())
-    val students: StateFlow<List<StudentDto>> = _students
+    private val _students = MutableStateFlow<MutableList<StudentDto>>(mutableListOf())
+    val students: StateFlow<MutableList<StudentDto>> = _students
     init {
         viewModelScope.launch {
             val studentsDtos = studentRepository.getAllCurrentUserStudents(userContext.getCurrentUserId()!!)
-            _students.value = studentsDtos
+            _students.value = studentsDtos.toMutableList()
+        }
+    }
+
+    fun deleteStudent(studentId: Long) {
+        val studentToDeleteDto = StudentDto(
+            id = studentId,
+            firstName = "",
+            lastName = "",
+            albumNumber = ""
+        )
+
+        viewModelScope.launch {
+            studentRepository.deleteStudent(studentToDeleteDto)
         }
     }
 }

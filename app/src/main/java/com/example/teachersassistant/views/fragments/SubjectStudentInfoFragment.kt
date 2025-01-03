@@ -6,15 +6,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.teachersassistant.adapters.SubjectStudentGradesRecyclerViewAdapter
 import com.example.teachersassistant.databinding.FragmentSubjectStudentInfoBinding
-import com.example.teachersassistant.dtos.student.StudentDto
 import com.example.teachersassistant.viewmodels.SubjectStudentInfoViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class SubjectStudentInfoFragment : Fragment() {
     private val args: SubjectStudentInfoFragmentArgs by navArgs()
 
@@ -30,7 +32,7 @@ class SubjectStudentInfoFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // TODO: Use the ViewModel
+        viewModel.getSubjectStudentWithGrades(args.subjectId, args.studentId)
     }
 
     override fun onCreateView(
@@ -39,22 +41,29 @@ class SubjectStudentInfoFragment : Fragment() {
     ): View {
         subjectStudentGradesAdapter = SubjectStudentGradesRecyclerViewAdapter(emptyList())
 
-        subjectStudentGradesAdapter.onItemClickListener = { student ->
-            //Toast.makeText(requireActivity(), "${student.firstName} ${student.lastName} GRADE!", Toast.LENGTH_SHORT).show()
-
-            //TODO: Navigate to gradeFragment with the grade id
+        subjectStudentGradesAdapter.onItemClickListener = { grade ->
+            val action = SubjectStudentInfoFragmentDirections.actionSubjectStudentInfoFragmentToGradeFragment(
+                subjectId = args.subjectId,
+                studentId = args.studentId,
+                gradeId = grade.id)
+            findNavController().navigate(action)
         }
 
-        binding = FragmentSubjectStudentInfoBinding.inflate(inflater, container, false)
-        binding.apply {
-            subjectStudentGradesRecyclerView.apply {
-                layoutManager = LinearLayoutManager(requireActivity())
-                adapter = subjectStudentGradesAdapter
+        lifecycleScope.launch {
+            viewModel.grades.collect { grades ->
+                subjectStudentGradesAdapter.updateData(grades)
             }
         }
 
-        //TODO: Fetch subject student from database based on args.subjectId and args.studentId
-
+        binding = FragmentSubjectStudentInfoBinding.inflate(inflater, container, false)
+        binding.subjectStudentInfoViewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.apply {
+            subjectStudentGradesRecyclerView.apply {
+                layoutManager = LinearLayoutManager(requireContext())
+                adapter = subjectStudentGradesAdapter
+            }
+        }
 
         return binding.root
     }
@@ -74,7 +83,5 @@ class SubjectStudentInfoFragment : Fragment() {
                 gradeId = 0L)
             findNavController().navigate(action)
         }
-
-        //TODO: Click on single grade
     }
 }

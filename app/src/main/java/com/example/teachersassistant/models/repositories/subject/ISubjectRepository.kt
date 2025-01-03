@@ -11,7 +11,7 @@ import com.example.teachersassistant.models.entities.student.SubjectStudent
 interface ISubjectRepository {
     abstract suspend fun insertSubject(newSubjectDto: SubjectBasicInfoDto, teacherId: Long): Long
     abstract suspend fun insertSubjectDate(newSubjectDateDto: SubjectDateDto, subjectId: Long)
-    abstract suspend fun assignStudentToSubject(newSubjectStudentDto: SubjectStudentDto)
+    abstract suspend fun assignStudentToSubject(newSubjectStudentsDtos: List<SubjectStudentDto>)
     abstract suspend fun updateSubject(updatedSubjectDto: SubjectBasicInfoDto, teacherId: Long)
     abstract suspend fun updateSubjectDate(updatedSubjectDateDto: SubjectDateDto, subjectId: Long)
     abstract suspend fun deleteSubject(subjectToDeleteDto: SubjectBasicInfoDto)
