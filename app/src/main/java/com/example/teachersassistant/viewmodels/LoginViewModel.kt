@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.teachersassistant.common.RegistrationOrLoginResult
 import com.example.teachersassistant.dtos.user.RegisterOrLoginUserDto
 import com.example.teachersassistant.models.repositories.user.ILoginUserRepository
+import com.example.teachersassistant.session.IUserContext
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,6 +16,7 @@ import javax.inject.Named
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
+    private val userContext: IUserContext,
     private val loginUserRepository: ILoginUserRepository
 ) : ViewModel() {
     val username = MutableLiveData<String>()
@@ -37,8 +39,11 @@ class LoginViewModel @Inject constructor(
                 _loginState.value = RegistrationOrLoginResult.FAILED
             }
             else {
+                userContext.login(loggedInUser)
                 _loginState.value = RegistrationOrLoginResult.SUCCESS
             }
+
+            _loginState.value = RegistrationOrLoginResult.NONE
         }
     }
 }

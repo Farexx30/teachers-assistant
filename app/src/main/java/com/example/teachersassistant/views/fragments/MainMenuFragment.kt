@@ -6,11 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.teachersassistant.R
 import com.example.teachersassistant.databinding.FragmentMainMenuBinding
 import com.example.teachersassistant.viewmodels.MainMenuViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint //Not necessary actually but looks like a "good practice" to me
 class MainMenuFragment : Fragment() {
@@ -33,6 +36,9 @@ class MainMenuFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMainMenuBinding.inflate(inflater, container, false)
+        binding.mainMenuViewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
         return binding.root
     }
 
@@ -40,23 +46,49 @@ class MainMenuFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.scheduleButton.setOnClickListener {
-            findNavController().navigate(R.id.action_mainMenuFragment_to_scheduleFragment)
+            val action = MainMenuFragmentDirections.actionMainMenuFragmentToScheduleFragment()
+            findNavController().navigate(action)
         }
 
         binding.mySubjectsButton.setOnClickListener {
-            findNavController().navigate(R.id.action_mainMenuFragment_to_allSubjectsFragment)
+            val action = MainMenuFragmentDirections.actionMainMenuFragmentToAllSubjectsFragment()
+            findNavController().navigate(action)
         }
 
         binding.myStudentsButton.setOnClickListener {
-            findNavController().navigate(R.id.action_mainMenuFragment_to_allStudentsFragment)
+            val action = MainMenuFragmentDirections.actionMainMenuFragmentToAllStudentsFragment()
+            findNavController().navigate(action)
         }
 
         binding.resetButton.setOnClickListener {
-            // TODO
+            lifecycleScope.launch {
+                disableAllButtons()
+                viewModel.resetAllData()
+                enableAllButtons()
+            }
         }
 
         binding.logoutButton.setOnClickListener {
-            findNavController().navigate(R.id.action_mainMenuFragment_to_initialFragment)
+            viewModel.logout()
+
+            Toast.makeText(requireContext(), "Goodbye", Toast.LENGTH_SHORT).show()
+
+            val action = MainMenuFragmentDirections.actionMainMenuFragmentToInitialFragment()
+            findNavController().navigate(action)
         }
+    }
+
+    private fun disableAllButtons() {
+        binding.scheduleButton.isEnabled = false
+        binding.myStudentsButton.isEnabled = false
+        binding.resetButton.isEnabled = false
+        binding.logoutButton.isEnabled = false
+    }
+
+    private fun enableAllButtons() {
+        binding.scheduleButton.isEnabled = true
+        binding.myStudentsButton.isEnabled = true
+        binding.resetButton.isEnabled = true
+        binding.logoutButton.isEnabled = true
     }
 }

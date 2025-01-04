@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class UserRepository @Inject constructor(
     private val userDao: UserDao,
-): IRegisterUserRepository, ILoginUserRepository {
+): IRegisterUserRepository, ILoginUserRepository, IResetAllUserDataRepository {
     override suspend fun registerUser(newUserDto: RegisterOrLoginUserDto): UserBasicInfoDto? {
         val isUsernameInUse = userDao.isUsernameInUse(newUserDto.username)
         if (isUsernameInUse) {
@@ -35,5 +35,9 @@ class UserRepository @Inject constructor(
 
         val userBasicInfoDto = user.mapToUserBasicInfoDto()
         return userBasicInfoDto
+    }
+
+    override suspend fun resetAllUserData(currentUserId: Long) {
+        userDao.resetAllUserData(currentUserId)
     }
 }

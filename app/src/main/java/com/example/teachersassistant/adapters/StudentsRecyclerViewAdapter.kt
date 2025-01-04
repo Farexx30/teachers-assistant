@@ -2,16 +2,17 @@ package com.example.teachersassistant.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.teachersassistant.databinding.RecyclerViewElementStudentBinding
 import com.example.teachersassistant.dtos.student.StudentDto
 
-class StudentsRecyclerViewAdapter (private val items: List<StudentDto>)
+class StudentsRecyclerViewAdapter (private var items: MutableList<StudentDto>)
     : RecyclerView.Adapter<StudentsRecyclerViewAdapter.ViewHolder>() {
 
     var onItemClickListener: ((StudentDto) -> Unit)? = null
-
+    var onItemLongClickListener: ((View, StudentDto, Int) -> Unit)? = null
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -43,6 +44,23 @@ class StudentsRecyclerViewAdapter (private val items: List<StudentDto>)
             itemView.setOnClickListener {
                 onItemClickListener?.invoke(item)
             }
+
+            itemView.setOnLongClickListener {
+                onItemLongClickListener?.invoke(it, item, adapterPosition)
+                true
+            }
         }
+    }
+
+    fun itemRemoved(position: Int) {
+        items.removeAt(position)
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position, items.size)
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun fillWithData(newItems: MutableList<StudentDto>) {
+        items = newItems
+        notifyDataSetChanged()
     }
 }

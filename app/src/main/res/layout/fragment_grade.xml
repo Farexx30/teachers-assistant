@@ -1,156 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".views.fragments.GradeFragment"
-    android:background="@color/my_dark">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
+        <variable
+            name="gradeViewModel"
+            type="com.example.teachersassistant.viewmodels.GradeViewModel" />
+    </data>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".views.fragments.GradeFragment"
+        android:background="@color/my_dark">
 
-        <LinearLayout
-            android:id="@+id/grade_linear_layout"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/dynamic_content_linear_layout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent">
 
             <LinearLayout
+                android:id="@+id/grade_linear_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="20dp"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toTopOf="@+id/dynamic_content_linear_layout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="@string/title"
+                        android:textColor="@color/my_very_light_blue"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/grade_title_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="true"
+                        android:hint="@string/title"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:text="@={gradeViewModel.title}"
+                        android:textColor="@color/my_very_light_blue"
+                        android:textColorHint="@color/my_light_blue"
+                        android:textSize="20sp"
+                        tools:ignore="LabelFor" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="@string/grade"
+                        android:textColor="@color/my_very_light_blue"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/grade_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/grade"
+                        android:importantForAutofill="no"
+                        android:inputType="numberDecimal"
+                        android:text="@={gradeViewModel.grade}"
+                        android:textColor="@color/my_very_light_blue"
+                        android:textColorHint="@color/my_light_blue"
+                        android:textSize="20sp" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/comment"
+                        android:textColor="@color/my_very_light_blue"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/grade_comment_edit_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/comment"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:text="@={gradeViewModel.comment}"
+                        android:textColor="@color/my_very_light_blue"
+                        android:textColorHint="@color/my_light_blue"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/dynamic_content_linear_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <Button
+                    android:id="@+id/cancel_grade_creation_or_update_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:text="@string/title"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/my_blue"
+                    android:padding="2dp"
+                    android:text="@string/cancel"
                     android:textColor="@color/my_very_light_blue"
-                    android:textSize="20sp" />
-
-                <EditText
-                    android:id="@+id/grade_title_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:focusable="true"
-                    android:hint="@string/title"
-                    android:importantForAutofill="no"
-                    android:inputType="text"
-                    android:text=""
-                    android:textColor="@color/my_very_light_blue"
-                    android:textColorHint="@color/my_light_blue"
                     android:textSize="20sp"
-                    tools:ignore="LabelFor" />
+                    android:enabled="true"
+                    tools:ignore="ButtonStyle,InefficientWeight" />
 
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:orientation="vertical">
-
-                <TextView
+                <Button
+                    android:id="@+id/save_grade_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:text="@string/grade"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/my_blue"
+                    android:padding="2dp"
+                    android:text="@string/save"
                     android:textColor="@color/my_very_light_blue"
-                    android:textSize="20sp" />
-
-                <EditText
-                    android:id="@+id/grade_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/grade"
-                    android:importantForAutofill="no"
-                    android:inputType="numberDecimal"
-                    android:text=""
-                    android:textColor="@color/my_very_light_blue"
-                    android:textColorHint="@color/my_light_blue"
-                    android:textSize="20sp" />
-
+                    android:textSize="20sp"
+                    android:enabled="true"
+                    tools:ignore="ButtonStyle,InefficientWeight" />
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:orientation="vertical">
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/comment"
-                    android:textColor="@color/my_very_light_blue"
-                    android:textSize="20sp" />
-
-                <EditText
-                    android:id="@+id/grade_comment_edit_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/comment"
-                    android:importantForAutofill="no"
-                    android:inputType="text"
-                    android:text=""
-                    android:textColor="@color/my_very_light_blue"
-                    android:textColorHint="@color/my_light_blue"
-                    android:textSize="20sp" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/dynamic_content_linear_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:orientation="horizontal"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <Button
-                android:id="@+id/cancel_grade_creation_or_update_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/my_blue"
-                android:padding="2dp"
-                android:text="@string/cancel"
-                android:textColor="@color/my_very_light_blue"
-                android:textSize="20sp"
-                android:enabled="true"
-                tools:ignore="ButtonStyle,InefficientWeight" />
-
-            <Button
-                android:id="@+id/save_grade_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/my_blue"
-                android:padding="2dp"
-                android:text="@string/save"
-                android:textColor="@color/my_very_light_blue"
-                android:textSize="20sp"
-                android:enabled="true"
-                tools:ignore="ButtonStyle,InefficientWeight" />
-
-        </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</FrameLayout>
+    </FrameLayout>
+</layout>

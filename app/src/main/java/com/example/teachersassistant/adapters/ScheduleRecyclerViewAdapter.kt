@@ -6,8 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.teachersassistant.databinding.RecyclerViewElementScheduleBinding
 import com.example.teachersassistant.dtos.subject.SubjectAndHoursDto
+import com.example.teachersassistant.dtos.subject.SubjectBasicInfoDto
 
-class ScheduleRecyclerViewAdapter(private val items: List<SubjectAndHoursDto>)
+class ScheduleRecyclerViewAdapter(private var items: List<SubjectAndHoursDto>)
     : RecyclerView.Adapter<ScheduleRecyclerViewAdapter.ViewHolder>() {
 
     var onItemClickListener: ((SubjectAndHoursDto) -> Unit)? = null
@@ -44,5 +45,11 @@ class ScheduleRecyclerViewAdapter(private val items: List<SubjectAndHoursDto>)
                 onItemClickListener?.invoke(item)
             }
         }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun fillWithData(newItems: List<SubjectAndHoursDto>) {
+        items = newItems
+        notifyDataSetChanged()
     }
 }

@@ -50,16 +50,16 @@ class LoginFragment : Fragment() {
                         RegistrationOrLoginResult.NONE -> {}
 
                         RegistrationOrLoginResult.FAILED -> Toast.makeText(
-                            requireActivity(),
-                            "Not good! :(",
-                            Toast.LENGTH_LONG
+                            requireContext(),
+                            "Incorrect username or password",
+                            Toast.LENGTH_SHORT
                         ).show()
 
                         RegistrationOrLoginResult.SUCCESS -> {
                             Toast.makeText(
-                                requireActivity(),
-                                "Good! :)",
-                                Toast.LENGTH_LONG
+                                requireContext(),
+                                "Welcome",
+                                Toast.LENGTH_SHORT
                             ).show()
                             //Navigate:
                             val action = LoginFragmentDirections.actionLoginFragmentToMainMenuFragment()

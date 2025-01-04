@@ -15,5 +15,11 @@ enum class Day(val value: Int, val asString: String) {
                 it.value == value
             }
         }
+
+        fun fromString(value: String): Day {
+            return entries.first {
+                it.asString.equals(value, ignoreCase = true)
+            }
+        }
     }
 }

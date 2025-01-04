@@ -2,15 +2,19 @@ package com.example.teachersassistant.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.teachersassistant.databinding.RecyclerViewElementSubjectDateBinding
+import com.example.teachersassistant.dtos.subject.SubjectBasicInfoDto
+import com.example.teachersassistant.dtos.subject.SubjectDateDto
 import com.example.teachersassistant.dtos.subject.SubjectWithDatesDto
 
-class SubjectDatesRecyclerViewAdapter (private val items: List<SubjectWithDatesDto>)
+class SubjectDatesRecyclerViewAdapter (private var items: MutableList<SubjectDateDto>)
     : RecyclerView.Adapter<SubjectDatesRecyclerViewAdapter.ViewHolder>() {
 
-    var onItemClickListener: ((SubjectWithDatesDto) -> Unit)? = null
+    var onItemClickListener: ((SubjectDateDto) -> Unit)? = null
+    var onItemLongClickListener: ((View, SubjectDateDto, Int) -> Unit)? = null
 
 
     override fun onCreateViewHolder(
@@ -34,15 +38,32 @@ class SubjectDatesRecyclerViewAdapter (private val items: List<SubjectWithDatesD
 
     inner class ViewHolder(private val binding: RecyclerViewElementSubjectDateBinding): RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
-        fun bind(item: SubjectWithDatesDto) {
+        fun bind(item: SubjectDateDto) {
             binding.apply {
-//                dayTextView.text = item.subjectDay.asString
-//                subjectHoursTextView.text = "${item.subjectStartHour} - ${item.subjectEndHour}"
+                dayTextView.text = item.day.asString
+                subjectHoursTextView.text = "${item.startHour} - ${item.endHour}"
             }
 
             itemView.setOnClickListener {
                 onItemClickListener?.invoke(item)
             }
+
+            itemView.setOnLongClickListener {
+                onItemLongClickListener?.invoke(it, item, adapterPosition)
+                true
+            }
         }
+    }
+
+    fun itemRemoved(position: Int) {
+        items.removeAt(position)
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position, items.size)
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun fillWithData(newItems: MutableList<SubjectDateDto>) {
+        items = newItems
+        notifyDataSetChanged()
     }
 }

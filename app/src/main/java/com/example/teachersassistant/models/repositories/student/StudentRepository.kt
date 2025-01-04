@@ -3,6 +3,7 @@ package com.example.teachersassistant.models.repositories.student
 import com.example.teachersassistant.common.mapToStudent
 import com.example.teachersassistant.common.mapToStudentDto
 import com.example.teachersassistant.common.mapToStudentsDtos
+import com.example.teachersassistant.common.mapToSubjectStudentGrade
 import com.example.teachersassistant.dtos.student.StudentDto
 import com.example.teachersassistant.dtos.student.StudentWithGradesDto
 import com.example.teachersassistant.dtos.student.SubjectStudentGradeDto
@@ -19,11 +20,35 @@ class StudentRepository @Inject constructor(
         studentDao.insertStudent(newStudent)
     }
 
+    override suspend fun insertGrade(
+        newGradeDto: SubjectStudentGradeDto,
+        subjectId: Long,
+        studentId: Long
+    ) {
+        val newGrade = newGradeDto.mapToSubjectStudentGrade()
+        newGrade.subjectId = subjectId
+        newGrade.studentId = studentId
+
+        studentDao.insertGrade(newGrade)
+    }
+
     override suspend fun updateStudent(updatedStudentDto: StudentDto, teacherId: Long) {
         val updatedStudent = updatedStudentDto.mapToStudent()
         updatedStudent.teacherId = teacherId
 
         studentDao.updateStudent(updatedStudent)
+    }
+
+    override suspend fun updateGrade(
+        updatedGradeDto: SubjectStudentGradeDto,
+        subjectId: Long,
+        studentId: Long
+    ) {
+        val updatedGrade = updatedGradeDto.mapToSubjectStudentGrade()
+        updatedGrade.subjectId = subjectId
+        updatedGrade.studentId = studentId
+
+        studentDao.updateGrade(updatedGrade)
     }
 
     override suspend fun deleteStudent(studentToDeleteDto: StudentDto) {
@@ -32,37 +57,38 @@ class StudentRepository @Inject constructor(
         studentDao.deleteStudent(studentToDelete)
     }
 
+    override suspend fun deleteGrade(gradeToDeleteDto: SubjectStudentGradeDto) {
+        val gradeToDelete = gradeToDeleteDto.mapToSubjectStudentGrade()
+
+        studentDao.deleteGrade(gradeToDelete)
+    }
+
     override suspend fun getAllCurrentUserStudents(teacherId: Long): List<StudentDto> {
-        val students = studentDao.getAllCurrentUserStudentsById(teacherId)
-        val studentsDto = students.mapToStudentsDtos()
-        return studentsDto
+        val studentsDtos = studentDao.getAllCurrentUserStudentsById(teacherId)
+        return studentsDtos
     }
 
     override suspend fun getStudentDataById(studentId: Long): StudentDto {
-        val student = studentDao.getStudentDataById(studentId)
-        val studentDto = student.mapToStudentDto()
+        val studentDto = studentDao.getStudentDataById(studentId)
         return studentDto
     }
 
     override suspend fun getSubjectStudentsBySubjectId(subjectId: Long): List<StudentDto> {
-        val students = studentDao.getSubjectStudentsBySubjectId(subjectId)
-        val studentsDtos = students.mapToStudentsDtos()
+        val studentsDtos = studentDao.getSubjectStudentsBySubjectId(subjectId)
         return studentsDtos
     }
 
-    override suspend fun getNotSubjectStudentsBySubjectId(subjectId: Long): List<StudentDto> {
-        val students = studentDao.getNotSubjectStudentsBySubjectId(subjectId)
-        val studentsDtos = students.mapToStudentsDtos()
+    override suspend fun getNotSubjectStudentsBySubjectId(subjectId: Long, teacherId: Long): List<StudentDto> {
+        val studentsDtos = studentDao.getNotSubjectStudentsBySubjectId(subjectId, teacherId)
         return studentsDtos
     }
 
-    override suspend fun getSubjectStudentsWithGradesById(subjectId:Long, studentId: Long): StudentWithGradesDto {
+    override suspend fun getSubjectStudentWithGrades(subjectId:Long, studentId: Long): Pair<StudentDto, List<SubjectStudentGradeDto>> {
         //Here we don't need to map to dto because we already returns dto from dao (cuz we are returning data from multiple tables):
-        val student = studentDao.getStudentDataById(studentId)
-        val grades = studentDao.getSubjectStudentGrades(subjectId, studentId)
+        val studentDto = studentDao.getStudentDataById(studentId)
+        val gradesDtos = studentDao.getSubjectStudentGrades(subjectId, studentId)
 
-        val studentWithGradesDto = StudentWithGradesDto(student.mapToStudentDto(), grades)
-        return studentWithGradesDto
+        return Pair(studentDto, gradesDtos)
     }
 
     override suspend fun getGradeById(gradeId: Long): SubjectStudentGradeDto {

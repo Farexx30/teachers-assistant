@@ -28,8 +28,8 @@ import com.example.teachersassistant.models.entities.subject.Subject
 data class SubjectStudentGrade(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
-    val subjectId: Long,
-    val studentId: Long,
+    var subjectId: Long,
+    var studentId: Long,
     val gradeTitle: String,
     val grade: Float,
     val gradeComment: String?

@@ -19,13 +19,13 @@ import com.example.teachersassistant.models.entities.subject.SubjectDate
 interface SubjectDao {
     //!!! INSERTS !!!//
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertSubject(newSubject: Subject)
+    suspend fun insertSubject(newSubject: Subject): Long
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertSubjectDate(newSubjectDate: SubjectDate)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun assignStudentToSubject(newSubjectStudent: SubjectStudent)
+    suspend fun assignStudentsToSubject(newSubjectStudents: List<SubjectStudent>)
 
 
     //!!! UPDATES !!!//
@@ -57,16 +57,16 @@ interface SubjectDao {
        FROM ${DatabaseTableName.SUBJECTS}
        WHERE teacherId = :currentUserId
     """)
-    suspend fun getAllCurrentUserSubjectsByUserId(currentUserId: Long): List<Subject>
+    suspend fun getAllCurrentUserSubjectsByUserId(currentUserId: Long): List<SubjectBasicInfoDto>
 
     @Query("""
        SELECT s.id subjectId, s.name subjectName, sd.startHour subjectStartHour, sd.endHour subjectEndHour
        FROM ${DatabaseTableName.SUBJECTS} s
        JOIN ${DatabaseTableName.SUBJECT_DATE} sd ON sd.subjectId = s.id
-       WHERE sd.day = :day
+       WHERE sd.day = :day AND s.teacherId = :currentUserId
        ORDER BY sd.day, sd.startHour, sd.endHour
     """)
-    suspend fun getSubjectsWithHoursByDay(day: Day): SubjectAndHoursDto
+    suspend fun getSubjectsWithHours(day: Day, currentUserId: Long): List<SubjectAndHoursDto>
 
     @Query("""
        SELECT id, name
@@ -83,4 +83,12 @@ interface SubjectDao {
        ORDER BY day, startHour, endHour
     """)
     suspend fun getSubjectDatesBySubjectId(subjectId: Long): List<SubjectDateDto>
+
+    @Query("""
+       SELECT id, day, startHour, endHour
+       FROM ${DatabaseTableName.SUBJECT_DATE}
+       WHERE id = :dateId
+       LIMIT 1
+    """)
+    suspend fun getSubjectDateById(dateId: Long): SubjectDateDto
 }

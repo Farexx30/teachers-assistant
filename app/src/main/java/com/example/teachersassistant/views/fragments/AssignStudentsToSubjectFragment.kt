@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,7 +15,10 @@ import com.example.teachersassistant.adapters.AssignStudentsToSubjectRecyclerVie
 import com.example.teachersassistant.viewmodels.AssignStudentsToSubjectViewModel
 import com.example.teachersassistant.databinding.FragmentAssignStudentsToSubjectBinding
 import com.example.teachersassistant.dtos.student.StudentDto
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class AssignStudentsToSubjectFragment : Fragment() {
     private val args: AssignStudentsToSubjectFragmentArgs by navArgs()
     private lateinit var assignStudentsToSubjectAdapter: AssignStudentsToSubjectRecyclerViewAdapter
@@ -29,7 +33,7 @@ class AssignStudentsToSubjectFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // TODO: Use the ViewModel
+        viewModel.getNotSubjectStudentsBySubjectId(args.subjectId)
     }
 
     override fun onCreateView(
@@ -38,14 +42,22 @@ class AssignStudentsToSubjectFragment : Fragment() {
     ): View {
         assignStudentsToSubjectAdapter = AssignStudentsToSubjectRecyclerViewAdapter(emptyList())
 
-        assignStudentsToSubjectAdapter.onItemClickListener = { student ->
-            Toast.makeText(requireActivity(), "${student.firstName} ${student.lastName}", Toast.LENGTH_SHORT).show()
+        assignStudentsToSubjectAdapter.onSelectionChangedListener = { students ->
+            viewModel.updateSelectedStudentsCounter(students.size)
+        }
+
+        lifecycleScope.launch {
+            viewModel.students.collect { students ->
+                assignStudentsToSubjectAdapter.fillWithData(students.toList())
+            }
         }
 
         binding = FragmentAssignStudentsToSubjectBinding.inflate(inflater, container, false)
+        binding.assignStudentsToSubjectViewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.apply {
             studentsToAssignRecyclerView.apply {
-                layoutManager = LinearLayoutManager(requireActivity())
+                layoutManager = LinearLayoutManager(requireContext())
                 adapter = assignStudentsToSubjectAdapter
             }
         }
@@ -57,15 +69,22 @@ class AssignStudentsToSubjectFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.assignChosenStudentsToSubjectButton.setOnClickListener {
-            val action = AssignStudentsToSubjectFragmentDirections.actionAssignStudentsToSubjectFragmentToSubjectStudentsFragment(args.subjectId)
-            findNavController().navigate(action)
+            val studentsToAssign = assignStudentsToSubjectAdapter.getSelectedItems()
+            val studentsIdsToAssign = studentsToAssign.map { student ->
+                student.id
+            }
+
+            lifecycleScope.launch {
+                viewModel.assignStudentsToSubject(studentsIdsToAssign, args.subjectId)
+
+                val action = AssignStudentsToSubjectFragmentDirections.actionAssignStudentsToSubjectFragmentToSubjectStudentsFragment(args.subjectId)
+                findNavController().navigate(action)
+            }
         }
 
         binding.cancelStudentAssignmentToSubjectButton.setOnClickListener {
             val action = AssignStudentsToSubjectFragmentDirections.actionAssignStudentsToSubjectFragmentToSubjectStudentsFragment(args.subjectId)
             findNavController().navigate(action)
         }
-
-        //TODO: Students selection
     }
 }

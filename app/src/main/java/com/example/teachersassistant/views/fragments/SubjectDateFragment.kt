@@ -1,5 +1,6 @@
 package com.example.teachersassistant.views.fragments
 
+import android.graphics.Color
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,38 +11,37 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.teachersassistant.R
-import com.example.teachersassistant.databinding.FragmentStudentBinding
+import com.example.teachersassistant.databinding.FragmentSubjectDateBinding
 import com.example.teachersassistant.databinding.FragmentSubjectInfoBinding
-import com.example.teachersassistant.viewmodels.StudentViewModel
+import com.example.teachersassistant.viewmodels.SubjectDateViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class StudentFragment : Fragment() {
-    private val args: StudentFragmentArgs by navArgs()
-
-    private lateinit var binding: FragmentStudentBinding
+class SubjectDateFragment : Fragment() {
+    private val args: SubjectDateFragmentArgs by navArgs()
+    private lateinit var binding: FragmentSubjectDateBinding
 
     companion object {
-        fun newInstance() = StudentFragment()
+        fun newInstance() = SubjectDateFragment()
     }
+
+    private val viewModel: SubjectDateViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (args.studentId != 0L) {
-            viewModel.getStudentData(args.studentId)
+        if (args.dateId != 0L) {
+            viewModel.getSubjectDate(args.dateId)
         }
     }
-
-    private val viewModel: StudentViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentStudentBinding.inflate(inflater, container, false)
-        binding.studentViewModel = viewModel
+        binding = FragmentSubjectDateBinding.inflate(inflater, container, false)
+        binding.subjectDateViewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
         return binding.root
@@ -50,17 +50,21 @@ class StudentFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.saveStudentButton.setOnClickListener {
+        binding.saveSubjectDateButton.setOnClickListener {
             lifecycleScope.launch {
-                viewModel.saveStudent(args.studentId)
+                viewModel.saveSubjectDate(args.subjectId, args.dateId)
 
-                val action = StudentFragmentDirections.actionStudentFragmentToAllStudentsFragment()
+                val action = SubjectDateFragmentDirections.actionSubjectDateFragmentToSubjectInfoFragment(
+                    subjectId = args.subjectId
+                )
                 findNavController().navigate(action)
             }
         }
 
-        binding.cancelStudentButton.setOnClickListener {
-            val action = StudentFragmentDirections.actionStudentFragmentToAllStudentsFragment()
+        binding.cancelSubjectDateButton.setOnClickListener {
+            val action = SubjectDateFragmentDirections.actionSubjectDateFragmentToSubjectInfoFragment(
+                subjectId = args.subjectId
+            )
             findNavController().navigate(action)
         }
     }

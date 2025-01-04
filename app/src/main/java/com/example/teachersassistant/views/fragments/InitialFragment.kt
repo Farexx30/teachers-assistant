@@ -40,11 +40,13 @@ class InitialFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.loginButton.setOnClickListener {
-            findNavController().navigate(R.id.action_initialFragment_to_loginFragment)
+            val action = InitialFragmentDirections.actionInitialFragmentToLoginFragment()
+            findNavController().navigate(action)
         }
 
         binding.registrationButton.setOnClickListener {
-            findNavController().navigate(R.id.action_initialFragment_to_registrationFragment)
+            val action = InitialFragmentDirections.actionInitialFragmentToRegistrationFragment()
+            findNavController().navigate(action)
         }
     }
 }
