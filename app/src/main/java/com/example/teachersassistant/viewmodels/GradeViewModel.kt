@@ -27,7 +27,7 @@ class GradeViewModel @Inject constructor(
         }
     }
 
-    fun saveGrade(gradeId: Long, subjectId: Long, studentId: Long) {
+    suspend fun saveGrade(gradeId: Long, subjectId: Long, studentId: Long) {
         val gradeDto = SubjectStudentGradeDto(
             id = gradeId,
             title = title.value!!.trim(),
@@ -35,13 +35,11 @@ class GradeViewModel @Inject constructor(
             comment = comment.value?.trim()
         )
 
-        viewModelScope.launch {
-            if (gradeId == 0L) {
-                studentRepository.insertGrade(gradeDto, subjectId, studentId)
-            }
-            else {
-                studentRepository.updateGrade(gradeDto, subjectId, studentId)
-            }
+        if (gradeId == 0L) {
+            studentRepository.insertGrade(gradeDto, subjectId, studentId)
+        }
+        else {
+            studentRepository.updateGrade(gradeDto, subjectId, studentId)
         }
     }
 }

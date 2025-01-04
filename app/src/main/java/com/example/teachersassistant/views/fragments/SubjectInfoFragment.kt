@@ -3,29 +3,24 @@ package com.example.teachersassistant.views.fragments
 import android.annotation.SuppressLint
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.view.isVisible
+import android.widget.PopupMenu
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.transition.Visibility
+import com.example.teachersassistant.R
 import com.example.teachersassistant.adapters.SubjectDatesRecyclerViewAdapter
-import com.example.teachersassistant.common.Day
-import com.example.teachersassistant.common.RegistrationOrLoginResult
 import com.example.teachersassistant.databinding.FragmentSubjectInfoBinding
-import com.example.teachersassistant.dtos.subject.SubjectWithDatesDto
 import com.example.teachersassistant.viewmodels.SubjectInfoViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.time.LocalTime
 
 @AndroidEntryPoint
 class SubjectInfoFragment : Fragment() {
@@ -55,13 +50,43 @@ class SubjectInfoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        subjectDatesAdapter = SubjectDatesRecyclerViewAdapter(emptyList())
+        subjectDatesAdapter = SubjectDatesRecyclerViewAdapter(mutableListOf())
 
         subjectDatesAdapter.onItemClickListener = { date ->
             val action = SubjectInfoFragmentDirections.actionSubjectInfoFragmentToSubjectDateFragment(
                 date.id,
-                subjectId)
+                subjectId
+            )
             findNavController().navigate(action)
+        }
+
+        subjectDatesAdapter.onItemLongClickListener = { view, subjectDate, position ->
+            val popupMenu = PopupMenu(requireContext(), view)
+
+            popupMenu.menuInflater
+                .inflate(R.menu.menu_recycler_view_delete_options, popupMenu.menu)
+            popupMenu.gravity = Gravity.END
+
+            popupMenu.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.delete_option -> {
+                        lifecycleScope.launch {
+                            viewModel.deleteSubjectDate(subjectDate)
+                            subjectDatesAdapter.itemRemoved(position)
+                        }
+                        true
+                    }
+                    else -> false
+                }
+            }
+
+            popupMenu.show()
+        }
+
+        lifecycleScope.launch {
+            viewModel.subjectDates.collect { subjectDates ->
+                subjectDatesAdapter.fillWithData(subjectDates.toMutableList())
+            }
         }
 
         binding = FragmentSubjectInfoBinding.inflate(inflater, container, false)
@@ -97,12 +122,6 @@ class SubjectInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        lifecycleScope.launch {
-            viewModel.subjectDates.collect { subjectDates ->
-                subjectDatesAdapter.updateData(subjectDates)
-            }
-        }
-
         binding.addNewSubjectDateButton.setOnClickListener {
             val action = SubjectInfoFragmentDirections.actionSubjectInfoFragmentToSubjectDateFragment(
                 subjectId = subjectId,
@@ -121,9 +140,12 @@ class SubjectInfoFragment : Fragment() {
         }
 
         binding.saveNewSubjectButton.setOnClickListener {
-            viewModel.saveNewSubject()
+            lifecycleScope.launch {
+                viewModel.saveNewSubject()
+                viewModel.getSubjectData(subjectId)
 
-            adjustUIWhenSubjectExist()
+                adjustUIWhenSubjectExist()
+            }
         }
 
         binding.goToScheduleFromSubjectInfoButton.setOnClickListener {
@@ -143,10 +165,12 @@ class SubjectInfoFragment : Fragment() {
                 binding.subjectNameEditText.isEnabled = true
             }
             else {
-                viewModel.updateSubjectName(subjectId)
+                lifecycleScope.launch {
+                    viewModel.updateSubjectName(subjectId)
 
-                binding.editSubjectNameButton.text = "Edit"
-                binding.subjectNameEditText.isEnabled = false
+                    binding.editSubjectNameButton.text = "Edit"
+                    binding.subjectNameEditText.isEnabled = false
+                }
             }
         }
     }

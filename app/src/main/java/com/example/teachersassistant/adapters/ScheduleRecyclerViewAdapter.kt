@@ -47,7 +47,8 @@ class ScheduleRecyclerViewAdapter(private var items: List<SubjectAndHoursDto>)
         }
     }
 
-    fun updateData(newItems: List<SubjectAndHoursDto>) {
+    @SuppressLint("NotifyDataSetChanged")
+    fun fillWithData(newItems: List<SubjectAndHoursDto>) {
         items = newItems
         notifyDataSetChanged()
     }

@@ -62,7 +62,7 @@ class SubjectRepository @Inject constructor(
         subjectDao.deleteSubject(subjectToDelete)
     }
 
-    override suspend fun deleteSubject(subjectDateToDeleteDto: SubjectDateDto) {
+    override suspend fun deleteSubjectDate(subjectDateToDeleteDto: SubjectDateDto) {
         val subjectDateToDelete = subjectDateToDeleteDto.mapToSubjectDate()
 
         subjectDao.deleteSubjectDate(subjectDateToDelete)

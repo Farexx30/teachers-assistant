@@ -48,7 +48,7 @@ class AssignStudentsToSubjectFragment : Fragment() {
 
         lifecycleScope.launch {
             viewModel.students.collect { students ->
-                assignStudentsToSubjectAdapter.updateData(students)
+                assignStudentsToSubjectAdapter.fillWithData(students.toList())
             }
         }
 
@@ -73,10 +73,13 @@ class AssignStudentsToSubjectFragment : Fragment() {
             val studentsIdsToAssign = studentsToAssign.map { student ->
                 student.id
             }
-            viewModel.assignStudentsToSubject(studentsIdsToAssign, args.subjectId)
 
-            val action = AssignStudentsToSubjectFragmentDirections.actionAssignStudentsToSubjectFragmentToSubjectStudentsFragment(args.subjectId)
-            findNavController().navigate(action)
+            lifecycleScope.launch {
+                viewModel.assignStudentsToSubject(studentsIdsToAssign, args.subjectId)
+
+                val action = AssignStudentsToSubjectFragmentDirections.actionAssignStudentsToSubjectFragmentToSubjectStudentsFragment(args.subjectId)
+                findNavController().navigate(action)
+            }
         }
 
         binding.cancelStudentAssignmentToSubjectButton.setOnClickListener {

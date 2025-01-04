@@ -15,7 +15,7 @@ interface ISubjectRepository {
     abstract suspend fun updateSubject(updatedSubjectDto: SubjectBasicInfoDto, teacherId: Long)
     abstract suspend fun updateSubjectDate(updatedSubjectDateDto: SubjectDateDto, subjectId: Long)
     abstract suspend fun deleteSubject(subjectToDeleteDto: SubjectBasicInfoDto)
-    abstract suspend fun deleteSubject(subjectDateToDeleteDto: SubjectDateDto)
+    abstract suspend fun deleteSubjectDate(subjectDateToDeleteDto: SubjectDateDto)
     abstract suspend fun removeStudentFromSubject(subjectStudentToRemoveDto: SubjectStudentDto)
     abstract suspend fun getSubjectBasicInfoById (subjectId: Long): SubjectBasicInfoDto
     abstract suspend fun getAllCurrentUserSubjects(currentUserId: Long): List<SubjectBasicInfoDto>

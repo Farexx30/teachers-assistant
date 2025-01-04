@@ -2,15 +2,18 @@ package com.example.teachersassistant.views.fragments
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.teachersassistant.R
 import com.example.teachersassistant.adapters.StudentsRecyclerViewAdapter
 import com.example.teachersassistant.databinding.FragmentSubjectStudentsBinding
 import com.example.teachersassistant.dtos.student.StudentDto
@@ -50,17 +53,42 @@ class SubjectStudentsFragment : Fragment() {
             findNavController().navigate(action)
         }
 
-        binding = FragmentSubjectStudentsBinding.inflate(inflater, container, false)
-        binding.apply {
-            subjectStudentsRecyclerView.apply {
-                layoutManager = LinearLayoutManager(requireContext())
-                adapter = studentsAdapter
+        studentsAdapter.onItemLongClickListener = { view, student, position ->
+            val popupMenu = PopupMenu(requireContext(), view)
+
+            popupMenu.menuInflater
+                .inflate(R.menu.menu_recycler_view_remove_options, popupMenu.menu)
+            popupMenu.gravity = Gravity.END
+
+            popupMenu.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.remove_option -> {
+                        lifecycleScope.launch {
+                            viewModel.removeStudentFromSubject(student, args.subjectId)
+                            studentsAdapter.itemRemoved(position)
+                        }
+                        true
+                    }
+                    else -> false
+                }
             }
+
+            popupMenu.show()
         }
 
         lifecycleScope.launch {
             viewModel.students.collect { students ->
-                studentsAdapter.updateData(students.toMutableList())
+                studentsAdapter.fillWithData(students.toMutableList())
+            }
+        }
+
+        binding = FragmentSubjectStudentsBinding.inflate(inflater, container, false)
+        binding.subjectStudentsViewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.apply {
+            subjectStudentsRecyclerView.apply {
+                layoutManager = LinearLayoutManager(requireContext())
+                adapter = studentsAdapter
             }
         }
 

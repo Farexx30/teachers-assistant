@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.teachersassistant.dtos.student.StudentDto
 import com.example.teachersassistant.models.repositories.student.IStudentRepository
 import com.example.teachersassistant.session.IUserContext
-import com.example.teachersassistant.session.UserContext
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -26,16 +25,8 @@ class AllStudentsViewModel @Inject constructor(
         }
     }
 
-    fun deleteStudent(studentId: Long) {
-        val studentToDeleteDto = StudentDto(
-            id = studentId,
-            firstName = "",
-            lastName = "",
-            albumNumber = ""
-        )
-
-        viewModelScope.launch {
-            studentRepository.deleteStudent(studentToDeleteDto)
-        }
+    suspend fun deleteStudent(studentToDeleteDto: StudentDto) {
+        studentRepository.deleteStudent(studentToDeleteDto)
+        _students.value.remove(studentToDeleteDto)
     }
 }

@@ -2,15 +2,18 @@ package com.example.teachersassistant.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.teachersassistant.databinding.RecyclerViewElementSubjectBinding
+import com.example.teachersassistant.dtos.student.StudentDto
 import com.example.teachersassistant.dtos.subject.SubjectBasicInfoDto
 
-class AllSubjectsRecyclerViewAdapter (private var items: List<SubjectBasicInfoDto>)
+class AllSubjectsRecyclerViewAdapter (private var items: MutableList<SubjectBasicInfoDto>)
     : RecyclerView.Adapter<AllSubjectsRecyclerViewAdapter.ViewHolder>() {
 
     var onItemClickListener: ((SubjectBasicInfoDto) -> Unit)? = null
+    var onItemLongClickListener: ((View, SubjectBasicInfoDto, Int) -> Unit)? = null
 
 
     override fun onCreateViewHolder(
@@ -42,10 +45,22 @@ class AllSubjectsRecyclerViewAdapter (private var items: List<SubjectBasicInfoDt
             itemView.setOnClickListener {
                 onItemClickListener?.invoke(item)
             }
+
+            itemView.setOnLongClickListener {
+                onItemLongClickListener?.invoke(it, item, adapterPosition)
+                true
+            }
         }
     }
 
-    fun updateData(newItems: List<SubjectBasicInfoDto>) {
+    fun itemRemoved(position: Int) {
+        items.removeAt(position)
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position, items.size)
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun fillWithData(newItems: MutableList<SubjectBasicInfoDto>) {
         items = newItems
         notifyDataSetChanged()
     }

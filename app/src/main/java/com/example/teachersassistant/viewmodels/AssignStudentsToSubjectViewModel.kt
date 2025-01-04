@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.teachersassistant.dtos.student.StudentDto
 import com.example.teachersassistant.dtos.subject.SubjectStudentDto
+import com.example.teachersassistant.models.entities.student.SubjectStudent
 import com.example.teachersassistant.models.repositories.student.IStudentRepository
 import com.example.teachersassistant.models.repositories.subject.ISubjectRepository
 import com.example.teachersassistant.session.IUserContext
@@ -42,15 +43,14 @@ class AssignStudentsToSubjectViewModel @Inject constructor(
         }
     }
 
-    fun assignStudentsToSubject(studentsIdsToAssign: List<Long>, subjectId: Long) {
+    suspend fun assignStudentsToSubject(studentsIdsToAssign: List<Long>, subjectId: Long) {
         val newSubjectStudentsDtos = studentsIdsToAssign.map { studentId ->
             SubjectStudentDto(
                 subjectId = subjectId,
-                studentId = studentId)
+                studentId = studentId
+            )
         }
 
-        viewModelScope.launch {
-            subjectRepository.assignStudentToSubject(newSubjectStudentsDtos)
-        }
+        subjectRepository.assignStudentToSubject(newSubjectStudentsDtos)
     }
 }

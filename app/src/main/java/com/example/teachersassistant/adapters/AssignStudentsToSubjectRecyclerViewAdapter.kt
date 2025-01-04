@@ -56,6 +56,15 @@ class AssignStudentsToSubjectRecyclerViewAdapter(private var items: List<Student
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun fillWithData(newItems: List<StudentDto>) {
+        items = newItems
+        selectedItems.clear()
+        notifyDataSetChanged()
+    }
+
+    fun getSelectedItems(): List<StudentDto> = selectedItems
+
     private fun toggleSelection(item: StudentDto) {
         if (selectedItems.contains(item)) {
             selectedItems.remove(item)
@@ -70,12 +79,4 @@ class AssignStudentsToSubjectRecyclerViewAdapter(private var items: List<Student
 
         onSelectionChangedListener?.invoke(selectedItems)
     }
-
-    fun updateData(newItems: List<StudentDto>) {
-        items = newItems
-        selectedItems.clear()
-        notifyDataSetChanged()
-    }
-
-    fun getSelectedItems(): List<StudentDto> = selectedItems
 }

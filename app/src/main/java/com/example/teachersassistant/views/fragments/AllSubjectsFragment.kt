@@ -2,14 +2,16 @@ package com.example.teachersassistant.views.fragments
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.PopupMenu
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.teachersassistant.R
 import com.example.teachersassistant.adapters.AllSubjectsRecyclerViewAdapter
 import com.example.teachersassistant.viewmodels.AllSubjectsViewModel
 import com.example.teachersassistant.databinding.FragmentAllSubjectsBinding
@@ -31,11 +33,40 @@ class AllSubjectsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        allSubjectsAdapter = AllSubjectsRecyclerViewAdapter(emptyList())
+        allSubjectsAdapter = AllSubjectsRecyclerViewAdapter(mutableListOf())
 
         allSubjectsAdapter.onItemClickListener = { subject ->
             val action = AllSubjectsFragmentDirections.actionAllSubjectsFragmentToSubjectInfoFragment(subject.id)
             findNavController().navigate(action)
+        }
+
+        allSubjectsAdapter.onItemLongClickListener = { view, subject, position ->
+            val popupMenu = PopupMenu(requireContext(), view)
+
+            popupMenu.menuInflater
+                .inflate(R.menu.menu_recycler_view_delete_options, popupMenu.menu)
+            popupMenu.gravity = Gravity.END
+
+            popupMenu.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.delete_option -> {
+                        lifecycleScope.launch {
+                            viewModel.deleteSubject(subject)
+                            allSubjectsAdapter.itemRemoved(position)
+                        }
+                        true
+                    }
+                    else -> false
+                }
+            }
+
+            popupMenu.show()
+        }
+
+        lifecycleScope.launch {
+            viewModel.subjects.collect { subjects ->
+                allSubjectsAdapter.fillWithData(subjects.toMutableList())
+            }
         }
 
         binding = FragmentAllSubjectsBinding.inflate(inflater, container, false)
@@ -51,12 +82,6 @@ class AllSubjectsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        lifecycleScope.launch {
-            viewModel.subjects.collect { subjects ->
-                allSubjectsAdapter.updateData(subjects)
-            }
-        }
 
         binding.goToMainMenuFromAllSubjectsButton.setOnClickListener {
             val action = AllSubjectsFragmentDirections.actionAllSubjectsFragmentToMainMenuFragment()

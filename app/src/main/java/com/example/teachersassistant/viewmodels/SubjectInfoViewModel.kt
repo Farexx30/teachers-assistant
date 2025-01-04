@@ -10,9 +10,11 @@ import com.example.teachersassistant.models.repositories.subject.ISubjectReposit
 import com.example.teachersassistant.session.IUserContext
 import com.example.teachersassistant.session.UserContext
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,8 +24,8 @@ class SubjectInfoViewModel @Inject constructor(
 ): ViewModel() {
     val subjectName = MutableLiveData<String>()
 
-    private val _subjectDates = MutableStateFlow<List<SubjectDateDto>>(emptyList())
-    val subjectDates: StateFlow<List<SubjectDateDto>> = _subjectDates
+    private val _subjectDates = MutableStateFlow<MutableList<SubjectDateDto>>(mutableListOf())
+    val subjectDates: StateFlow<MutableList<SubjectDateDto>> = _subjectDates
 
     private val _subjectId = MutableStateFlow(0L)
     val subjectId: StateFlow<Long> = _subjectId
@@ -34,30 +36,31 @@ class SubjectInfoViewModel @Inject constructor(
 
             subjectName.postValue(subjectDto.name)
             _subjectId.value = subjectDto.id
-            _subjectDates.value = subjectDatesDtos
+            _subjectDates.value = subjectDatesDtos.toMutableList()
         }
     }
 
-    fun saveNewSubject() {
+    suspend fun saveNewSubject() {
         val newSubjectDto = SubjectBasicInfoDto(
-            id = 0,
+            id = 0L,
             name = subjectName.value!!.trim()
         )
 
-        viewModelScope.launch {
-            val insertedSubjectId = subjectRepository.insertSubject(newSubjectDto, userContext.getCurrentUserId()!!)
-            _subjectId.value = insertedSubjectId
-        }
+        val insertedSubjectId = subjectRepository.insertSubject(newSubjectDto, userContext.getCurrentUserId()!!)
+        _subjectId.value = insertedSubjectId
     }
 
-    fun updateSubjectName(subjectId: Long) {
+    suspend fun updateSubjectName(subjectId: Long) {
         val updatedSubjectDto = SubjectBasicInfoDto(
             id = subjectId,
             name = subjectName.value!!.trim()
         )
 
-        viewModelScope.launch {
-            subjectRepository.updateSubject(updatedSubjectDto, userContext.getCurrentUserId()!!)
-        }
+        subjectRepository.updateSubject(updatedSubjectDto, userContext.getCurrentUserId()!!)
+    }
+
+    suspend fun deleteSubjectDate(subjectDateToDeleteDto: SubjectDateDto) {
+        subjectRepository.deleteSubjectDate(subjectDateToDeleteDto)
+        _subjectDates.value.remove(subjectDateToDeleteDto)
     }
 }

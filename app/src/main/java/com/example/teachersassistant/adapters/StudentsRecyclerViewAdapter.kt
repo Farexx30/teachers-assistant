@@ -46,8 +46,7 @@ class StudentsRecyclerViewAdapter (private var items: MutableList<StudentDto>)
             }
 
             itemView.setOnLongClickListener {
-                val position = adapterPosition
-                onItemLongClickListener?.invoke(it, item, position)
+                onItemLongClickListener?.invoke(it, item, adapterPosition)
                 true
             }
         }
@@ -56,13 +55,12 @@ class StudentsRecyclerViewAdapter (private var items: MutableList<StudentDto>)
     fun itemRemoved(position: Int) {
         items.removeAt(position)
         notifyItemRemoved(position)
+        notifyItemRangeChanged(position, items.size)
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateData(newItems: MutableList<StudentDto>) {
+    fun fillWithData(newItems: MutableList<StudentDto>) {
         items = newItems
         notifyDataSetChanged()
     }
-
-
 }

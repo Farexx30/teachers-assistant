@@ -28,7 +28,7 @@ class StudentViewModel @Inject constructor(
         }
     }
 
-    fun saveStudent(studentId: Long) {
+    suspend fun saveStudent(studentId: Long) {
         val studentDto = StudentDto(
             id = studentId,
             firstName = firstName.value!!.trim(),
@@ -37,14 +37,10 @@ class StudentViewModel @Inject constructor(
         )
 
         if (studentId == 0L) {
-            viewModelScope.launch {
-                studentRepository.insertStudent(studentDto, userContext.getCurrentUserId()!!)
-            }
+            studentRepository.insertStudent(studentDto, userContext.getCurrentUserId()!!)
         }
         else {
-            viewModelScope.launch {
-                studentRepository.updateStudent(studentDto, userContext.getCurrentUserId()!!)
-            }
+            studentRepository.updateStudent(studentDto, userContext.getCurrentUserId()!!)
         }
     }
 }

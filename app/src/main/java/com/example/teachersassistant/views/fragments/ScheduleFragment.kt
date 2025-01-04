@@ -57,7 +57,7 @@ class ScheduleFragment : Fragment() {
 
         lifecycleScope.launch {
             viewModel.subjects.collect { subjects ->
-                scheduleAdapter.updateData(subjects)
+                scheduleAdapter.fillWithData(subjects.toList())
             }
         }
 

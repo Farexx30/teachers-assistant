@@ -2,6 +2,7 @@ package com.example.teachersassistant.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.teachersassistant.databinding.RecyclerViewElementSubjectDateBinding
@@ -9,10 +10,11 @@ import com.example.teachersassistant.dtos.subject.SubjectBasicInfoDto
 import com.example.teachersassistant.dtos.subject.SubjectDateDto
 import com.example.teachersassistant.dtos.subject.SubjectWithDatesDto
 
-class SubjectDatesRecyclerViewAdapter (private var items: List<SubjectDateDto>)
+class SubjectDatesRecyclerViewAdapter (private var items: MutableList<SubjectDateDto>)
     : RecyclerView.Adapter<SubjectDatesRecyclerViewAdapter.ViewHolder>() {
 
     var onItemClickListener: ((SubjectDateDto) -> Unit)? = null
+    var onItemLongClickListener: ((View, SubjectDateDto, Int) -> Unit)? = null
 
 
     override fun onCreateViewHolder(
@@ -45,10 +47,22 @@ class SubjectDatesRecyclerViewAdapter (private var items: List<SubjectDateDto>)
             itemView.setOnClickListener {
                 onItemClickListener?.invoke(item)
             }
+
+            itemView.setOnLongClickListener {
+                onItemLongClickListener?.invoke(it, item, adapterPosition)
+                true
+            }
         }
     }
 
-    fun updateData(newItems: List<SubjectDateDto>) {
+    fun itemRemoved(position: Int) {
+        items.removeAt(position)
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position, items.size)
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun fillWithData(newItems: MutableList<SubjectDateDto>) {
         items = newItems
         notifyDataSetChanged()
     }

@@ -35,7 +35,7 @@ class SubjectDateViewModel @Inject constructor(
         }
     }
 
-    fun saveSubjectDate(subjectId: Long, dateId: Long) {
+    suspend fun saveSubjectDate(subjectId: Long, dateId: Long) {
         val subjectDateDto = SubjectDateDto(
             id = dateId,
             day = Day.fromString(day.value!!.trim()),
@@ -44,14 +44,10 @@ class SubjectDateViewModel @Inject constructor(
         )
 
         if (dateId == 0L) {
-            viewModelScope.launch {
-                subjectRepository.insertSubjectDate(subjectDateDto, subjectId)
-            }
+            subjectRepository.insertSubjectDate(subjectDateDto, subjectId)
         }
         else {
-            viewModelScope.launch {
-                subjectRepository.updateSubjectDate(subjectDateDto, subjectId)
-            }
+            subjectRepository.updateSubjectDate(subjectDateDto, subjectId)
         }
     }
 }

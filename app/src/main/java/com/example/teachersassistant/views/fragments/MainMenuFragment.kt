@@ -7,11 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.teachersassistant.R
 import com.example.teachersassistant.databinding.FragmentMainMenuBinding
 import com.example.teachersassistant.viewmodels.MainMenuViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint //Not necessary actually but looks like a "good practice" to me
 class MainMenuFragment : Fragment() {
@@ -59,7 +61,11 @@ class MainMenuFragment : Fragment() {
         }
 
         binding.resetButton.setOnClickListener {
-            viewModel.resetAllData()
+            lifecycleScope.launch {
+                disableAllButtons()
+                viewModel.resetAllData()
+                enableAllButtons()
+            }
         }
 
         binding.logoutButton.setOnClickListener {
@@ -70,5 +76,19 @@ class MainMenuFragment : Fragment() {
             val action = MainMenuFragmentDirections.actionMainMenuFragmentToInitialFragment()
             findNavController().navigate(action)
         }
+    }
+
+    private fun disableAllButtons() {
+        binding.scheduleButton.isEnabled = false
+        binding.myStudentsButton.isEnabled = false
+        binding.resetButton.isEnabled = false
+        binding.logoutButton.isEnabled = false
+    }
+
+    private fun enableAllButtons() {
+        binding.scheduleButton.isEnabled = true
+        binding.myStudentsButton.isEnabled = true
+        binding.resetButton.isEnabled = true
+        binding.logoutButton.isEnabled = true
     }
 }

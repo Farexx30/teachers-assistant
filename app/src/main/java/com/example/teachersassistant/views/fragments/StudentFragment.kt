@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.teachersassistant.R
@@ -13,6 +14,7 @@ import com.example.teachersassistant.databinding.FragmentStudentBinding
 import com.example.teachersassistant.databinding.FragmentSubjectInfoBinding
 import com.example.teachersassistant.viewmodels.StudentViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class StudentFragment : Fragment() {
@@ -22,6 +24,14 @@ class StudentFragment : Fragment() {
 
     companion object {
         fun newInstance() = StudentFragment()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        if (args.studentId != 0L) {
+            viewModel.getStudentData(args.studentId)
+        }
     }
 
     private val viewModel: StudentViewModel by viewModels()
@@ -40,15 +50,13 @@ class StudentFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (args.studentId != 0L) {
-            viewModel.getStudentData(args.studentId)
-        }
-
         binding.saveStudentButton.setOnClickListener {
-            viewModel.saveStudent(args.studentId)
+            lifecycleScope.launch {
+                viewModel.saveStudent(args.studentId)
 
-            val action = StudentFragmentDirections.actionStudentFragmentToAllStudentsFragment()
-            findNavController().navigate(action)
+                val action = StudentFragmentDirections.actionStudentFragmentToAllStudentsFragment()
+                findNavController().navigate(action)
+            }
         }
 
         binding.cancelStudentButton.setOnClickListener {

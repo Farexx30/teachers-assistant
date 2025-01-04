@@ -25,8 +25,8 @@ class SubjectStudentInfoViewModel @Inject constructor(
     private val _albumNumber = MutableLiveData<String>()
     val albumNumber: LiveData<String> = _albumNumber
 
-    private val _grades = MutableStateFlow<List<SubjectStudentGradeDto>>(emptyList())
-    val grades: StateFlow<List<SubjectStudentGradeDto>> = _grades
+    private val _grades = MutableStateFlow<MutableList<SubjectStudentGradeDto>>(mutableListOf())
+    val grades: StateFlow<MutableList<SubjectStudentGradeDto>> = _grades
 
 
     fun getSubjectStudentWithGrades(subjectId: Long, studentId: Long) {
@@ -37,7 +37,12 @@ class SubjectStudentInfoViewModel @Inject constructor(
             _lastName.postValue(studentDto.lastName)
             _albumNumber.postValue(studentDto.albumNumber)
 
-            _grades.value = gradesDtos
+            _grades.value = gradesDtos.toMutableList()
         }
+    }
+
+    suspend fun deleteGrade(gradeToDeleteDto: SubjectStudentGradeDto) {
+        studentRepository.deleteGrade(gradeToDeleteDto)
+        _grades.value.remove(gradeToDeleteDto)
     }
 }

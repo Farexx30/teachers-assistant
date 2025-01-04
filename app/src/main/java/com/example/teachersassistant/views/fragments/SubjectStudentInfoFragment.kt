@@ -2,14 +2,17 @@ package com.example.teachersassistant.views.fragments
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.teachersassistant.R
 import com.example.teachersassistant.adapters.SubjectStudentGradesRecyclerViewAdapter
 import com.example.teachersassistant.databinding.FragmentSubjectStudentInfoBinding
 import com.example.teachersassistant.viewmodels.SubjectStudentInfoViewModel
@@ -39,7 +42,7 @@ class SubjectStudentInfoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        subjectStudentGradesAdapter = SubjectStudentGradesRecyclerViewAdapter(emptyList())
+        subjectStudentGradesAdapter = SubjectStudentGradesRecyclerViewAdapter(mutableListOf())
 
         subjectStudentGradesAdapter.onItemClickListener = { grade ->
             val action = SubjectStudentInfoFragmentDirections.actionSubjectStudentInfoFragmentToGradeFragment(
@@ -49,9 +52,32 @@ class SubjectStudentInfoFragment : Fragment() {
             findNavController().navigate(action)
         }
 
+        subjectStudentGradesAdapter.onItemLongClickListener = { view, grade, position ->
+            val popupMenu = PopupMenu(requireContext(), view)
+
+            popupMenu.menuInflater
+                .inflate(R.menu.menu_recycler_view_delete_options, popupMenu.menu)
+            popupMenu.gravity = Gravity.END
+
+            popupMenu.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.delete_option -> {
+                        lifecycleScope.launch {
+                            viewModel.deleteGrade(grade)
+                            subjectStudentGradesAdapter.itemRemoved(position)
+                        }
+                        true
+                    }
+                    else -> false
+                }
+            }
+
+            popupMenu.show()
+        }
+
         lifecycleScope.launch {
             viewModel.grades.collect { grades ->
-                subjectStudentGradesAdapter.updateData(grades)
+                subjectStudentGradesAdapter.fillWithData(grades.toMutableList())
             }
         }
 

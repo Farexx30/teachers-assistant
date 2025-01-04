@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.teachersassistant.R
@@ -13,6 +14,7 @@ import com.example.teachersassistant.databinding.FragmentGradeBinding
 import com.example.teachersassistant.databinding.FragmentSubjectStudentInfoBinding
 import com.example.teachersassistant.viewmodels.GradeViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class GradeFragment : Fragment() {
@@ -49,17 +51,19 @@ class GradeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.saveGradeButton.setOnClickListener {
-            viewModel.saveGrade(
-                args.gradeId,
-                args.subjectId,
-                args.studentId
-            )
+            lifecycleScope.launch {
+                viewModel.saveGrade(
+                    args.gradeId,
+                    args.subjectId,
+                    args.studentId
+                )
 
-            val action = GradeFragmentDirections.actionGradeFragmentToSubjectStudentInfoFragment(
-                subjectId = args.subjectId,
-                studentId = args.studentId
-            )
-            findNavController().navigate(action)
+                val action = GradeFragmentDirections.actionGradeFragmentToSubjectStudentInfoFragment(
+                    subjectId = args.subjectId,
+                    studentId = args.studentId
+                )
+                findNavController().navigate(action)
+            }
         }
 
         binding.cancelGradeCreationOrUpdateButton.setOnClickListener {

@@ -16,12 +16,17 @@ class AllSubjectsViewModel @Inject constructor(
     private val userContext: IUserContext,
     private val subjectRepository: ISubjectRepository
 ) : ViewModel() {
-    private val _subjects = MutableStateFlow<List<SubjectBasicInfoDto>>(emptyList())
-    val subjects: StateFlow<List<SubjectBasicInfoDto>> = _subjects
+    private val _subjects = MutableStateFlow<MutableList<SubjectBasicInfoDto>>(mutableListOf())
+    val subjects: StateFlow<MutableList<SubjectBasicInfoDto>> = _subjects
     init {
         viewModelScope.launch {
             val subjectsDtos = subjectRepository.getAllCurrentUserSubjects(userContext.getCurrentUserId()!!)
-            _subjects.value = subjectsDtos
+            _subjects.value = subjectsDtos.toMutableList()
         }
+    }
+
+    suspend fun deleteSubject(subjectToDeleteDto: SubjectBasicInfoDto) {
+        subjectRepository.deleteSubject(subjectToDeleteDto)
+        _subjects.value.remove(subjectToDeleteDto)
     }
 }

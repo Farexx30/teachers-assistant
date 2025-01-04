@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.teachersassistant.R
@@ -14,6 +15,7 @@ import com.example.teachersassistant.databinding.FragmentSubjectDateBinding
 import com.example.teachersassistant.databinding.FragmentSubjectInfoBinding
 import com.example.teachersassistant.viewmodels.SubjectDateViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SubjectDateFragment : Fragment() {
@@ -49,12 +51,14 @@ class SubjectDateFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.saveSubjectDateButton.setOnClickListener {
-            viewModel.saveSubjectDate(args.subjectId, args.dateId)
+            lifecycleScope.launch {
+                viewModel.saveSubjectDate(args.subjectId, args.dateId)
 
-            val action = SubjectDateFragmentDirections.actionSubjectDateFragmentToSubjectInfoFragment(
-                subjectId = args.subjectId
-            )
-            findNavController().navigate(action)
+                val action = SubjectDateFragmentDirections.actionSubjectDateFragmentToSubjectInfoFragment(
+                    subjectId = args.subjectId
+                )
+                findNavController().navigate(action)
+            }
         }
 
         binding.cancelSubjectDateButton.setOnClickListener {

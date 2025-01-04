@@ -2,6 +2,7 @@ package com.example.teachersassistant.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.teachersassistant.databinding.RecyclerViewElementGradeBinding
@@ -10,10 +11,11 @@ import com.example.teachersassistant.dtos.student.StudentWithGradesDto
 import com.example.teachersassistant.dtos.student.SubjectStudentGradeDto
 import com.example.teachersassistant.dtos.subject.SubjectBasicInfoDto
 
-class SubjectStudentGradesRecyclerViewAdapter (private var items: List<SubjectStudentGradeDto>)
+class SubjectStudentGradesRecyclerViewAdapter (private var items: MutableList<SubjectStudentGradeDto>)
     : RecyclerView.Adapter<SubjectStudentGradesRecyclerViewAdapter.ViewHolder>() {
 
     var onItemClickListener: ((SubjectStudentGradeDto) -> Unit)? = null
+    var onItemLongClickListener: ((View, SubjectStudentGradeDto, Int) -> Unit)? = null
 
 
     override fun onCreateViewHolder(
@@ -46,10 +48,23 @@ class SubjectStudentGradesRecyclerViewAdapter (private var items: List<SubjectSt
             itemView.setOnClickListener {
                 onItemClickListener?.invoke(item)
             }
+
+            itemView.setOnLongClickListener {
+                onItemLongClickListener?.invoke(it, item, adapterPosition)
+                true
+            }
         }
     }
 
-    fun updateData(newItems: List<SubjectStudentGradeDto>) {
+    fun itemRemoved(position: Int) {
+        items.removeAt(position)
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position, items.size)
+    }
+
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun fillWithData(newItems: MutableList<SubjectStudentGradeDto>) {
         items = newItems
         notifyDataSetChanged()
     }
