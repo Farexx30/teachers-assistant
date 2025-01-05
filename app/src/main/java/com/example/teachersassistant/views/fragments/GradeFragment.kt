@@ -50,6 +50,13 @@ class GradeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.gradeNumberPicker.apply {
+            val grades = arrayOf("2.0", "3.0", "3.5", "4.0", "4.5", "5.0")
+            minValue = 0
+            maxValue = grades.size - 1
+            displayedValues = grades
+        }
+
         binding.saveGradeButton.setOnClickListener {
             lifecycleScope.launch {
                 viewModel.saveGrade(

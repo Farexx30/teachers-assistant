@@ -19,8 +19,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <!--    Visible and enabled only when subject already exist -->
-
+            <Button
+                android:id="@+id/go_to_main_menu_from_subject_info_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/menu"
+                android:textColor="@color/my_very_light_blue"
+                android:textSize="15sp"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:padding="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                style="@style/Widget.AppCompat.Button.Borderless"/>
 
             <LinearLayout
                 android:id="@+id/subject_name_linear_layout1"
@@ -149,6 +160,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/subject_dates_recycler_view"
                 tools:ignore="ButtonStyle,InefficientWeight" />
+
+            <TextView
+                android:id="@+id/save_subject_first_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Save subject first!"
+                android:textColor="@color/my_very_light_blue"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/creation_buttons_linear_layout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/go_to_assigned_students_button"
+                tools:ignore="HardcodedText" />
 
 
             <!--    Visible only when subject doesn't exist -->

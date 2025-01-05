@@ -71,20 +71,17 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
                         android:text="@string/grade"
+                        android:layout_gravity="center"
                         android:textColor="@color/my_very_light_blue"
                         android:textSize="20sp" />
 
-                    <EditText
-                        android:id="@+id/grade_edit_text"
-                        android:layout_width="match_parent"
+                    <NumberPicker
+                        android:id="@+id/grade_number_picker"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="@string/grade"
-                        android:importantForAutofill="no"
-                        android:inputType="numberDecimal"
-                        android:text="@={gradeViewModel.grade}"
-                        android:textColor="@color/my_very_light_blue"
-                        android:textColorHint="@color/my_light_blue"
-                        android:textSize="20sp" />
+                        android:layout_gravity="center"
+                        android:theme="@style/LargeNumberPickerText"
+                        android:value="@={gradeViewModel.grade}"/>
 
 
                 </LinearLayout>

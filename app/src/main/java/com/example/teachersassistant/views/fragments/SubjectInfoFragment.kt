@@ -122,6 +122,11 @@ class SubjectInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.goToMainMenuFromSubjectInfoButton.setOnClickListener {
+            val action = SubjectInfoFragmentDirections.actionSubjectInfoFragmentToMainMenuFragment()
+            findNavController().navigate(action)
+        }
+
         binding.addNewSubjectDateButton.setOnClickListener {
             val action = SubjectInfoFragmentDirections.actionSubjectInfoFragmentToSubjectDateFragment(
                 subjectId = subjectId,
@@ -162,14 +167,20 @@ class SubjectInfoFragment : Fragment() {
         binding.editSubjectNameButton.setOnClickListener {
             if (!binding.subjectNameEditText.isEnabled) {
                 binding.editSubjectNameButton.text = "Save"
-                binding.subjectNameEditText.isEnabled = true
+                binding.subjectNameEditText.apply {
+                    isEnabled = true
+                    alpha = 1.0F
+                }
             }
             else {
                 lifecycleScope.launch {
                     viewModel.updateSubjectName(subjectId)
 
                     binding.editSubjectNameButton.text = "Edit"
-                    binding.subjectNameEditText.isEnabled = false
+                    binding.subjectNameEditText.apply {
+                        isEnabled = false
+                        alpha = 0.5F
+                    }
                 }
             }
         }
@@ -179,14 +190,44 @@ class SubjectInfoFragment : Fragment() {
         binding.navButtonsLinearLayout.visibility = View.GONE
         binding.editSubjectNameButton.visibility = View.GONE
         binding.creationButtonsLinearLayout.visibility = View.VISIBLE
-        binding.subjectNameEditText.isEnabled = true
+        binding.saveSubjectFirstTextView.visibility = View.VISIBLE
+
+        binding.subjectNameEditText.apply {
+            isEnabled = true
+            alpha = 1.0F
+        }
+
+        binding.addNewSubjectDateButton.apply {
+            isEnabled = false
+            alpha = 0.5F
+        }
+
+        binding.goToAssignedStudentsButton.apply {
+            isEnabled = false
+            alpha = 0.5F
+        }
     }
 
     private fun adjustUIWhenSubjectExist() {
         binding.creationButtonsLinearLayout.visibility = View.GONE
         binding.navButtonsLinearLayout.visibility = View.VISIBLE
+        binding.saveSubjectFirstTextView.visibility = View.GONE
         binding.editSubjectNameButton.visibility = View.VISIBLE
         binding.editSubjectNameButton.isEnabled = true
-        binding.subjectNameEditText.isEnabled = false
+
+        binding.addNewSubjectDateButton.apply {
+            isEnabled = true
+            alpha = 1.0F
+        }
+
+        binding.goToAssignedStudentsButton.apply {
+            isEnabled = true
+            alpha = 1.0F
+        }
+
+        binding.subjectNameEditText.apply {
+            isEnabled = false
+            alpha = 0.5F
+        }
     }
 }

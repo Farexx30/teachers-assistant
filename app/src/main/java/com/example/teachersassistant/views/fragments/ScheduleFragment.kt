@@ -72,7 +72,7 @@ class ScheduleFragment : Fragment() {
                 adapter = scheduleAdapter
             }
         }
-        
+
         return binding.root
     }
 

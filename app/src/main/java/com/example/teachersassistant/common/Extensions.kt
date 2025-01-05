@@ -4,3 +4,5 @@ fun String.toTitleCase(): String {
     return this.lowercase()
         .replaceFirstChar { it.uppercase() }
 }
+
+

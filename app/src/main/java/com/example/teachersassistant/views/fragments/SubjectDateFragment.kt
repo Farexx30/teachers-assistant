@@ -1,6 +1,5 @@
 package com.example.teachersassistant.views.fragments
 
-import android.graphics.Color
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,11 +10,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.teachersassistant.R
+import com.example.teachersassistant.common.Day
 import com.example.teachersassistant.databinding.FragmentSubjectDateBinding
-import com.example.teachersassistant.databinding.FragmentSubjectInfoBinding
 import com.example.teachersassistant.viewmodels.SubjectDateViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 @AndroidEntryPoint
 class SubjectDateFragment : Fragment() {
@@ -47,24 +47,57 @@ class SubjectDateFragment : Fragment() {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.subjectDayNumberPicker.apply {
+            val dayOptions = resources.getStringArray(R.array.day_options)
+            minValue = 0
+            maxValue = dayOptions.size - 1
+            displayedValues = dayOptions
+        }
+
+        binding.subjectStartHourNumberPicker.apply {
+            minValue = 0
+            maxValue = 23
+            setFormatter { value -> String.format(Locale.US, "%02d", value) }
+        }
+
+        binding.subjectStartMinuteNumberPicker.apply {
+            minValue = 0
+            maxValue = 59
+            setFormatter { value -> String.format(Locale.US, "%02d", value) }
+        }
+
+        binding.subjectEndHourNumberPicker.apply {
+            minValue = 0
+            maxValue = 23
+            setFormatter { value -> String.format(Locale.US, "%02d", value) }
+        }
+
+        binding.subjectEndMinuteNumberPicker.apply {
+            minValue = 0
+            maxValue = 59
+            setFormatter { value -> String.format(Locale.US, "%02d", value) }
+        }
 
         binding.saveSubjectDateButton.setOnClickListener {
             lifecycleScope.launch {
                 viewModel.saveSubjectDate(args.subjectId, args.dateId)
-
-                val action = SubjectDateFragmentDirections.actionSubjectDateFragmentToSubjectInfoFragment(
-                    subjectId = args.subjectId
-                )
+                val action =
+                    SubjectDateFragmentDirections.actionSubjectDateFragmentToSubjectInfoFragment(
+                        subjectId = args.subjectId
+                    )
                 findNavController().navigate(action)
             }
         }
 
         binding.cancelSubjectDateButton.setOnClickListener {
-            val action = SubjectDateFragmentDirections.actionSubjectDateFragmentToSubjectInfoFragment(
-                subjectId = args.subjectId
-            )
+            val action =
+                SubjectDateFragmentDirections.actionSubjectDateFragmentToSubjectInfoFragment(
+                    subjectId = args.subjectId
+                )
             findNavController().navigate(action)
         }
     }

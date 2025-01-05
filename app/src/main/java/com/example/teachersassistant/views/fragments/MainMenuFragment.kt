@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.teachersassistant.R
@@ -61,11 +62,7 @@ class MainMenuFragment : Fragment() {
         }
 
         binding.resetButton.setOnClickListener {
-            lifecycleScope.launch {
-                disableAllButtons()
-                viewModel.resetAllData()
-                enableAllButtons()
-            }
+            showResetAllDataConfirmationDialog()
         }
 
         binding.logoutButton.setOnClickListener {
@@ -90,5 +87,39 @@ class MainMenuFragment : Fragment() {
         binding.myStudentsButton.isEnabled = true
         binding.resetButton.isEnabled = true
         binding.logoutButton.isEnabled = true
+    }
+
+
+    private fun showResetAllDataConfirmationDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setMessage("Are you sure you want to proceed? This will permanently delete all your data.")
+            .setCancelable(false)
+            .setPositiveButton("Confirm") { _, _ ->
+                lifecycleScope.launch {
+                    disableAllButtons()
+                    viewModel.resetAllData()
+                    showResetAllDataMessageDialog()
+                    enableAllButtons()
+                }
+            }
+            .setNegativeButton("Cancel") { _, _ ->
+                //No action, just close the dialog.
+            }
+
+        // Create and show the dialog
+        val alertDialog = builder.create()
+        alertDialog.show()
+    }
+
+    private fun showResetAllDataMessageDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setMessage("Successfully deleted your data!")
+            .setCancelable(false)
+            .setPositiveButton("OK") { _, _ ->
+                //No action, just close the dialog.
+            }
+
+        val alertDialog = builder.create()
+        alertDialog.show()
     }
 }

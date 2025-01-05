@@ -14,7 +14,7 @@ class GradeViewModel @Inject constructor(
     private val studentRepository: IStudentRepository
 ): ViewModel() {
     val title = MutableLiveData<String>()
-    val grade = MutableLiveData<String>()
+    val grade = MutableLiveData(3)
     val comment = MutableLiveData<String?>()
 
     fun getGradeById(gradeId: Long) {
@@ -22,7 +22,7 @@ class GradeViewModel @Inject constructor(
             val gradeDto = studentRepository.getGradeById(gradeId)
 
             title.postValue(gradeDto.title)
-            grade.postValue(gradeDto.grade.toString())
+            grade.postValue(mapGradeToNumberPickerValue(gradeDto.grade)) //Because NumberPicker cannot hold Float data and we handle
             comment.postValue(gradeDto.comment)
         }
     }
@@ -31,7 +31,7 @@ class GradeViewModel @Inject constructor(
         val gradeDto = SubjectStudentGradeDto(
             id = gradeId,
             title = title.value!!.trim(),
-            grade = grade.value!!.toFloat(),
+            grade = mapNumberPickerValueToGrade(grade.value!!),
             comment = comment.value?.trim()
         )
 
@@ -40,6 +40,30 @@ class GradeViewModel @Inject constructor(
         }
         else {
             studentRepository.updateGrade(gradeDto, subjectId, studentId)
+        }
+    }
+
+    private fun mapGradeToNumberPickerValue(grade: Float): Int {
+        return when(grade) {
+            2.0F -> 0
+            3.0F -> 1
+            3.5F -> 2
+            4.0F -> 3
+            4.5F -> 4
+            5.0F -> 5
+            else -> null!! //Not possible
+        }
+    }
+
+    private fun mapNumberPickerValueToGrade(value: Int): Float {
+        return when(value) {
+            0 -> 2.0F
+            1 -> 3.0F
+            2 -> 3.5F
+            3 -> 4.0F
+            4 -> 4.5F
+            5 -> 5.0F
+            else -> null!! //Not possible
         }
     }
 }
