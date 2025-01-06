@@ -75,11 +75,12 @@
                         android:textColor="@color/my_very_light_blue"
                         android:textColorHint="@color/my_light_blue"
                         android:textSize="30sp"
+                        android:maxLength="14"
                         tools:ignore="LabelFor" />
 
                     <!--    Visible and enabled only when subject already exist -->
                     <Button
-                        android:id="@+id/edit_subject_name_button"
+                        android:id="@+id/edit_and_save_subject_name_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
@@ -212,7 +213,8 @@
                     android:text="@string/save"
                     android:textColor="@color/my_very_light_blue"
                     android:textSize="20sp"
-                    android:enabled="true"
+                    android:enabled="false"
+                    android:alpha="0.5"
                     tools:ignore="ButtonStyle,InefficientWeight" />
 
             </LinearLayout>

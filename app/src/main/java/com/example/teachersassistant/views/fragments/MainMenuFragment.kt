@@ -10,13 +10,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.teachersassistant.R
 import com.example.teachersassistant.databinding.FragmentMainMenuBinding
 import com.example.teachersassistant.viewmodels.MainMenuViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-@AndroidEntryPoint //Not necessary actually but looks like a "good practice" to me
+@AndroidEntryPoint
 class MainMenuFragment : Fragment() {
     private lateinit var binding: FragmentMainMenuBinding
 
@@ -29,7 +28,7 @@ class MainMenuFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // TODO: Use the ViewModel
+        // No ViewModel usage here.
     }
 
     override fun onCreateView(
@@ -76,17 +75,42 @@ class MainMenuFragment : Fragment() {
     }
 
     private fun disableAllButtons() {
-        binding.scheduleButton.isEnabled = false
-        binding.myStudentsButton.isEnabled = false
-        binding.resetButton.isEnabled = false
-        binding.logoutButton.isEnabled = false
+        binding.scheduleButton.apply {
+            isEnabled = false
+            alpha = 0.5F
+        }
+        binding.myStudentsButton.apply {
+            isEnabled = false
+            alpha = 0.5F
+
+        }
+        binding.resetButton.apply {
+            isEnabled = false
+            alpha = 0.5F
+        }
+        binding.logoutButton.apply {
+            isEnabled = false
+            alpha = 0.5F
+        }
     }
 
     private fun enableAllButtons() {
-        binding.scheduleButton.isEnabled = true
-        binding.myStudentsButton.isEnabled = true
-        binding.resetButton.isEnabled = true
-        binding.logoutButton.isEnabled = true
+        binding.scheduleButton.apply {
+            isEnabled = true
+            alpha = 1.0F
+        }
+        binding.myStudentsButton.apply {
+            isEnabled = true
+            alpha = 1.0F
+        }
+        binding.resetButton.apply {
+            isEnabled = true
+            alpha = 1.0F
+        }
+        binding.logoutButton.apply {
+            isEnabled = true
+            alpha = 1.0F
+        }
     }
 
 
@@ -106,7 +130,6 @@ class MainMenuFragment : Fragment() {
                 //No action, just close the dialog.
             }
 
-        // Create and show the dialog
         val alertDialog = builder.create()
         alertDialog.show()
     }

@@ -37,9 +37,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:text="@{subjectStudentsViewModel.subjectName}"
+                android:text='@{subjectStudentsViewModel.subjectName + " students"}'
                 android:textColor="@color/my_very_light_blue"
-                android:textSize="26sp"
+                android:textSize="24sp"
                 app:layout_constraintBottom_toTopOf="@+id/subject_students_recycler_view"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />

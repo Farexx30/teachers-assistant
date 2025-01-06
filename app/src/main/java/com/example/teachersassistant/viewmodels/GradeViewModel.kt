@@ -1,5 +1,6 @@
 package com.example.teachersassistant.viewmodels
 
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,12 +18,16 @@ class GradeViewModel @Inject constructor(
     val grade = MutableLiveData(3)
     val comment = MutableLiveData<String?>()
 
+    val isSaveGradeButtonEnabled = MediatorLiveData<Boolean>().apply {
+        addSource(title) { checkFields() }
+    }
+
     fun getGradeById(gradeId: Long) {
         viewModelScope.launch {
             val gradeDto = studentRepository.getGradeById(gradeId)
 
             title.postValue(gradeDto.title)
-            grade.postValue(mapGradeToNumberPickerValue(gradeDto.grade)) //Because NumberPicker cannot hold Float data and we handle
+            grade.postValue(mapGradeToNumberPickerValue(gradeDto.grade)) //Because NumberPicker cannot hold Float data and we map it from Float to Int
             comment.postValue(gradeDto.comment)
         }
     }
@@ -41,6 +46,14 @@ class GradeViewModel @Inject constructor(
         else {
             studentRepository.updateGrade(gradeDto, subjectId, studentId)
         }
+    }
+
+    private fun checkFields() {
+        isSaveGradeButtonEnabled.value = canSaveGrade()
+    }
+
+    private fun canSaveGrade(): Boolean {
+        return title.value?.trim()?.isNotEmpty() == true
     }
 
     private fun mapGradeToNumberPickerValue(grade: Float): Int {

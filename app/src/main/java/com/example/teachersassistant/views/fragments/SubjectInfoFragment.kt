@@ -164,9 +164,9 @@ class SubjectInfoFragment : Fragment() {
         }
 
 
-        binding.editSubjectNameButton.setOnClickListener {
+        binding.editAndSaveSubjectNameButton.setOnClickListener {
             if (!binding.subjectNameEditText.isEnabled) {
-                binding.editSubjectNameButton.text = "Save"
+                binding.editAndSaveSubjectNameButton.text = "Save"
                 binding.subjectNameEditText.apply {
                     isEnabled = true
                     alpha = 1.0F
@@ -176,7 +176,7 @@ class SubjectInfoFragment : Fragment() {
                 lifecycleScope.launch {
                     viewModel.updateSubjectName(subjectId)
 
-                    binding.editSubjectNameButton.text = "Edit"
+                    binding.editAndSaveSubjectNameButton.text = "Edit"
                     binding.subjectNameEditText.apply {
                         isEnabled = false
                         alpha = 0.5F
@@ -184,11 +184,24 @@ class SubjectInfoFragment : Fragment() {
                 }
             }
         }
+
+        viewModel.isSaveSubjectButtonEnabled.observe(viewLifecycleOwner) { state ->
+            binding.editAndSaveSubjectNameButton.apply {
+                isEnabled = state
+                alpha = if (state) 1.0F else 0.5F
+            }
+            binding.saveNewSubjectButton.apply {
+                if (visibility != View.GONE) {
+                    isEnabled = state
+                    alpha = if (state) 1.0F else 0.5F
+                }
+            }
+        }
     }
 
     private fun adjustUIWhenSubjectNotExist() {
         binding.navButtonsLinearLayout.visibility = View.GONE
-        binding.editSubjectNameButton.visibility = View.GONE
+        binding.editAndSaveSubjectNameButton.visibility = View.GONE
         binding.creationButtonsLinearLayout.visibility = View.VISIBLE
         binding.saveSubjectFirstTextView.visibility = View.VISIBLE
 
@@ -196,12 +209,10 @@ class SubjectInfoFragment : Fragment() {
             isEnabled = true
             alpha = 1.0F
         }
-
         binding.addNewSubjectDateButton.apply {
             isEnabled = false
             alpha = 0.5F
         }
-
         binding.goToAssignedStudentsButton.apply {
             isEnabled = false
             alpha = 0.5F
@@ -212,19 +223,17 @@ class SubjectInfoFragment : Fragment() {
         binding.creationButtonsLinearLayout.visibility = View.GONE
         binding.navButtonsLinearLayout.visibility = View.VISIBLE
         binding.saveSubjectFirstTextView.visibility = View.GONE
-        binding.editSubjectNameButton.visibility = View.VISIBLE
-        binding.editSubjectNameButton.isEnabled = true
+        binding.editAndSaveSubjectNameButton.visibility = View.VISIBLE
+        binding.editAndSaveSubjectNameButton.isEnabled = true
 
         binding.addNewSubjectDateButton.apply {
             isEnabled = true
             alpha = 1.0F
         }
-
         binding.goToAssignedStudentsButton.apply {
             isEnabled = true
             alpha = 1.0F
         }
-
         binding.subjectNameEditText.apply {
             isEnabled = false
             alpha = 0.5F

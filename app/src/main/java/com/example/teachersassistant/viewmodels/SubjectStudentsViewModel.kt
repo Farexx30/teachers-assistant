@@ -31,7 +31,7 @@ class SubjectStudentsViewModel @Inject constructor(
             val subjectInfoDto = subjectRepository.getSubjectBasicInfoById(subjectId)
             val studentsDtos = studentRepository.getSubjectStudentsBySubjectId(subjectId)
 
-            _subjectName.postValue("${subjectInfoDto.name} students")
+            _subjectName.postValue(subjectInfoDto.name)
             _students.value = studentsDtos.toMutableList()
         }
     }

@@ -151,7 +151,8 @@
                     android:text="@string/save"
                     android:textColor="@color/my_very_light_blue"
                     android:textSize="20sp"
-                    android:enabled="true"
+                    android:enabled="false"
+                    android:alpha="0.5"
                     tools:ignore="ButtonStyle,InefficientWeight" />
 
             </LinearLayout>

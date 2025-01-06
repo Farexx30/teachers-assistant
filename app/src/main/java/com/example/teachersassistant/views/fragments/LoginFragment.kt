@@ -11,9 +11,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.example.teachersassistant.R
 import com.example.teachersassistant.common.RegistrationOrLoginResult
-import com.example.teachersassistant.databinding.FragmentInitialBinding
 import com.example.teachersassistant.databinding.FragmentLoginBinding
 import com.example.teachersassistant.viewmodels.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,7 +30,7 @@ class LoginFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // TODO: Use the ViewModel
+        //No viewModel usage here.
     }
 
     override fun onCreateView(
@@ -79,6 +77,17 @@ class LoginFragment : Fragment() {
         binding.goBackToInitialFragmentFromLoginButton.setOnClickListener {
             val action = LoginFragmentDirections.actionLoginFragmentToInitialFragment()
             findNavController().navigate(action)
+        }
+
+        binding.loginButton.setOnClickListener {
+            viewModel.login()
+        }
+
+        viewModel.isLoginButtonEnabled.observe(viewLifecycleOwner) { state ->
+            binding.loginButton.apply {
+                isEnabled = state
+                alpha = if (state) 1.0F else 0.5F
+            }
         }
     }
 }

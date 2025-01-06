@@ -31,7 +31,7 @@ class ScheduleFragment : Fragment() {
     private lateinit var binding: FragmentScheduleBinding
 
     private lateinit var currentDayButton: Button
-    private lateinit var currentDay: String
+    private lateinit var currentDay: String //Only necessary for initialization
 
     companion object {
         fun newInstance() = ScheduleFragment()
@@ -137,12 +137,25 @@ class ScheduleFragment : Fragment() {
             currentDay.equals(Day.SUNDAY.asString, ignoreCase = true) -> binding.sundayButton
             else -> null!! // Not possible
         }
-        currentDayButton.isEnabled = false
+        currentDayButton.apply {
+            isEnabled = false
+            alpha = 0.5F
+        }
     }
 
     private fun changeCurrentDayButton(newCurrentDayButton: Button) {
-        currentDayButton.isEnabled = true
+        //Enable old current day button:
+        currentDayButton.apply {
+            isEnabled = true
+            alpha = 1.0F
+        }
+
         currentDayButton = newCurrentDayButton
-        currentDayButton.isEnabled = false
+
+        //Disable new current day button:
+        currentDayButton.apply {
+            isEnabled = false
+            alpha = 0.5F
+        }
     }
 }

@@ -80,5 +80,12 @@ class GradeFragment : Fragment() {
             )
             findNavController().navigate(action)
         }
+
+        viewModel.isSaveGradeButtonEnabled.observe(viewLifecycleOwner) { state ->
+            binding.saveGradeButton.apply {
+                isEnabled = state
+                alpha = if (state) 1.0F else 0.5F
+            }
+        }
     }
 }

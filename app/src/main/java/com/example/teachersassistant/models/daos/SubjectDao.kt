@@ -56,6 +56,7 @@ interface SubjectDao {
        SELECT id, name, teacherId
        FROM ${DatabaseTableName.SUBJECTS}
        WHERE teacherId = :currentUserId
+       ORDER BY name COLLATE NOCASE
     """)
     suspend fun getAllCurrentUserSubjectsByUserId(currentUserId: Long): List<SubjectBasicInfoDto>
 
@@ -64,7 +65,7 @@ interface SubjectDao {
        FROM ${DatabaseTableName.SUBJECTS} s
        JOIN ${DatabaseTableName.SUBJECT_DATE} sd ON sd.subjectId = s.id
        WHERE sd.day = :day AND s.teacherId = :currentUserId
-       ORDER BY sd.day, sd.startHour, sd.endHour
+       ORDER BY sd.day, sd.startHour, sd.endHour, s.name COLLATE NOCASE
     """)
     suspend fun getSubjectsWithHours(day: Day, currentUserId: Long): List<SubjectAndHoursDto>
 

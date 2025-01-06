@@ -22,18 +22,15 @@ class AssignStudentsToSubjectViewModel @Inject constructor(
     private val subjectRepository: ISubjectRepository,
     private val userContext: IUserContext
 ) : ViewModel() {
-    private var counter = 0
-
-    private val _selectedStudentsCounter = MutableLiveData("Selected students: $counter")
-    val selectedStudentsCounter: LiveData<String> = _selectedStudentsCounter
+    private val _selectedStudentsCounter = MutableLiveData(0)
+    val selectedStudentsCounter: LiveData<Int> = _selectedStudentsCounter
 
     private val _students = MutableStateFlow<List<StudentDto>>(emptyList())
     val students: StateFlow<List<StudentDto>> = _students
 
 
     fun updateSelectedStudentsCounter(count: Int) {
-        counter = count
-        _selectedStudentsCounter.value = "Selected students: $counter"
+        _selectedStudentsCounter.value = count
     }
 
     fun getNotSubjectStudentsBySubjectId(subjectId: Long) {

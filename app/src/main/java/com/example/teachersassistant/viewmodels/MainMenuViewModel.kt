@@ -13,7 +13,7 @@ class MainMenuViewModel @Inject constructor(
     private val userRepository: IResetAllUserDataRepository,
     private val userContext: IUserContext
 ) : ViewModel() {
-    private val _currentUserUsername = MutableLiveData("Welcome: ${userContext.getCurrentUserUsername()}")
+    private val _currentUserUsername = MutableLiveData(userContext.getCurrentUserUsername())
     val currentUserUsername: LiveData<String?> = _currentUserUsername
 
     //BE CAREFUL: DELETES ALL CURRENT USER DATA!!!

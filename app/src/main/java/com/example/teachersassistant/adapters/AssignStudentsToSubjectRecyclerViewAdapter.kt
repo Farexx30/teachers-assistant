@@ -12,6 +12,7 @@ class AssignStudentsToSubjectRecyclerViewAdapter(private var items: List<Student
     : RecyclerView.Adapter<AssignStudentsToSubjectRecyclerViewAdapter.ViewHolder>() {
 
     private val selectedItems = mutableListOf<StudentDto>()
+
     var onSelectionChangedListener: ((List<StudentDto>) -> Unit)? = null
 
     override fun onCreateViewHolder(

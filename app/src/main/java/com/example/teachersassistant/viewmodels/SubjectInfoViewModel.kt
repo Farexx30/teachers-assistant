@@ -1,20 +1,17 @@
 package com.example.teachersassistant.viewmodels
 
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.teachersassistant.dtos.student.StudentDto
 import com.example.teachersassistant.dtos.subject.SubjectBasicInfoDto
 import com.example.teachersassistant.dtos.subject.SubjectDateDto
 import com.example.teachersassistant.models.repositories.subject.ISubjectRepository
 import com.example.teachersassistant.session.IUserContext
-import com.example.teachersassistant.session.UserContext
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,11 +21,16 @@ class SubjectInfoViewModel @Inject constructor(
 ): ViewModel() {
     val subjectName = MutableLiveData<String>()
 
+    val isSaveSubjectButtonEnabled = MediatorLiveData<Boolean>().apply {
+        addSource(subjectName) { checkFields() }
+    }
+
     private val _subjectDates = MutableStateFlow<MutableList<SubjectDateDto>>(mutableListOf())
     val subjectDates: StateFlow<MutableList<SubjectDateDto>> = _subjectDates
 
     private val _subjectId = MutableStateFlow(0L)
     val subjectId: StateFlow<Long> = _subjectId
+
 
     fun getSubjectData(subjectId: Long) {
         viewModelScope.launch {
@@ -62,5 +64,13 @@ class SubjectInfoViewModel @Inject constructor(
     suspend fun deleteSubjectDate(subjectDateToDeleteDto: SubjectDateDto) {
         subjectRepository.deleteSubjectDate(subjectDateToDeleteDto)
         _subjectDates.value.remove(subjectDateToDeleteDto)
+    }
+
+    private fun checkFields() {
+        isSaveSubjectButtonEnabled.value = canSaveSubject()
+    }
+
+    private fun canSaveSubject(): Boolean {
+        return subjectName.value?.trim()?.isNotEmpty() == true
     }
 }

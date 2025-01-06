@@ -68,7 +68,7 @@ class AssignStudentsToSubjectFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.assignChosenStudentsToSubjectButton.setOnClickListener {
+        binding.assignSelectedStudentsToSubjectButton.setOnClickListener {
             val studentsToAssign = assignStudentsToSubjectAdapter.getSelectedItems()
             val studentsIdsToAssign = studentsToAssign.map { student ->
                 student.id
@@ -85,6 +85,13 @@ class AssignStudentsToSubjectFragment : Fragment() {
         binding.cancelStudentAssignmentToSubjectButton.setOnClickListener {
             val action = AssignStudentsToSubjectFragmentDirections.actionAssignStudentsToSubjectFragmentToSubjectStudentsFragment(args.subjectId)
             findNavController().navigate(action)
+        }
+
+        viewModel.selectedStudentsCounter.observe(viewLifecycleOwner) { counter ->
+            binding.assignSelectedStudentsToSubjectButton.apply {
+                isEnabled = counter > 0
+                alpha = if (counter > 0) 1.0F else 0.5F
+            }
         }
     }
 }
