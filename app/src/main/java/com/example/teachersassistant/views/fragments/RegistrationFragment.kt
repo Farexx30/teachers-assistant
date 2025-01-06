@@ -80,5 +80,16 @@ class RegistrationFragment : Fragment() {
             val action = RegistrationFragmentDirections.actionRegistrationFragmentToInitialFragment()
             findNavController().navigate(action)
         }
+
+        binding.registerButton.setOnClickListener {
+            viewModel.register()
+        }
+
+        viewModel.isRegisterButtonEnabled.observe(viewLifecycleOwner) { state ->
+            binding.registerButton.apply {
+                isEnabled = state
+                alpha = if (state) 1.0F else 0.5F
+            }
+        }
     }
 }

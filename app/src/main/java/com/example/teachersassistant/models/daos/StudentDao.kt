@@ -48,6 +48,7 @@ interface StudentDao {
        SELECT id, firstName, lastName, albumNumber
        FROM ${DatabaseTableName.STUDENTS}
        WHERE teacherId = :currentUserId
+       ORDER BY lastName COLLATE NOCASE, firstName COLLATE NOCASE, albumNumber
     """)
     suspend fun getAllCurrentUserStudentsById(currentUserId: Long): List<StudentDto>
 
@@ -66,6 +67,7 @@ interface StudentDao {
         FROM ${DatabaseTableName.STUDENTS} s
         JOIN ${DatabaseTableName.SUBJECT_STUDENT} ss ON ss.studentId = s.id
         WHERE ss.subjectId = :subjectId 
+        ORDER BY s.lastName COLLATE NOCASE, s.firstName COLLATE NOCASE, s.albumNumber
         """)
     suspend fun getSubjectStudentsBySubjectId(subjectId: Long): List<StudentDto>
 
@@ -78,6 +80,7 @@ interface StudentDao {
                            FROM ${DatabaseTableName.STUDENTS} s
                            JOIN ${DatabaseTableName.SUBJECT_STUDENT} ss ON ss.studentId = s.id
                            WHERE ss.subjectId = :subjectId)
+        ORDER BY lastName COLLATE NOCASE, firstName COLLATE NOCASE, albumNumber
         """)
     suspend fun getNotSubjectStudentsBySubjectId(subjectId: Long, teacherId: Long): List<StudentDto>
 

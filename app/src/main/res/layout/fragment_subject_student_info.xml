@@ -66,12 +66,18 @@
 
                     <TextView
                         android:id="@+id/student_first_name_text_view"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
                         android:text="@{subjectStudentInfoViewModel.firstName}"
                         android:textColor="@color/my_very_light_blue"
                         android:textSize="24sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/my_very_light_blue"
+                        android:layout_marginBottom="5dp"/>
 
                 </LinearLayout>
 
@@ -103,6 +109,12 @@
                         android:textColor="@color/my_very_light_blue"
                         android:textSize="24sp" />
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/my_very_light_blue"
+                        android:layout_marginBottom="5dp"/>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -133,6 +145,12 @@
                         android:textColor="@color/my_very_light_blue"
                         android:textSize="24sp" />
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/my_very_light_blue"
+                        android:layout_marginBottom="5dp"/>
+
                 </LinearLayout>
 
             </LinearLayout>
@@ -141,7 +159,7 @@
                 android:id="@+id/grades_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_margin="10dp"
                 android:text="@string/grades"
                 android:textColor="@color/my_very_light_blue"
                 android:textSize="24sp"

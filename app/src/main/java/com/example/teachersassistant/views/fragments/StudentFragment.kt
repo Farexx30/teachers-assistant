@@ -63,5 +63,12 @@ class StudentFragment : Fragment() {
             val action = StudentFragmentDirections.actionStudentFragmentToAllStudentsFragment()
             findNavController().navigate(action)
         }
+
+        viewModel.isSaveStudentButtonEnabled.observe(viewLifecycleOwner) { state ->
+            binding.saveStudentButton.apply {
+                isEnabled = state
+                alpha = if (state) 1.0F else 0.5F
+            }
+        }
     }
 }

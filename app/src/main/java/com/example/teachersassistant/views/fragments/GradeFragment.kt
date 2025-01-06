@@ -50,6 +50,13 @@ class GradeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.gradeNumberPicker.apply {
+            val grades = arrayOf("2.0", "3.0", "3.5", "4.0", "4.5", "5.0")
+            minValue = 0
+            maxValue = grades.size - 1
+            displayedValues = grades
+        }
+
         binding.saveGradeButton.setOnClickListener {
             lifecycleScope.launch {
                 viewModel.saveGrade(
@@ -72,6 +79,13 @@ class GradeFragment : Fragment() {
                 studentId = args.studentId
             )
             findNavController().navigate(action)
+        }
+
+        viewModel.isSaveGradeButtonEnabled.observe(viewLifecycleOwner) { state ->
+            binding.saveGradeButton.apply {
+                isEnabled = state
+                alpha = if (state) 1.0F else 0.5F
+            }
         }
     }
 }

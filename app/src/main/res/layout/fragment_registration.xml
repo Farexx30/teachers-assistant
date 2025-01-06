@@ -81,6 +81,7 @@
                         android:textColor="@color/my_very_light_blue"
                         android:textColorHint="@color/my_light_blue"
                         android:textSize="20sp"
+                        android:maxLength="14"
                         tools:ignore="LabelFor" />
 
 
@@ -110,7 +111,8 @@
                         android:text="@={registrationViewModel.rawPassword}"
                         android:textColor="@color/my_very_light_blue"
                         android:textColorHint="@color/my_light_blue"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        android:maxLength="36"/>
 
 
                 </LinearLayout>
@@ -138,7 +140,8 @@
                         android:text="@={registrationViewModel.confirmRawPassword}"
                         android:textColor="@color/my_very_light_blue"
                         android:textColorHint="@color/my_light_blue"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        android:maxLength="36"/>
 
                 </LinearLayout>
 
@@ -153,7 +156,8 @@
                 android:text="@string/register"
                 android:textColor="@color/my_very_light_blue"
                 android:textSize="20sp"
-                android:onClick="@{() -> registrationViewModel.register()}"
+                android:enabled="false"
+                android:alpha="0.5"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

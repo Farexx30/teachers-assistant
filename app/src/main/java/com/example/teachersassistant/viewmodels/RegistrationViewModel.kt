@@ -1,5 +1,6 @@
 package com.example.teachersassistant.viewmodels
 
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,7 +8,6 @@ import com.example.teachersassistant.common.RegistrationOrLoginResult
 import com.example.teachersassistant.dtos.user.RegisterOrLoginUserDto
 import com.example.teachersassistant.models.repositories.user.IRegisterUserRepository
 import com.example.teachersassistant.session.IUserContext
-import com.example.teachersassistant.session.UserContext
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,6 +25,12 @@ class RegistrationViewModel @Inject constructor(
 
     private val _registrationState = MutableStateFlow(RegistrationOrLoginResult.NONE)
     val registrationState: StateFlow<RegistrationOrLoginResult> = _registrationState
+
+    val isRegisterButtonEnabled = MediatorLiveData<Boolean>().apply {
+        addSource(username) { checkFields() }
+        addSource(rawPassword) { checkFields() }
+        addSource(confirmRawPassword) { checkFields() }
+    }
 
 
     fun register() {
@@ -46,5 +52,15 @@ class RegistrationViewModel @Inject constructor(
 
             _registrationState.value = RegistrationOrLoginResult.NONE
         }
+    }
+
+    private fun checkFields() {
+        isRegisterButtonEnabled.value = canRegister()
+    }
+
+    private fun canRegister(): Boolean {
+        return listOf(username.value, rawPassword.value, confirmRawPassword.value)
+            .all { it?.trim()?.isNotEmpty() == true }
+                && rawPassword.value!!.trim() == confirmRawPassword.value!!.trim()
     }
 }

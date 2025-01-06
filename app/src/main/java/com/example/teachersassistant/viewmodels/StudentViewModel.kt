@@ -1,5 +1,6 @@
 package com.example.teachersassistant.viewmodels
 
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,6 +19,13 @@ class StudentViewModel @Inject constructor(
     val firstName = MutableLiveData<String>()
     val lastName = MutableLiveData<String>()
     val albumNumber = MutableLiveData<String>()
+
+    val isSaveStudentButtonEnabled = MediatorLiveData<Boolean>().apply {
+        addSource(firstName) { checkFields() }
+        addSource(lastName) { checkFields() }
+        addSource(albumNumber) { checkFields() }
+    }
+
 
     fun getStudentData(studentId: Long) {
         viewModelScope.launch {
@@ -42,5 +50,14 @@ class StudentViewModel @Inject constructor(
         else {
             studentRepository.updateStudent(studentDto, userContext.getCurrentUserId()!!)
         }
+    }
+
+    private fun checkFields() {
+        isSaveStudentButtonEnabled.value = canSaveStudent()
+    }
+
+    private fun canSaveStudent(): Boolean {
+        return listOf(firstName.value, lastName.value, albumNumber.value)
+            .all { it?.trim()?.isNotEmpty() == true }
     }
 }

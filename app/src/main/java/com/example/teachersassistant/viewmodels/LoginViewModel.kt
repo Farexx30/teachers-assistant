@@ -1,5 +1,6 @@
 package com.example.teachersassistant.viewmodels
 
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,7 +13,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import javax.inject.Named
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
@@ -21,6 +21,11 @@ class LoginViewModel @Inject constructor(
 ) : ViewModel() {
     val username = MutableLiveData<String>()
     val rawPassword = MutableLiveData<String>()
+
+    val isLoginButtonEnabled = MediatorLiveData<Boolean>().apply {
+        addSource(username) { checkFields() }
+        addSource(rawPassword) { checkFields() }
+    }
 
     private val _loginState = MutableStateFlow(RegistrationOrLoginResult.NONE)
     val loginState: StateFlow<RegistrationOrLoginResult> = _loginState
@@ -45,5 +50,14 @@ class LoginViewModel @Inject constructor(
 
             _loginState.value = RegistrationOrLoginResult.NONE
         }
+    }
+
+    private fun checkFields() {
+        isLoginButtonEnabled.value = canLogin()
+    }
+
+    private fun canLogin(): Boolean {
+        return listOf(username.value, rawPassword.value)
+            .all { it?.trim()?.isNotEmpty() == true }
     }
 }

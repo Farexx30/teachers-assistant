@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="LargeNumberPickerText">
+        <item name="android:textSize">36sp</item>
+        <item name="android:textColorPrimary">@color/my_very_light_blue</item>
+    </style>
+    <style name="SmallNumberPickerText">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColorPrimary">@color/my_very_light_blue</item>
+    </style>
+</resources>

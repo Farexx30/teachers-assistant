@@ -23,7 +23,7 @@
                 android:id="@+id/counter_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{assignStudentsToSubjectViewModel.selectedStudentsCounter}"
+                android:text='@{"Selected students: " + assignStudentsToSubjectViewModel.selectedStudentsCounter.toString()}'
                 android:textColor="@color/my_very_light_blue"
                 android:textSize="28sp"
                 android:layout_margin="20dp"
@@ -70,13 +70,14 @@
                     tools:ignore="ButtonStyle,InefficientWeight" />
 
                 <Button
-                    android:id="@+id/assign_chosen_students_to_subject_button"
+                    android:id="@+id/assign_selected_students_to_subject_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
                     android:backgroundTint="@color/my_blue"
-                    android:enabled="true"
+                    android:enabled="false"
+                    android:alpha="0.5"
                     android:padding="2dp"
                     android:text="@string/assign"
                     android:textColor="@color/my_very_light_blue"

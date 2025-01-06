@@ -122,6 +122,11 @@ class SubjectInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.goToMainMenuFromSubjectInfoButton.setOnClickListener {
+            val action = SubjectInfoFragmentDirections.actionSubjectInfoFragmentToMainMenuFragment()
+            findNavController().navigate(action)
+        }
+
         binding.addNewSubjectDateButton.setOnClickListener {
             val action = SubjectInfoFragmentDirections.actionSubjectInfoFragmentToSubjectDateFragment(
                 subjectId = subjectId,
@@ -159,17 +164,36 @@ class SubjectInfoFragment : Fragment() {
         }
 
 
-        binding.editSubjectNameButton.setOnClickListener {
+        binding.editAndSaveSubjectNameButton.setOnClickListener {
             if (!binding.subjectNameEditText.isEnabled) {
-                binding.editSubjectNameButton.text = "Save"
-                binding.subjectNameEditText.isEnabled = true
+                binding.editAndSaveSubjectNameButton.text = "Save"
+                binding.subjectNameEditText.apply {
+                    isEnabled = true
+                    alpha = 1.0F
+                }
             }
             else {
                 lifecycleScope.launch {
                     viewModel.updateSubjectName(subjectId)
 
-                    binding.editSubjectNameButton.text = "Edit"
-                    binding.subjectNameEditText.isEnabled = false
+                    binding.editAndSaveSubjectNameButton.text = "Edit"
+                    binding.subjectNameEditText.apply {
+                        isEnabled = false
+                        alpha = 0.5F
+                    }
+                }
+            }
+        }
+
+        viewModel.isSaveSubjectButtonEnabled.observe(viewLifecycleOwner) { state ->
+            binding.editAndSaveSubjectNameButton.apply {
+                isEnabled = state
+                alpha = if (state) 1.0F else 0.5F
+            }
+            binding.saveNewSubjectButton.apply {
+                if (visibility != View.GONE) {
+                    isEnabled = state
+                    alpha = if (state) 1.0F else 0.5F
                 }
             }
         }
@@ -177,16 +201,42 @@ class SubjectInfoFragment : Fragment() {
 
     private fun adjustUIWhenSubjectNotExist() {
         binding.navButtonsLinearLayout.visibility = View.GONE
-        binding.editSubjectNameButton.visibility = View.GONE
+        binding.editAndSaveSubjectNameButton.visibility = View.GONE
         binding.creationButtonsLinearLayout.visibility = View.VISIBLE
-        binding.subjectNameEditText.isEnabled = true
+        binding.saveSubjectFirstTextView.visibility = View.VISIBLE
+
+        binding.subjectNameEditText.apply {
+            isEnabled = true
+            alpha = 1.0F
+        }
+        binding.addNewSubjectDateButton.apply {
+            isEnabled = false
+            alpha = 0.5F
+        }
+        binding.goToAssignedStudentsButton.apply {
+            isEnabled = false
+            alpha = 0.5F
+        }
     }
 
     private fun adjustUIWhenSubjectExist() {
         binding.creationButtonsLinearLayout.visibility = View.GONE
         binding.navButtonsLinearLayout.visibility = View.VISIBLE
-        binding.editSubjectNameButton.visibility = View.VISIBLE
-        binding.editSubjectNameButton.isEnabled = true
-        binding.subjectNameEditText.isEnabled = false
+        binding.saveSubjectFirstTextView.visibility = View.GONE
+        binding.editAndSaveSubjectNameButton.visibility = View.VISIBLE
+        binding.editAndSaveSubjectNameButton.isEnabled = true
+
+        binding.addNewSubjectDateButton.apply {
+            isEnabled = true
+            alpha = 1.0F
+        }
+        binding.goToAssignedStudentsButton.apply {
+            isEnabled = true
+            alpha = 1.0F
+        }
+        binding.subjectNameEditText.apply {
+            isEnabled = false
+            alpha = 0.5F
+        }
     }
 }

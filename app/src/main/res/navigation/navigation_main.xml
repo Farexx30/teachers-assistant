@@ -138,6 +138,9 @@
         <action
             android:id="@+id/action_subjectInfoFragment_to_subjectDateFragment"
             app:destination="@id/subjectDateFragment" />
+        <action
+            android:id="@+id/action_subjectInfoFragment_to_mainMenuFragment"
+            app:destination="@id/mainMenuFragment" />
 
     </fragment>
     <fragment
