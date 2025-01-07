@@ -1,9 +1,7 @@
 package com.example.teachersassistant.models.repositories.student
 
 import com.example.teachersassistant.dtos.student.StudentDto
-import com.example.teachersassistant.dtos.student.StudentWithGradesDto
-import com.example.teachersassistant.dtos.student.SubjectStudentGradeDto
-import com.example.teachersassistant.models.entities.student.SubjectStudentGrade
+import com.example.teachersassistant.dtos.subjectstudentgrade.SubjectStudentGradeDto
 
 interface IStudentRepository {
     abstract suspend fun insertStudent(newStudentDto: StudentDto, teacherId: Long)

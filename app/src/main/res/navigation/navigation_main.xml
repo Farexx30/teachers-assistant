@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/initialFragment"
-        android:name="com.example.teachersassistant.views.fragments.InitialFragment"
+        android:name="com.example.teachersassistant.views.fragments.common.InitialFragment"
         android:label="fragment_initial"
         tools:layout="@layout/fragment_initial" >
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.teachersassistant.views.fragments.LoginFragment"
+        android:name="com.example.teachersassistant.views.fragments.user.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/registrationFragment"
-        android:name="com.example.teachersassistant.views.fragments.RegistrationFragment"
+        android:name="com.example.teachersassistant.views.fragments.user.RegistrationFragment"
         android:label="fragment_registration"
         tools:layout="@layout/fragment_registration" >
         <action
@@ -43,7 +43,7 @@
     </fragment>
     <fragment
         android:id="@+id/allStudentsFragment"
-        android:name="com.example.teachersassistant.views.fragments.AllStudentsFragment"
+        android:name="com.example.teachersassistant.views.fragments.student.AllStudentsFragment"
         android:label="fragment_all_students"
         tools:layout="@layout/fragment_all_students" >
         <action
@@ -55,7 +55,7 @@
     </fragment>
     <fragment
         android:id="@+id/allSubjectsFragment"
-        android:name="com.example.teachersassistant.views.fragments.AllSubjectsFragment"
+        android:name="com.example.teachersassistant.views.fragments.subject.AllSubjectsFragment"
         android:label="fragment_all_subjects"
         tools:layout="@layout/fragment_all_subjects" >
         <action
@@ -67,7 +67,7 @@
     </fragment>
     <fragment
         android:id="@+id/gradeFragment"
-        android:name="com.example.teachersassistant.views.fragments.GradeFragment"
+        android:name="com.example.teachersassistant.views.fragments.subjectstudentgrade.GradeFragment"
         android:label="fragment_grade"
         tools:layout="@layout/fragment_grade" >
         <action
@@ -88,7 +88,7 @@
     </fragment>
     <fragment
         android:id="@+id/mainMenuFragment"
-        android:name="com.example.teachersassistant.views.fragments.MainMenuFragment"
+        android:name="com.example.teachersassistant.views.fragments.common.MainMenuFragment"
         android:label="fragment_main_menu"
         tools:layout="@layout/fragment_main_menu" >
         <action
@@ -106,7 +106,7 @@
     </fragment>
     <fragment
         android:id="@+id/studentFragment"
-        android:name="com.example.teachersassistant.views.fragments.StudentFragment"
+        android:name="com.example.teachersassistant.views.fragments.student.StudentFragment"
         android:label="fragment_student"
         tools:layout="@layout/fragment_student" >
         <action
@@ -119,7 +119,7 @@
     </fragment>
     <fragment
         android:id="@+id/subjectInfoFragment"
-        android:name="com.example.teachersassistant.views.fragments.SubjectInfoFragment"
+        android:name="com.example.teachersassistant.views.fragments.subject.SubjectInfoFragment"
         android:label="fragment_subject_info"
         tools:layout="@layout/fragment_subject_info" >
         <action
@@ -145,7 +145,7 @@
     </fragment>
     <fragment
         android:id="@+id/subjectStudentInfoFragment"
-        android:name="com.example.teachersassistant.views.fragments.SubjectStudentInfoFragment"
+        android:name="com.example.teachersassistant.views.fragments.subjectstudent.SubjectStudentInfoFragment"
         android:label="fragment_subject_student_info"
         tools:layout="@layout/fragment_subject_student_info" >
         <action
@@ -165,7 +165,7 @@
     </fragment>
     <fragment
         android:id="@+id/subjectStudentsFragment"
-        android:name="com.example.teachersassistant.views.fragments.SubjectStudentsFragment"
+        android:name="com.example.teachersassistant.views.fragments.subjectstudent.SubjectStudentsFragment"
         android:label="fragment_subject_students"
         tools:layout="@layout/fragment_subject_students" >
         <action
@@ -184,7 +184,7 @@
     </fragment>
     <fragment
         android:id="@+id/assignStudentsToSubjectFragment"
-        android:name="com.example.teachersassistant.views.fragments.AssignStudentsToSubjectFragment"
+        android:name="com.example.teachersassistant.views.fragments.subjectstudent.AssignStudentsToSubjectFragment"
         android:label="fragment_assign_students_to_subject"
         tools:layout="@layout/fragment_assign_students_to_subject" >
         <action
@@ -197,7 +197,7 @@
     </fragment>
     <fragment
         android:id="@+id/scheduleFragment"
-        android:name="com.example.teachersassistant.views.fragments.ScheduleFragment"
+        android:name="com.example.teachersassistant.views.fragments.subject.ScheduleFragment"
         android:label="fragment_schedule"
         tools:layout="@layout/fragment_schedule" >
         <action
@@ -209,7 +209,7 @@
     </fragment>
     <fragment
         android:id="@+id/subjectDateFragment"
-        android:name="com.example.teachersassistant.views.fragments.SubjectDateFragment"
+        android:name="com.example.teachersassistant.views.fragments.subject.SubjectDateFragment"
         android:label="fragment_subject_date"
         tools:layout="@layout/fragment_subject_date" >
         <argument

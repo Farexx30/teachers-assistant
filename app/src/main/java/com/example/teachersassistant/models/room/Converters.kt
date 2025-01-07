@@ -1,7 +1,7 @@
 package com.example.teachersassistant.models.room
 
 import androidx.room.TypeConverter
-import com.example.teachersassistant.common.Day
+import com.example.teachersassistant.constants.Day
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 

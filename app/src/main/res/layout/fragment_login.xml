@@ -6,13 +6,13 @@
     <data>
         <variable
             name="loginViewModel"
-            type="com.example.teachersassistant.viewmodels.LoginViewModel" />
+            type="com.example.teachersassistant.viewmodels.user.LoginViewModel" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".views.fragments.LoginFragment"
+        tools:context=".views.fragments.user.LoginFragment"
         android:background="@color/my_dark">
 
         <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,7 +1,7 @@
 package com.example.teachersassistant.models.repositories.user
 
-import com.example.teachersassistant.common.mapToUser
-import com.example.teachersassistant.common.mapToUserBasicInfoDto
+import com.example.teachersassistant.dtos.mapToUser
+import com.example.teachersassistant.dtos.mapToUserBasicInfoDto
 import com.example.teachersassistant.dtos.user.RegisterOrLoginUserDto
 import com.example.teachersassistant.dtos.user.UserBasicInfoDto
 import com.example.teachersassistant.models.daos.UserDao

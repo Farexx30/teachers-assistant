@@ -6,13 +6,13 @@
     <data>
         <variable
             name="mainMenuViewModel"
-            type="com.example.teachersassistant.viewmodels.MainMenuViewModel" />
+            type="com.example.teachersassistant.viewmodels.common.MainMenuViewModel" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".views.fragments.MainMenuFragment"
+        tools:context=".views.fragments.common.MainMenuFragment"
         android:background="@color/my_dark">
 
         <androidx.constraintlayout.widget.ConstraintLayout

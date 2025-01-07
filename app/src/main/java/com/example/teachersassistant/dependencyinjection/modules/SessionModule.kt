@@ -1,9 +1,7 @@
 package com.example.teachersassistant.dependencyinjection.modules
 
-import com.example.teachersassistant.models.repositories.user.IRegisterUserRepository
-import com.example.teachersassistant.models.repositories.user.UserRepository
-import com.example.teachersassistant.session.IUserContext
-import com.example.teachersassistant.session.UserContext
+import com.example.teachersassistant.session.usercontext.IUserContext
+import com.example.teachersassistant.session.usercontext.UserContext
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import com.example.teachersassistant.common.DatabaseTableName
+import com.example.teachersassistant.models.constants.DatabaseConstants
 import com.example.teachersassistant.models.entities.user.User
 
 @Dao
@@ -21,7 +21,7 @@ interface UserDao {
     @Query("""
        SELECT 
        EXISTS (SELECT 1
-                FROM ${DatabaseTableName.USERS}
+                FROM ${DatabaseConstants.TableNames.USERS}
                 WHERE username = :username COLLATE NOCASE
                 LIMIT 1)
     """)
@@ -30,13 +30,15 @@ interface UserDao {
 
     @Query("""
         SELECT id, username, passwordHash
-        FROM ${DatabaseTableName.USERS}
+        FROM ${DatabaseConstants.TableNames.USERS}
         WHERE username = :username COLLATE NOCASE
         LIMIT 1
     """)
     suspend fun getUserByUsername(username: String) : User?
 
 
+
+    //!!!DELETES ALL USER DATA!!!//
     @Transaction
     suspend fun resetAllUserData(currentUserId: Long) {
         deleteUserSubjects(currentUserId)
@@ -44,13 +46,13 @@ interface UserDao {
     }
 
     @Query("""
-        DELETE FROM ${DatabaseTableName.SUBJECTS}
+        DELETE FROM ${DatabaseConstants.TableNames.SUBJECTS}
         WHERE teacherId = :currentUserId
     """)
     suspend fun deleteUserSubjects(currentUserId: Long)
 
     @Query("""
-        DELETE FROM ${DatabaseTableName.STUDENTS}
+        DELETE FROM ${DatabaseConstants.TableNames.STUDENTS}
         WHERE teacherId = :currentUserId
     """)
     suspend fun deleteUserStudents(currentUserId: Long)

@@ -6,13 +6,13 @@
     <data>
         <variable
             name="scheduleViewModel"
-            type="com.example.teachersassistant.viewmodels.ScheduleViewModel" />
+            type="com.example.teachersassistant.viewmodels.subject.ScheduleViewModel" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".views.fragments.ScheduleFragment"
+        tools:context=".views.fragments.subject.ScheduleFragment"
         android:background="@color/my_dark">
 
         <androidx.constraintlayout.widget.ConstraintLayout

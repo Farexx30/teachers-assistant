@@ -6,13 +6,13 @@
     <data>
         <variable
             name="gradeViewModel"
-            type="com.example.teachersassistant.viewmodels.GradeViewModel" />
+            type="com.example.teachersassistant.viewmodels.subjectstudentgrade.GradeViewModel" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".views.fragments.GradeFragment"
+        tools:context=".views.fragments.subjectstudentgrade.GradeFragment"
         android:background="@color/my_dark">
 
         <androidx.constraintlayout.widget.ConstraintLayout

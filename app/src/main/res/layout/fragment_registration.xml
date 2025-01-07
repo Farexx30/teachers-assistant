@@ -6,13 +6,13 @@
     <data>
         <variable
             name="registrationViewModel"
-            type="com.example.teachersassistant.viewmodels.RegistrationViewModel" />
+            type="com.example.teachersassistant.viewmodels.user.RegistrationViewModel" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".views.fragments.RegistrationFragment"
+        tools:context=".views.fragments.user.RegistrationFragment"
         android:background="@color/my_dark">
 
         <androidx.constraintlayout.widget.ConstraintLayout

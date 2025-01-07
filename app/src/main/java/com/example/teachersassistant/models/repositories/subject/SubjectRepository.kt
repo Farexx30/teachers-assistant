@@ -1,18 +1,15 @@
 package com.example.teachersassistant.models.repositories.subject
 
-import com.example.teachersassistant.common.Day
-import com.example.teachersassistant.common.mapToSubject
-import com.example.teachersassistant.common.mapToSubjectDate
-import com.example.teachersassistant.common.mapToSubjectDtos
-import com.example.teachersassistant.common.mapToSubjectStudent
-import com.example.teachersassistant.common.mapToSubjectStudents
+import com.example.teachersassistant.constants.Day
+import com.example.teachersassistant.dtos.mapToSubject
+import com.example.teachersassistant.dtos.mapToSubjectDate
+import com.example.teachersassistant.dtos.mapToSubjectStudent
+import com.example.teachersassistant.dtos.mapToSubjectStudents
 import com.example.teachersassistant.dtos.subject.SubjectAndHoursDto
 import com.example.teachersassistant.dtos.subject.SubjectBasicInfoDto
 import com.example.teachersassistant.dtos.subject.SubjectDateDto
-import com.example.teachersassistant.dtos.subject.SubjectStudentDto
-import com.example.teachersassistant.dtos.subject.SubjectWithDatesDto
+import com.example.teachersassistant.dtos.subjectstudent.SubjectStudentDto
 import com.example.teachersassistant.models.daos.SubjectDao
-import com.example.teachersassistant.models.entities.student.SubjectStudent
 import javax.inject.Inject
 
 class SubjectRepository @Inject constructor(

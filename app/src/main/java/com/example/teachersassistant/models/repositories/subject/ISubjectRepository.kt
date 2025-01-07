@@ -1,12 +1,10 @@
 package com.example.teachersassistant.models.repositories.subject
 
-import com.example.teachersassistant.common.Day
+import com.example.teachersassistant.constants.Day
 import com.example.teachersassistant.dtos.subject.SubjectAndHoursDto
 import com.example.teachersassistant.dtos.subject.SubjectBasicInfoDto
 import com.example.teachersassistant.dtos.subject.SubjectDateDto
-import com.example.teachersassistant.dtos.subject.SubjectStudentDto
-import com.example.teachersassistant.dtos.subject.SubjectWithDatesDto
-import com.example.teachersassistant.models.entities.student.SubjectStudent
+import com.example.teachersassistant.dtos.subjectstudent.SubjectStudentDto
 
 interface ISubjectRepository {
     abstract suspend fun insertSubject(newSubjectDto: SubjectBasicInfoDto, teacherId: Long): Long

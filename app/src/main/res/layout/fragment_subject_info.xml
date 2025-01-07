@@ -6,13 +6,13 @@
     <data>
         <variable
             name="subjectInfoViewModel"
-            type="com.example.teachersassistant.viewmodels.SubjectInfoViewModel" />
+            type="com.example.teachersassistant.viewmodels.subject.SubjectInfoViewModel" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".views.fragments.SubjectInfoFragment"
+        tools:context=".views.fragments.subject.SubjectInfoFragment"
         android:background="@color/my_dark">
 
         <androidx.constraintlayout.widget.ConstraintLayout

@@ -6,9 +6,9 @@ import androidx.room.TypeConverters
 import com.example.teachersassistant.models.entities.student.Student
 import com.example.teachersassistant.models.entities.subject.Subject
 import com.example.teachersassistant.models.entities.user.User
-import com.example.teachersassistant.models.entities.student.SubjectStudent
+import com.example.teachersassistant.models.entities.subjectstudent.SubjectStudent
 import com.example.teachersassistant.models.entities.subject.SubjectDate
-import com.example.teachersassistant.models.entities.student.SubjectStudentGrade
+import com.example.teachersassistant.models.entities.subjectstudentgrade.SubjectStudentGrade
 import com.example.teachersassistant.models.daos.StudentDao
 import com.example.teachersassistant.models.daos.SubjectDao
 import com.example.teachersassistant.models.daos.UserDao

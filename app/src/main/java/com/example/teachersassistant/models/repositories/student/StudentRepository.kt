@@ -1,12 +1,9 @@
 package com.example.teachersassistant.models.repositories.student
 
-import com.example.teachersassistant.common.mapToStudent
-import com.example.teachersassistant.common.mapToStudentDto
-import com.example.teachersassistant.common.mapToStudentsDtos
-import com.example.teachersassistant.common.mapToSubjectStudentGrade
+import com.example.teachersassistant.dtos.mapToStudent
+import com.example.teachersassistant.dtos.mapToSubjectStudentGrade
 import com.example.teachersassistant.dtos.student.StudentDto
-import com.example.teachersassistant.dtos.student.StudentWithGradesDto
-import com.example.teachersassistant.dtos.student.SubjectStudentGradeDto
+import com.example.teachersassistant.dtos.subjectstudentgrade.SubjectStudentGradeDto
 import com.example.teachersassistant.models.daos.StudentDao
 import javax.inject.Inject
 
