@@ -1,6 +1,6 @@
 package com.example.teachersassistant.dtos.subject
 
-import com.example.teachersassistant.common.Day
+import com.example.teachersassistant.constants.Day
 import java.time.LocalTime
 
 data class SubjectDateDto(

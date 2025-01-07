@@ -6,13 +6,13 @@
     <data>
         <variable
             name="registrationViewModel"
-            type="com.example.teachersassistant.viewmodels.RegistrationViewModel" />
+            type="com.example.teachersassistant.viewmodels.user.RegistrationViewModel" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".views.fragments.RegistrationFragment"
+        tools:context=".views.fragments.user.RegistrationFragment"
         android:background="@color/my_dark">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -146,6 +146,20 @@
                 </LinearLayout>
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/passwords_info_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Passwords must match!"
+                android:textColor="@color/my_very_light_blue"
+                android:textSize="20sp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@+id/register_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/form_linear_layout"
+                tools:ignore="HardcodedText" />
 
             <Button
                 android:id="@+id/register_button"

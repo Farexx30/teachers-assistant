@@ -6,13 +6,13 @@
     <data>
         <variable
             name="subjectInfoViewModel"
-            type="com.example.teachersassistant.viewmodels.SubjectInfoViewModel" />
+            type="com.example.teachersassistant.viewmodels.subject.SubjectInfoViewModel" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".views.fragments.SubjectInfoFragment"
+        tools:context=".views.fragments.subject.SubjectInfoFragment"
         android:background="@color/my_dark">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -162,6 +162,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/subject_dates_recycler_view"
                 tools:ignore="ButtonStyle,InefficientWeight" />
 
+
+            <!--    Visible only when subject doesn't exist -->
             <TextView
                 android:id="@+id/save_subject_first_text_view"
                 android:layout_width="wrap_content"
@@ -174,10 +176,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/go_to_assigned_students_button"
+                app:layout_constraintVertical_bias="0.506"
                 tools:ignore="HardcodedText" />
 
-
-            <!--    Visible only when subject doesn't exist -->
             <LinearLayout
                 android:id="@+id/creation_buttons_linear_layout"
                 android:layout_width="match_parent"

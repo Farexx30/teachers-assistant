@@ -4,10 +4,10 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import com.example.teachersassistant.common.DatabaseTableName
+import com.example.teachersassistant.models.constants.DatabaseConstants
 import com.example.teachersassistant.models.entities.user.User
 
-@Entity(tableName = DatabaseTableName.STUDENTS, foreignKeys = [
+@Entity(tableName = DatabaseConstants.TableNames.STUDENTS, foreignKeys = [
     ForeignKey(
         entity = User::class,
         parentColumns = ["id"],

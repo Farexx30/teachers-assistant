@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <data>
-        <variable
-            name="allStudentsViewModel"
-            type="com.example.teachersassistant.viewmodels.AllStudentsViewModel" />
-    </data>
-
     <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".views.fragments.AllStudentsFragment"
+        tools:context=".views.fragments.student.AllStudentsFragment"
         android:background="@color/my_dark">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,6 +27,7 @@
                 style="@style/Widget.AppCompat.Button.Borderless" />
 
             <TextView
+                android:id="@+id/my_students_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
@@ -43,6 +37,15 @@
                 app:layout_constraintBottom_toTopOf="@+id/all_students_recycler_view"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_height="1dp"
+                android:background="@color/my_very_light_blue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/my_students_text_view" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/all_students_recycler_view"
@@ -74,5 +77,4 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </FrameLayout>
-</layout>
+</FrameLayout>

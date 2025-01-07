@@ -6,13 +6,13 @@
     <data>
         <variable
             name="studentViewModel"
-            type="com.example.teachersassistant.viewmodels.StudentViewModel" />
+            type="com.example.teachersassistant.viewmodels.student.StudentViewModel" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".views.fragments.StudentFragment"
+        tools:context=".views.fragments.student.StudentFragment"
         android:background="@color/my_dark">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -41,7 +41,8 @@
                         android:layout_margin="5dp"
                         android:text="@string/first_name"
                         android:textColor="@color/my_very_light_blue"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        android:maxLength="51"/>
 
                     <EditText
                         android:id="@+id/student_first_name_edit_text"
@@ -84,7 +85,8 @@
                         android:text="@={studentViewModel.lastName}"
                         android:textColor="@color/my_very_light_blue"
                         android:textColorHint="@color/my_light_blue"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        android:maxLength="51"/>
 
 
                 </LinearLayout>
@@ -113,7 +115,8 @@
                         android:textColor="@color/my_very_light_blue"
                         android:textColorHint="@color/my_light_blue"
                         android:textSize="20sp"
-                        tools:ignore="TextFields" />
+                        tools:ignore="TextFields"
+                        android:maxLength="24"/>
 
                 </LinearLayout>
 

@@ -6,12 +6,12 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.example.teachersassistant.common.DatabaseTableName
-import com.example.teachersassistant.common.Day
+import com.example.teachersassistant.models.constants.DatabaseConstants
+import com.example.teachersassistant.constants.Day
 import com.example.teachersassistant.dtos.subject.SubjectAndHoursDto
 import com.example.teachersassistant.dtos.subject.SubjectBasicInfoDto
 import com.example.teachersassistant.dtos.subject.SubjectDateDto
-import com.example.teachersassistant.models.entities.student.SubjectStudent
+import com.example.teachersassistant.models.entities.subjectstudent.SubjectStudent
 import com.example.teachersassistant.models.entities.subject.Subject
 import com.example.teachersassistant.models.entities.subject.SubjectDate
 
@@ -23,9 +23,6 @@ interface SubjectDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertSubjectDate(newSubjectDate: SubjectDate)
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun assignStudentsToSubject(newSubjectStudents: List<SubjectStudent>)
 
 
     //!!! UPDATES !!!//
@@ -45,16 +42,12 @@ interface SubjectDao {
     @Delete
     suspend fun deleteSubjectDate(subjectDateToDelete: SubjectDate)
 
-    @Delete
-    suspend fun removeStudentFromSubject(subjectStudentToRemove: SubjectStudent)
-
-
 
     //!!! QUERIES !!!//
 
     @Query("""
        SELECT id, name, teacherId
-       FROM ${DatabaseTableName.SUBJECTS}
+       FROM ${DatabaseConstants.TableNames.SUBJECTS}
        WHERE teacherId = :currentUserId
        ORDER BY name COLLATE NOCASE
     """)
@@ -62,8 +55,8 @@ interface SubjectDao {
 
     @Query("""
        SELECT s.id subjectId, s.name subjectName, sd.startHour subjectStartHour, sd.endHour subjectEndHour
-       FROM ${DatabaseTableName.SUBJECTS} s
-       JOIN ${DatabaseTableName.SUBJECT_DATE} sd ON sd.subjectId = s.id
+       FROM ${DatabaseConstants.TableNames.SUBJECTS} s
+       JOIN ${DatabaseConstants.TableNames.SUBJECT_DATE} sd ON sd.subjectId = s.id
        WHERE sd.day = :day AND s.teacherId = :currentUserId
        ORDER BY sd.day, sd.startHour, sd.endHour, s.name COLLATE NOCASE
     """)
@@ -71,7 +64,7 @@ interface SubjectDao {
 
     @Query("""
        SELECT id, name
-       FROM ${DatabaseTableName.SUBJECTS}
+       FROM ${DatabaseConstants.TableNames.SUBJECTS}
        WHERE id = :subjectId
        LIMIT 1
     """)
@@ -79,7 +72,7 @@ interface SubjectDao {
 
     @Query("""
        SELECT id, day, startHour, endHour
-       FROM ${DatabaseTableName.SUBJECT_DATE}
+       FROM ${DatabaseConstants.TableNames.SUBJECT_DATE}
        WHERE subjectId = :subjectId
        ORDER BY day, startHour, endHour
     """)
@@ -87,7 +80,7 @@ interface SubjectDao {
 
     @Query("""
        SELECT id, day, startHour, endHour
-       FROM ${DatabaseTableName.SUBJECT_DATE}
+       FROM ${DatabaseConstants.TableNames.SUBJECT_DATE}
        WHERE id = :dateId
        LIMIT 1
     """)

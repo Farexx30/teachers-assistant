@@ -6,13 +6,13 @@
     <data>
         <variable
             name="assignStudentsToSubjectViewModel"
-            type="com.example.teachersassistant.viewmodels.AssignStudentsToSubjectViewModel" />
+            type="com.example.teachersassistant.viewmodels.subjectstudent.AssignStudentsToSubjectViewModel" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".views.fragments.AssignStudentsToSubjectFragment"
+        tools:context=".views.fragments.subjectstudent.AssignStudentsToSubjectFragment"
         android:background="@color/my_dark">
 
         <androidx.constraintlayout.widget.ConstraintLayout
