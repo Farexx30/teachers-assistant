@@ -32,6 +32,11 @@ class RegistrationViewModel @Inject constructor(
         addSource(confirmRawPassword) { checkFields() }
     }
 
+    val isPasswordsInfoVisible = MediatorLiveData<Boolean>().apply {
+        addSource(rawPassword) { checkPasswordFields()}
+        addSource(confirmRawPassword) { checkPasswordFields() }
+    }
+
 
     fun register() {
         val userDto = RegisterOrLoginUserDto(
@@ -61,6 +66,14 @@ class RegistrationViewModel @Inject constructor(
     private fun canRegister(): Boolean {
         return listOf(username.value, rawPassword.value, confirmRawPassword.value)
             .all { it?.trim()?.isNotEmpty() == true }
-                && rawPassword.value!!.trim() == confirmRawPassword.value!!.trim()
+                && arePasswordFieldsEqual()
+    }
+
+    private fun checkPasswordFields() {
+        isPasswordsInfoVisible.value = !arePasswordFieldsEqual()
+    }
+
+    private fun arePasswordFieldsEqual() : Boolean {
+        return rawPassword.value?.trim() == confirmRawPassword.value?.trim()
     }
 }

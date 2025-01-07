@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -88,6 +89,10 @@ class RegistrationFragment : Fragment() {
                 isEnabled = state
                 alpha = if (state) 1.0F else 0.5F
             }
+        }
+
+        viewModel.isPasswordsInfoVisible.observe(viewLifecycleOwner) { state ->
+            binding.passwordsInfoTextView.isVisible = state
         }
     }
 }

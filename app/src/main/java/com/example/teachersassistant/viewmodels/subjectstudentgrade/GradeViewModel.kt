@@ -6,13 +6,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.teachersassistant.dtos.subjectstudentgrade.SubjectStudentGradeDto
 import com.example.teachersassistant.models.repositories.student.IStudentRepository
+import com.example.teachersassistant.models.repositories.subjectstudentgrade.ISubjectStudentGradeRepository
+import com.example.teachersassistant.models.repositories.subjectstudentgrade.SubjectStudentGradeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class GradeViewModel @Inject constructor(
-    private val studentRepository: IStudentRepository
+    private val subjectStudentGradeRepository: ISubjectStudentGradeRepository
 ): ViewModel() {
     val title = MutableLiveData<String>()
     val grade = MutableLiveData(3)
@@ -24,7 +26,7 @@ class GradeViewModel @Inject constructor(
 
     fun getGradeById(gradeId: Long) {
         viewModelScope.launch {
-            val gradeDto = studentRepository.getGradeById(gradeId)
+            val gradeDto = subjectStudentGradeRepository.getGradeById(gradeId)
 
             title.postValue(gradeDto.title)
             grade.postValue(mapGradeToNumberPickerValue(gradeDto.grade)) //Because NumberPicker cannot hold Float data and we map it from Float to Int
@@ -41,10 +43,10 @@ class GradeViewModel @Inject constructor(
         )
 
         if (gradeId == 0L) {
-            studentRepository.insertGrade(gradeDto, subjectId, studentId)
+            subjectStudentGradeRepository.insertGrade(gradeDto, subjectId, studentId)
         }
         else {
-            studentRepository.updateGrade(gradeDto, subjectId, studentId)
+            subjectStudentGradeRepository.updateGrade(gradeDto, subjectId, studentId)
         }
     }
 

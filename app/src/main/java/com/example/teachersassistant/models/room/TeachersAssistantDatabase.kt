@@ -11,6 +11,8 @@ import com.example.teachersassistant.models.entities.subject.SubjectDate
 import com.example.teachersassistant.models.entities.subjectstudentgrade.SubjectStudentGrade
 import com.example.teachersassistant.models.daos.StudentDao
 import com.example.teachersassistant.models.daos.SubjectDao
+import com.example.teachersassistant.models.daos.SubjectStudentDao
+import com.example.teachersassistant.models.daos.SubjectStudentGradeDao
 import com.example.teachersassistant.models.daos.UserDao
 
 @Database(entities = [
@@ -26,6 +28,8 @@ import com.example.teachersassistant.models.daos.UserDao
 @TypeConverters(Converters::class)
 abstract class TeachersAssistantDatabase: RoomDatabase() {
     abstract fun userDao(): UserDao
-    abstract fun subjectDao(): SubjectDao
+    abstract fun subjectDao(): SubjectDao //Includes SubjectDate
     abstract fun studentDao(): StudentDao
+    abstract fun subjectStudentDao(): SubjectStudentDao
+    abstract fun subjectStudentGradeDao(): SubjectStudentGradeDao
 }

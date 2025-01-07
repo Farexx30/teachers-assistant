@@ -6,6 +6,10 @@ import com.example.teachersassistant.models.repositories.student.IStudentReposit
 import com.example.teachersassistant.models.repositories.subject.ISubjectRepository
 import com.example.teachersassistant.models.repositories.student.StudentRepository
 import com.example.teachersassistant.models.repositories.subject.SubjectRepository
+import com.example.teachersassistant.models.repositories.subjectstudent.ISubjectStudentRepository
+import com.example.teachersassistant.models.repositories.subjectstudent.SubjectStudentRepository
+import com.example.teachersassistant.models.repositories.subjectstudentgrade.ISubjectStudentGradeRepository
+import com.example.teachersassistant.models.repositories.subjectstudentgrade.SubjectStudentGradeRepository
 import com.example.teachersassistant.models.repositories.user.IResetAllUserDataRepository
 import com.example.teachersassistant.models.repositories.user.UserRepository
 import dagger.Binds
@@ -38,4 +42,12 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindStudentRepository(studentRepository: StudentRepository): IStudentRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindSubjectStudentRepository(subjectStudentRepository: SubjectStudentRepository): ISubjectStudentRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindSubjectStudentGradeRepository(subjectStudentGradeRepository: SubjectStudentGradeRepository): ISubjectStudentGradeRepository
 }

@@ -65,6 +65,7 @@ class SubjectStudentInfoFragment : Fragment() {
                         lifecycleScope.launch {
                             viewModel.deleteGrade(grade)
                             subjectStudentGradesAdapter.itemRemoved(position)
+                            viewModel.calculateAndUpdateAverageGrade()
                         }
                         true
                     }

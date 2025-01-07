@@ -155,18 +155,40 @@
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/grades_text_view"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/grades_linear_layout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="@string/grades"
-                android:textColor="@color/my_very_light_blue"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linear_layout" />
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/linear_layout">
+
+                <TextView
+                    android:id="@+id/grades_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/grades"
+                    android:textColor="@color/my_very_light_blue"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/average_grade_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="20dp"
+                    android:text='@{"Average grade: " + subjectStudentInfoViewModel.averageGrade}'
+                    android:textColor="@color/my_very_light_blue"
+                    android:textSize="24sp" />
+
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/subject_student_grades_recycler_view"
@@ -178,7 +200,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHeight_percent="0.4"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/grades_text_view"
+                app:layout_constraintTop_toBottomOf="@+id/grades_linear_layout"
                 app:layout_constraintWidth_percent="0.95" />
 
             <Button

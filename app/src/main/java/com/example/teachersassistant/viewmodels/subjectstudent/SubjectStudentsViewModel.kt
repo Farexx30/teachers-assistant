@@ -8,6 +8,7 @@ import com.example.teachersassistant.dtos.student.StudentDto
 import com.example.teachersassistant.dtos.subjectstudent.SubjectStudentDto
 import com.example.teachersassistant.models.repositories.student.IStudentRepository
 import com.example.teachersassistant.models.repositories.subject.ISubjectRepository
+import com.example.teachersassistant.models.repositories.subjectstudent.ISubjectStudentRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,8 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SubjectStudentsViewModel @Inject constructor(
-    private val studentRepository: IStudentRepository,
-    private val subjectRepository: ISubjectRepository
+    private val subjectRepository: ISubjectRepository,
+    private val subjectStudentRepository: ISubjectStudentRepository
 ) : ViewModel() {
     private val _subjectName = MutableLiveData<String>()
     val subjectName: LiveData<String> = _subjectName
@@ -29,7 +30,7 @@ class SubjectStudentsViewModel @Inject constructor(
     fun getSubjectStudentsBySubjectId(subjectId: Long) {
         viewModelScope.launch {
             val subjectInfoDto = subjectRepository.getSubjectBasicInfoById(subjectId)
-            val studentsDtos = studentRepository.getSubjectStudentsBySubjectId(subjectId)
+            val studentsDtos = subjectStudentRepository.getSubjectStudentsBySubjectId(subjectId)
 
             _subjectName.postValue(subjectInfoDto.name)
             _students.value = studentsDtos.toMutableList()
@@ -42,7 +43,7 @@ class SubjectStudentsViewModel @Inject constructor(
             studentId = studentToRemoveFromSubjectDto.id
         )
 
-        subjectRepository.removeStudentFromSubject(subjectStudentToRemoveDto)
+        subjectStudentRepository.removeStudentFromSubject(subjectStudentToRemoveDto)
         _students.value.remove(studentToRemoveFromSubjectDto)
     }
 }

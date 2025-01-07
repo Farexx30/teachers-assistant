@@ -30,12 +30,6 @@ class SubjectRepository @Inject constructor(
         subjectDao.insertSubjectDate(newSubjectDate)
     }
 
-    override suspend fun assignStudentToSubject(newSubjectStudentsDtos: List<SubjectStudentDto>) {
-        val newSubjectStudents = newSubjectStudentsDtos.mapToSubjectStudents()
-
-        subjectDao.assignStudentsToSubject(newSubjectStudents)
-    }
-
 
     //updateSubject fun actually updates subject name only:
     override suspend fun updateSubject(updatedSubjectDto: SubjectBasicInfoDto, teacherId: Long) {
@@ -65,20 +59,12 @@ class SubjectRepository @Inject constructor(
         subjectDao.deleteSubjectDate(subjectDateToDelete)
     }
 
-    override suspend fun removeStudentFromSubject(subjectStudentToRemoveDto: SubjectStudentDto) {
-        val subjectStudentToRemove = subjectStudentToRemoveDto.mapToSubjectStudent()
-
-        subjectDao.removeStudentFromSubject(subjectStudentToRemove)
-    }
-
-
     override suspend fun getSubjectBasicInfoById(subjectId: Long): SubjectBasicInfoDto {
         val subjectDto = subjectDao.getSubjectBasicInfoById(subjectId)
         return subjectDto
     }
 
     override suspend fun getAllCurrentUserSubjects(currentUserId: Long): List<SubjectBasicInfoDto> {
-        //Here we don't need to map to dto because we already returns dto from dao:
         val subjectsDtos = subjectDao.getAllCurrentUserSubjectsByUserId(currentUserId)
         return subjectsDtos
     }
@@ -89,7 +75,6 @@ class SubjectRepository @Inject constructor(
     }
 
     override suspend fun getSubjectWithDates(subjectId: Long): Pair<SubjectBasicInfoDto, List<SubjectDateDto>> {
-        //Here we don't need to map to dto because we already returns dto from dao (cuz we are returning data from multiple tables):
         val subjectDto = subjectDao.getSubjectBasicInfoById(subjectId)
         val subjectDatesDtos = subjectDao.getSubjectDatesBySubjectId(subjectId)
 

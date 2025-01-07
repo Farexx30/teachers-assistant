@@ -6,6 +6,8 @@ import com.example.teachersassistant.models.constants.DatabaseConstants
 import com.example.teachersassistant.models.room.TeachersAssistantDatabase
 import com.example.teachersassistant.models.daos.StudentDao
 import com.example.teachersassistant.models.daos.SubjectDao
+import com.example.teachersassistant.models.daos.SubjectStudentDao
+import com.example.teachersassistant.models.daos.SubjectStudentGradeDao
 import com.example.teachersassistant.models.daos.UserDao
 import dagger.Module
 import dagger.Provides
@@ -42,5 +44,17 @@ object RoomModule {
     @Singleton
     fun provideStudentDao(database: TeachersAssistantDatabase) : StudentDao {
         return database.studentDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideSubjectStudentDao(database: TeachersAssistantDatabase) : SubjectStudentDao {
+        return database.subjectStudentDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideSubjectStudentGradeDao(database: TeachersAssistantDatabase) : SubjectStudentGradeDao {
+        return database.subjectStudentGradeDao()
     }
 }

@@ -19,26 +19,15 @@ interface StudentDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertStudent(newStudent: Student)
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertGrade(newGrade: SubjectStudentGrade)
-
 
     //!!! UPDATES !!!//
-
     @Update
     suspend fun updateStudent(updatedStudent: Student)
 
-    @Update
-    suspend fun updateGrade(updatedGrade: SubjectStudentGrade)
-
 
     //!!! DELETIONS !!!//
-
     @Delete
     suspend fun deleteStudent(studentToDelete: Student)
-
-    @Delete
-    suspend fun deleteGrade(gradeToDelete: SubjectStudentGrade)
 
 
     //!!! QUERIES !!!//
@@ -61,43 +50,6 @@ interface StudentDao {
     """)
     suspend fun getStudentDataById(studentId: Long): StudentDto
 
-    //Query for fetching current subject students:
-    @Query("""
-        SELECT s.id, s.firstName, s.lastName, s.albumNumber
-        FROM ${DatabaseConstants.TableNames.STUDENTS} s
-        JOIN ${DatabaseConstants.TableNames.SUBJECT_STUDENT} ss ON ss.studentId = s.id
-        WHERE ss.subjectId = :subjectId 
-        ORDER BY s.lastName COLLATE NOCASE, s.firstName COLLATE NOCASE, s.albumNumber
-        """)
-    suspend fun getSubjectStudentsBySubjectId(subjectId: Long): List<StudentDto>
 
-    //Query for fetching student that are NOT in current subject:
-    @Query("""
-        SELECT id, firstName, lastName, albumNumber
-        FROM ${DatabaseConstants.TableNames.STUDENTS}
-        WHERE teacherId = :teacherId 
-            AND id NOT IN (SELECT s.id 
-                           FROM ${DatabaseConstants.TableNames.STUDENTS} s
-                           JOIN ${DatabaseConstants.TableNames.SUBJECT_STUDENT} ss ON ss.studentId = s.id
-                           WHERE ss.subjectId = :subjectId)
-        ORDER BY lastName COLLATE NOCASE, firstName COLLATE NOCASE, albumNumber
-        """)
-    suspend fun getNotSubjectStudentsBySubjectId(subjectId: Long, teacherId: Long): List<StudentDto>
 
-    //Query for fetching student's data with its grades:
-    @Query("""
-       SELECT id id, gradeTitle title, grade grade, gradeComment comment
-       FROM ${DatabaseConstants.TableNames.SUBJECT_STUDENT_GRADE}
-       WHERE subjectId = :subjectId AND studentId = :studentId
-        """)
-    suspend fun getSubjectStudentGrades(subjectId:Long, studentId: Long): List<SubjectStudentGradeDto>
-
-    //Query for fetching student's grade data:
-    @Query("""
-       SELECT id id, gradeTitle title, grade grade, gradeComment comment
-       FROM ${DatabaseConstants.TableNames.SUBJECT_STUDENT_GRADE}
-       WHERE id = :gradeId
-       LIMIT 1
-        """)
-    suspend fun getGradeById(gradeId: Long): SubjectStudentGradeDto
 }

@@ -24,9 +24,6 @@ interface SubjectDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertSubjectDate(newSubjectDate: SubjectDate)
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun assignStudentsToSubject(newSubjectStudents: List<SubjectStudent>)
-
 
     //!!! UPDATES !!!//
 
@@ -44,10 +41,6 @@ interface SubjectDao {
 
     @Delete
     suspend fun deleteSubjectDate(subjectDateToDelete: SubjectDate)
-
-    @Delete
-    suspend fun removeStudentFromSubject(subjectStudentToRemove: SubjectStudent)
-
 
 
     //!!! QUERIES !!!//

@@ -8,6 +8,8 @@ import com.example.teachersassistant.dtos.student.StudentDto
 import com.example.teachersassistant.dtos.subjectstudent.SubjectStudentDto
 import com.example.teachersassistant.models.repositories.student.IStudentRepository
 import com.example.teachersassistant.models.repositories.subject.ISubjectRepository
+import com.example.teachersassistant.models.repositories.subjectstudent.ISubjectStudentRepository
+import com.example.teachersassistant.models.repositories.subjectstudent.SubjectStudentRepository
 import com.example.teachersassistant.session.usercontext.IUserContext
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,8 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AssignStudentsToSubjectViewModel @Inject constructor(
-    private val studentRepository: IStudentRepository,
-    private val subjectRepository: ISubjectRepository,
+    private val subjectStudentRepository: ISubjectStudentRepository,
     private val userContext: IUserContext
 ) : ViewModel() {
     private val _selectedStudentsCounter = MutableLiveData(0)
@@ -34,7 +35,7 @@ class AssignStudentsToSubjectViewModel @Inject constructor(
 
     fun getNotSubjectStudentsBySubjectId(subjectId: Long) {
         viewModelScope.launch {
-            val studentsDtos = studentRepository.getNotSubjectStudentsBySubjectId(subjectId, userContext.getCurrentUserId()!!)
+            val studentsDtos = subjectStudentRepository.getNotSubjectStudentsBySubjectId(subjectId, userContext.getCurrentUserId()!!)
             _students.value = studentsDtos
         }
     }
@@ -47,6 +48,6 @@ class AssignStudentsToSubjectViewModel @Inject constructor(
             )
         }
 
-        subjectRepository.assignStudentToSubject(newSubjectStudentsDtos)
+        subjectStudentRepository.assignStudentToSubject(newSubjectStudentsDtos)
     }
 }
