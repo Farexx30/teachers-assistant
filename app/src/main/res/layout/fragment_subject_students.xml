@@ -34,35 +34,48 @@
                 style="@style/Widget.AppCompat.Button.Borderless" />
 
             <TextView
+                android:id="@+id/subject_name_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_marginTop="30dp"
                 android:text='@{subjectStudentsViewModel.subjectName + " students"}'
                 android:textColor="@color/my_very_light_blue"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toTopOf="@+id/subject_students_recycler_view"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
+                android:layout_marginTop="5dp"
+                android:layout_height="1dp"
+                android:background="@color/my_very_light_blue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/subject_name_text_view" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/subject_students_recycler_view"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:scrollbars="vertical"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
                 app:layoutManager="LinearLayoutManager"
                 app:layout_constraintBottom_toTopOf="@+id/assign_new_student_to_subject_button"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_percent="0.75"
+                app:layout_constraintHeight_percent="0.72"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/view2"
                 app:layout_constraintWidth_percent="0.95" />
-
 
             <Button
                 android:id="@+id/assign_new_student_to_subject_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_marginBottom="10dp"
                 android:backgroundTint="@color/my_blue"
                 android:text="@string/assign_students"
                 android:textColor="@color/my_very_light_blue"

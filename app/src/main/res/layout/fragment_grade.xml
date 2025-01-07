@@ -55,6 +55,7 @@
                         android:textColor="@color/my_very_light_blue"
                         android:textColorHint="@color/my_light_blue"
                         android:textSize="20sp"
+                        android:maxLength="51"
                         tools:ignore="LabelFor" />
 
 
@@ -109,7 +110,8 @@
                         android:text="@={gradeViewModel.comment}"
                         android:textColor="@color/my_very_light_blue"
                         android:textColorHint="@color/my_light_blue"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        android:maxLength="100"/>
 
                 </LinearLayout>
 
