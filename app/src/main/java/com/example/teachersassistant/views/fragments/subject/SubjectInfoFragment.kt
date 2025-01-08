@@ -84,8 +84,10 @@ class SubjectInfoFragment : Fragment() {
         }
 
         lifecycleScope.launch {
-            viewModel.subjectDates.collect { subjectDates ->
-                subjectDatesAdapter.fillWithData(subjectDates.toMutableList())
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.subjectDates.collect { subjectDates ->
+                    subjectDatesAdapter.fillWithData(subjectDates.toMutableList())
+                }
             }
         }
 
@@ -105,7 +107,7 @@ class SubjectInfoFragment : Fragment() {
         }
         else {
             lifecycleScope.launch {
-                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                     viewModel.subjectId.collect { id ->
                         subjectId = id
                     }

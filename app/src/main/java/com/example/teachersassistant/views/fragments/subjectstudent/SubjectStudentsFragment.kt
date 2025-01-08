@@ -8,7 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -75,8 +77,10 @@ class SubjectStudentsFragment : Fragment() {
         }
 
         lifecycleScope.launch {
-            viewModel.students.collect { students ->
-                studentsAdapter.fillWithData(students.toMutableList())
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.students.collect { students ->
+                    studentsAdapter.fillWithData(students.toMutableList())
+                }
             }
         }
 

@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -45,8 +47,10 @@ class AssignStudentsToSubjectFragment : Fragment() {
         }
 
         lifecycleScope.launch {
-            viewModel.students.collect { students ->
-                assignStudentsToSubjectAdapter.fillWithData(students.toList())
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.students.collect { students ->
+                    assignStudentsToSubjectAdapter.fillWithData(students.toList())
+                }
             }
         }
 
