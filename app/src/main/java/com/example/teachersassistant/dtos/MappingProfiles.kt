@@ -26,7 +26,7 @@ fun User.mapToUserBasicInfoDto(): UserBasicInfoDto {
 fun RegisterOrLoginUserDto.mapToUser(): User {
     val passwordHash = BCrypt.hashpw(this.rawPassword, BCrypt.gensalt())
     return User(
-        id = 0,
+        id = 0L,
         username = this.username,
         passwordHash = passwordHash
     )
@@ -38,14 +38,14 @@ fun SubjectBasicInfoDto.mapToSubject(): Subject {
     return Subject(
         id = this.id,
         name = this.name,
-        teacherId = 0
+        teacherId = 0L
     )
 }
 
 fun SubjectDateDto.mapToSubjectDate(): SubjectDate {
     return SubjectDate(
         id = this.id,
-        subjectId = 0,
+        subjectId = 0L,
         day = this.day,
         startHour = this.startHour,
         endHour = this.endHour
@@ -60,7 +60,7 @@ fun StudentDto.mapToStudent(): Student {
         firstName = this.firstName,
         lastName = this.lastName,
         albumNumber = this.albumNumber,
-        teacherId = 0
+        teacherId = 0L
     )
 }
 

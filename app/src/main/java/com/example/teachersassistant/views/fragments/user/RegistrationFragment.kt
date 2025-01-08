@@ -43,7 +43,7 @@ class RegistrationFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.registrationState.collect { result ->
                     when (result) {
                         RegistrationOrLoginResult.NONE -> {}

@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.teachersassistant.adapters.recyclerview.ScheduleRecyclerViewAdapter
@@ -52,8 +54,10 @@ class ScheduleFragment : Fragment() {
         }
 
         lifecycleScope.launch {
-            viewModel.subjects.collect { subjects ->
-                scheduleAdapter.fillWithData(subjects.toList())
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.subjects.collect { subjects ->
+                    scheduleAdapter.fillWithData(subjects.toList())
+                }
             }
         }
 
